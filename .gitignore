@@ -1,0 +1,18 @@
+# Ignores
+## General
+.*
+*.tgz
+
+## Stack
+node_modules
+coverage
+
+# Excludes
+## General
+!.git*
+!.npmignore
+
+## Dev
+!.editorconfig
+!.eslint*
+dist

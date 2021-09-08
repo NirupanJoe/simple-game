@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+# Helpers
+disallowWhenChangesUncomitted() {
+	git diff --name-only | wc -l | awk {'print $1'}
+}
+
+# Main
+if [ $(disallowWhenChangesUncomitted) -gt 0 ]
+	then
+	echo "Commit your changes!"
+	exit 1
+fi
+
+npm run lint
+npm run test-dev

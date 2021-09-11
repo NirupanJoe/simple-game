@@ -1,13 +1,12 @@
 import { React } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
-// NOTE: automock from jest config doesn't work on apps created with create-react-app.
-
+/* eslint-disable react/display-name */
+jest.mock('./components/game', () => () => <div role="game"/>);
 import App from './App';
 
 test('renders learn react link', () => {
-	render(<App/>);
-	const someText = screen.getByText('Simple Game');
+	const { getByRole } = render(<App/>);
 
-	expect(someText).toBeInTheDocument();
+	expect(getByRole('game')).toBeInTheDocument();
 });

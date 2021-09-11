@@ -1,15 +1,10 @@
-import { React, useEffect } from 'react';
+import { React } from 'react';
 import './App.scss';
-import SampleService from './services/sample';
+import Game from './components/game';
 
-const App = () => {
-	useEffect(SampleService.sayHai, []);
-
-	return (
-		<div className="App">
-			Simple Game
-		</div>
-	);
-};
+const App = () =>
+	<div className="App">
+		{Game()}
+	</div>;
 
 export default App;

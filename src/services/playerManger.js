@@ -1,6 +1,5 @@
-
-const playerManager = {
-	isAlive: (context) => context.state.health > 0,
+const PlayerManager = {
+	isAlive: ({ state }) => state.health > 0,
 };
 
-export default playerManager;
+export default PlayerManager;

@@ -1,10 +1,10 @@
 import React from 'react';
 import Restart from './restart';
-import playerManager from '../services/playerManger';
+import PlayerManager from '../services/playerManger';
 import context from '../core/context';
 
 const Game = () => {
-	const Screen = !playerManager.isAlive(context) && Restart();
+	const Screen = !PlayerManager.isAlive(context) && Restart();
 
 	return (
 		<div role="game">

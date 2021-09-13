@@ -5,3 +5,12 @@
 		font-weight: bold;
 	}
 }
+
+.health-bar {
+	position: absolute;
+	height: 3%;
+	width: 15%;
+	top: 5%;
+	left: calc(50% - 7.5%);
+	border: 3px solid black;
+}

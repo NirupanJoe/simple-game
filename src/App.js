@@ -1,7 +1,7 @@
 import { React } from 'react';
 import './App.scss';
 import Game from './components/game';
-import HealthBar from './component/healthBar';
+import HealthBar from './components/healthBar';
 
 const App = () =>
 	<div className="App">

@@ -15,4 +15,4 @@ if [ $(disallowWhenChangesUncomitted) -gt 0 ]
 fi
 
 npm run lint
-npm run test-dev
+npm run test-ci

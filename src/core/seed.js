@@ -1,5 +1,6 @@
+import config from './config';
 const seed = {
-	health: 100,
+	health: config.health,
 };
 
 export default seed;

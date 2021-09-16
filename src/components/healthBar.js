@@ -10,7 +10,9 @@ const getStyle = () => ({
 
 const HealthBar = () =>
 	<div role="healthBar" className="health-bar">
-		<div style={ getStyle() }/>
+		<div style={ getStyle() }>
+			{context.state.health}
+		</div>
 	</div>;
 
 export default HealthBar;

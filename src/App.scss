@@ -13,4 +13,26 @@
 	top: 5%;
 	left: calc(50% - 7.5%);
 	border: 3px solid black;
-}
+	}
+
+.container{
+		height: 7vh;
+		width: 18vh;
+		border: 6px dashed rgba(17,3,11,0.98);
+		position: relative;
+	
+		.flightDamage{
+			height: 99%;
+			width: 52%;
+			position: absolute;
+			top: 1%;
+			left: 1%;
+		}
+
+		.score{
+			font-size: 7vmin;
+			bottom: -6%;
+			left: 65%;
+			position: absolute;
+		}
+	}

@@ -1,8 +1,8 @@
 import { React, useEffect } from 'react';
 import './App.scss';
 import Game from './components/game';
-import HealthBar from './components/healthBar';
 import ticker from './services/ticker';
+import GameScreen from './components/gameScreen';
 
 const App = () => {
 	useEffect(ticker.start, []);
@@ -10,7 +10,7 @@ const App = () => {
 	return (
 		<div className="App">
 			{Game()}
-			{ HealthBar() }
+			{ GameScreen() }
 		</div>
 	);
 };

@@ -1,11 +1,12 @@
 /* eslint-disable react/display-name */
 
 jest.mock('./components/game', () => () => <div role="game"/>);
-jest.mock('./components/healthBar', () => () => <div role="healthBar"/>);
+jest.mock('./components/gameScreen', () => () => <div role="gameScreen"/>);
 
 import React from 'react';
 import { render } from '@testing-library/react';
 import ticker from './services/ticker';
+
 import App from './App';
 
 test('renders learn react link', () => {
@@ -16,5 +17,5 @@ test('renders learn react link', () => {
 
 	expect(React.useEffect).toHaveBeenCalledWith(ticker.start, []);
 	expect(getByRole('game')).toBeInTheDocument();
-	expect(getByRole('healthBar')).toBeInTheDocument();
+	expect(getByRole('gameScreen')).toBeInTheDocument();
 });

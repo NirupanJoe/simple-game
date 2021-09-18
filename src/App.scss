@@ -1,9 +1,17 @@
 .App {
 	text-align: center;
+	pointer-events: none;
 
 	button {
 		font-weight: bold;
 	}
+}
+
+.game-screen {
+	position: absolute;
+	pointer-events: all;
+	height: 100vh;
+	width: 100vw;
 }
 
 .health-bar {

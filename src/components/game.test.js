@@ -11,6 +11,11 @@ import Game from '../components/game';
 import context from '../core/context';
 import playerManager from '../services/playerManger';
 
+jest.mock('../core/context', () => ({
+	state: { health: 100,
+		flight: { x: 10 }},
+}));
+
 describe('Game in Dom', () => {
 	test(' Game Over Screen', () => {
 		jest.spyOn(playerManager, 'isAlive').mockReturnValue(false);

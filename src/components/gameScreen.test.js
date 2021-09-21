@@ -1,13 +1,20 @@
+/* eslint-disable max-lines-per-function */
 import GameScreen from './gameScreen';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import context from '../core/context';
 
 jest.mock('../core/context', () => ({
 	state: { health: 40,
-		bgnScreenY: 0 },
+		bgnScreenY: 0,
+		flight: {
+			x: 0,
+		}},
+	actions: { updateMousePosition: jest.fn() },
 }));
 
 describe('testing GameScreen', () => {
+	const { actions } = context;
+
 	test('gameScreen visible', () => {
 		const component = render(GameScreen()).getByRole('gameScreen');
 
@@ -23,5 +30,16 @@ describe('testing GameScreen', () => {
 
 		expect(getByRole('healthBar')).toBeInTheDocument();
 		expect(getByRole('score')).toBeInTheDocument();
+		expect(getByRole('flight')).toBeInTheDocument();
+	});
+
+	test('event check', () => {
+		jest.spyOn(actions, 'updateMousePosition');
+
+		const component = render(GameScreen()).getByRole('gameScreen');
+
+		fireEvent.mouseMove(component);
+
+		expect(actions.updateMousePosition).toHaveBeenCalled();
 	});
 });

@@ -2,9 +2,10 @@
 import Actions from '../core/actions';
 import PlayerManager from '../services/playerManger';
 import context from '../core/context';
+import PositionService from '../services/positionService';
 
 describe('actions', () => {
-	const { restart } = Actions;
+	const { restart, updateMousePosition } = Actions;
 	const returnValue = Symbol('return');
 
 	test('restart returns seed', () => {
@@ -34,5 +35,15 @@ describe('actions', () => {
 		expect(PlayerManager.backGroundMovingAxis)
 			.toHaveBeenCalledWith(context);
 		expect(result).toEqual(returnValue);
+	});
+
+	test('updateMousePosition returns flight.x', () => {
+		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
+		const data = 100;
+		const result = updateMousePosition({ data });
+		const expected = { flight: { x: returnValue }};
+
+		expect(result).toMatchObject(expected);
+		expect(PositionService.project).toHaveBeenCalledWith(data);
 	});
 });

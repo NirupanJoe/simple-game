@@ -1,4 +1,5 @@
 import React from 'react';
+import Flight from './flight';
 import HealthBar from './healthBar';
 import Score from './score';
 import context from '../core/context';
@@ -12,9 +13,12 @@ const GameScreen = () =>
 		role="gameScreen"
 		className="game-screen"
 		style={ style() }
+		onMouseMove={ (event) =>
+			context.actions.updateMousePosition(event.clientX) }
 	>
 		{ HealthBar() }
 		{ Score() }
+		{ Flight() }
 	</div>;
 
 export default GameScreen;

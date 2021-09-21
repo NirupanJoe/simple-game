@@ -13,9 +13,10 @@ describe('testing GameScreen', () => {
 		expect(component).toHaveClass('game-screen');
 	});
 
-	test('gameScreen renders healthBar', () => {
+	test('gameScreen renders healthBar and score', () => {
 		const { getByRole } = render(GameScreen());
 
 		expect(getByRole('healthBar')).toBeInTheDocument();
+		expect(getByRole('score')).toBeInTheDocument();
 	});
 });

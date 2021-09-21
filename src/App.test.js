@@ -1,7 +1,6 @@
 /* eslint-disable react/display-name */
 
 jest.mock('./components/game', () => () => <div role="game"/>);
-jest.mock('./components/gameScreen', () => () => <div role="gameScreen"/>);
 
 import React from 'react';
 import { render } from '@testing-library/react';
@@ -17,5 +16,4 @@ test('renders learn react link', () => {
 
 	expect(React.useEffect).toHaveBeenCalledWith(ticker.start, []);
 	expect(getByRole('game')).toBeInTheDocument();
-	expect(getByRole('gameScreen')).toBeInTheDocument();
 });

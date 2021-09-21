@@ -10,7 +10,7 @@ describe('restart Button', () => {
 		expect(component).toHaveTextContent('Restart');
 	});
 	test('Click Event', () => {
-		jest.spyOn(context.actions, 'restart');
+		jest.spyOn(context.actions, 'restart').mockReturnValue();
 
 		const component = render(Restart()).getByRole('restartButton');
 

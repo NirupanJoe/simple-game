@@ -5,7 +5,7 @@ const Restart = () =>
 	<div>
 		<button
 			role="restartButton"
-			onClick={ context.actions.restart }
+			onClick={ () => context.actions.restart() }
 		>
 			Restart
 		</button>

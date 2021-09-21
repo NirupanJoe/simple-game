@@ -2,6 +2,9 @@
 jest.mock('./restart', () => () => <div role="restart"/>);
 jest.mock('../components/score', () => () => <div role="score"/>);
 jest.mock('../services/playerManger');
+jest.mock('../core/context', () => ({
+	state: { health: 100 },
+}));
 
 import React from 'react';
 import { render } from '@testing-library/react';
@@ -24,6 +27,7 @@ describe('Game in Dom', () => {
 		const { getByRole } = render(Game());
 
 		expect(getByRole('game')).toBeInTheDocument();
+		expect(getByRole('gameScreen')).toBeInTheDocument();
 		expect(playerManager.isAlive).toHaveBeenCalledWith(context);
 	});
 

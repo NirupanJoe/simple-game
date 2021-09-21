@@ -1,10 +1,5 @@
 .App {
 	text-align: center;
-	pointer-events: none;
-
-	button {
-		font-weight: bold;
-	}
 }
 
 .game-screen {
@@ -12,6 +7,8 @@
 	pointer-events: all;
 	height: 100vh;
 	width: 100vw;
+	background-image: url('./images/sky_image.jpeg');
+	background-repeat: repeat-y;
 }
 
 .health-bar {

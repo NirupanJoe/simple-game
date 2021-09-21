@@ -3,7 +3,7 @@ import PlayerManager from './playerManger';
 import config from '../core/config';
 
 describe('PlayerManger', () => {
-	const { isAlive, decreaseHealth } = PlayerManager;
+	const { isAlive, decreaseHealth, backGroundMovingAxis } = PlayerManager;
 
 	describe('isAlive', () => {
 		const expectations = [
@@ -33,5 +33,17 @@ describe('PlayerManger', () => {
 
 			expect(result).toEqual(expectation);
 		});
+	});
+
+	test('backGroundMovingAxis', () => {
+		const state = {
+			bgnScreenY: 0,
+		};
+		const result = backGroundMovingAxis({ state, config });
+		const expectation = {
+			bgnScreenY: state.bgnScreenY + config.bgnScreenYIncre,
+		};
+
+		expect(result).toEqual(expectation);
 	});
 });

@@ -7,7 +7,8 @@ describe('restart Button', () => {
 		const component = render(Restart()).getByRole('restartButton');
 
 		expect(component).toBeInTheDocument();
-		expect(component).toHaveTextContent('Restart');
+		expect(component).toHaveTextContent('RESTART');
+		expect(component).toHaveClass('restart-button');
 	});
 	test('Click Event', () => {
 		jest.spyOn(context.actions, 'restart').mockReturnValue();

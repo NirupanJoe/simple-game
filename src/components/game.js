@@ -1,19 +1,17 @@
 import React from 'react';
-import Restart from './restart';
-import PlayerManager from '../services/playerManger';
-import context from '../core/context';
-import Score from './score';
+import GameOverScreen from './gameOverScreen';
 import GameScreen from './gameScreen';
+import context from '../core/context';
+import PlayerManager from '../services/playerManger';
 
 const Game = () => {
 	const Screen = PlayerManager.isAlive(context)
 		? GameScreen
-		: Restart;
+		: GameOverScreen;
 
 	return (
 		<div role="game">
-			{ Screen() }
-			{Score()}
+			{Screen()}
 		</div>
 	);
 };

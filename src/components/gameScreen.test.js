@@ -1,16 +1,18 @@
 /* eslint-disable max-lines-per-function */
-import GameScreen from './gameScreen';
-import { render, fireEvent } from '@testing-library/react';
-import context from '../core/context';
-
+/* eslint-disable react/display-name */
 jest.mock('../core/context', () => ({
-	state: { health: 40,
-		bgnScreenY: 0,
-		flight: {
-			x: 0,
-		}},
+	state: { bgnScreenY: 0 },
 	actions: { updateMousePosition: jest.fn() },
 }));
+
+jest.mock('../components/healthBar', () => () => <div role="healthBar"/>);
+jest.mock('../components/score', () => () => <div role="score"/>);
+jest.mock('../components/flight', () => () => <div role="flight"/>);
+
+import { React } from 'react';
+import { render, fireEvent } from '@testing-library/react';
+import GameScreen from './gameScreen';
+import context from '../core/context';
 
 describe('testing GameScreen', () => {
 	const { actions } = context;

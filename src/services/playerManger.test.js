@@ -4,6 +4,7 @@ import config from '../core/config';
 
 describe('PlayerManger', () => {
 	const { isAlive, decreaseHealth, backGroundMovingAxis } = PlayerManager;
+	const hundred = 100;
 
 	describe('isAlive', () => {
 		const expectations = [
@@ -42,7 +43,7 @@ describe('PlayerManger', () => {
 		const result = backGroundMovingAxis({ state, config });
 		const expectation = {
 			bgnScreenY:
-			(state.bgnScreenY - config.bgnScreenYIncre) % config.hundred,
+			(state.bgnScreenY + config.bgnScreenYIncre) % hundred,
 		};
 
 		expect(result).toEqual(expectation);

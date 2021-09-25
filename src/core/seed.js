@@ -7,6 +7,7 @@ const seed = {
 	flight: {
 		x: 0,
 	},
+	targets: [],
 };
 
 export default seed;

@@ -1,5 +1,5 @@
 import React from 'react';
-import blast from '../images/damage.jpg';
+import blast from '../images/score-icon.png';
 import context from '../core/context';
 
 const Score = () =>

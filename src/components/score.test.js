@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import { render } from '@testing-library/react';
 import Score from './score';
-import blast from '../images/damage.jpg';
+import blast from '../images/score-icon.png';
 import context from '../core/context';
 
 jest.mock('../core/context', () => ({

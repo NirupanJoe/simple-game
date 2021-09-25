@@ -41,7 +41,8 @@ describe('PlayerManger', () => {
 		};
 		const result = backGroundMovingAxis({ state, config });
 		const expectation = {
-			bgnScreenY: state.bgnScreenY + config.bgnScreenYIncre,
+			bgnScreenY:
+			(state.bgnScreenY - config.bgnScreenYIncre) % config.hundred,
 		};
 
 		expect(result).toEqual(expectation);

@@ -9,8 +9,8 @@
 	pointer-events: all;
 	height: 100%;
 	width: 100%;
-	background-image: url('./images/sky_image.jpeg');
-	background-repeat: repeat-y;
+	background-image: url('./images/ocean-image.jpg');
+	background-repeat: repeat;
 	height: 100%;
 	width: 100%;
 }
@@ -36,7 +36,7 @@
 .container{
 		height: 7vh;
 		width: 18vh;
-		border: 6px dashed rgba(17,3,11,0.98);
+		border: 6px dashed firebrick;
 		position: relative;
 
 		.flightDamage{

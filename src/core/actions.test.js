@@ -3,9 +3,10 @@ import Actions from '../core/actions';
 import PlayerManager from '../services/playerManger';
 import context from '../core/context';
 import PositionService from '../services/positionService';
+import targetManager from '../services/targetManager';
 
 describe('actions', () => {
-	const { restart, updateMousePosition } = Actions;
+	const { restart, updateMousePosition, addTargets } = Actions;
 	const returnValue = Symbol('return');
 
 	test('restart returns seed', () => {
@@ -45,5 +46,15 @@ describe('actions', () => {
 
 		expect(result).toMatchObject(expected);
 		expect(PositionService.project).toHaveBeenCalledWith(data);
+	});
+
+	test('add Targets ', () => {
+		jest.spyOn(targetManager, 'addTargets')
+			.mockReturnValue(returnValue);
+
+		const result = addTargets(context);
+
+		expect(targetManager.addTargets).toHaveBeenCalledWith(context);
+		expect(result).toMatchObject({ targets: returnValue });
 	});
 });

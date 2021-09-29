@@ -18,10 +18,11 @@
 .flight {
 	position: absolute;
 	background-image: url('./images/fighterJet.png');
-	background-size: cover;
+	background-size: contain;
+	background-repeat: no-repeat;
 	width: 6%;
-	height: 15%;
-	top: 85%;
+	height: 10%;
+	top: 90%;
 }
 
 .health-bar {

@@ -6,8 +6,7 @@
 import TargetManager from '.';
 import config from '../../core/config';
 import * as HelperService from '../helperService';
-import * as PositionService from '../positionService';
-
+import PositionService from '../positionService';
 import { keys, range } from '@laufire/utils/collection';
 import * as random from '@laufire/utils/random';
 

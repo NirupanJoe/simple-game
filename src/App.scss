@@ -7,8 +7,6 @@
 .game-screen {
 	position: absolute;
 	pointer-events: all;
-	height: 100%;
-	width: 100%;
 	background-image: url('./images/ocean-image.jpg');
 	background-repeat: repeat;
 	height: 100%;
@@ -82,13 +80,13 @@
 }
 
 .restart-button {
-	color: rgb(8, 12, 30); 
-	font-size: calc(16px + 0.5vw); 
-	padding: 1%; 
-	border-radius: calc(16px + 1.5vw); 
+	color: rgb(8, 12, 30);
+	font-size: calc(16px + 0.5vw);
+	padding: 1%;
+	border-radius: calc(16px + 1.5vw);
 	font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 
-	background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); 
+	background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%);
 	box-shadow: black calc(1px + 0.1vw) calc(1px + 0.1vw) calc(11px + 0.5vw) calc(2px + 0.2vw);
-	border: 0.2vw solid rgb(28, 110, 164); 
+	border: 0.2vw solid rgb(28, 110, 164);
 }

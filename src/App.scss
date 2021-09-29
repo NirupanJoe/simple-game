@@ -56,51 +56,38 @@
 	}
 
 .game-over-screen{
-	position: absolute;
-	background-color: red;
-	height: 100%;
-	width: 100%;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: red;
+    height: 100vh;
+    justify-content: center;
+}
 
-	.game-over{
-		font-family: Impact, Charcoal, sans-serif;
-		font-size: 50px;
-		letter-spacing: -0.2px;
-		word-spacing: -0.4px;
-		color: #000000;
-		font-weight: 700;
-		font-style: normal;
-		font-variant: normal;
-		text-transform: uppercase;
-		position: absolute;
-		top: 27%;
-		left: 39%;
-		text-shadow: 2px 2px 0 #bcbcbc, 4px 4px 0 #9c9c9c, 2px 2px 2px rgba(206,89,55,0.05)
-	}
-	.game-score{
-		font-family: Impact, Charcoal, sans-serif;
-		font-size: 35px;
-		color: #000000;
-		font-weight: 700;
-		font-style: normal;
-		font-variant: normal;
-		text-transform: uppercase;
-		top: 38%;
-		left: 44%;
-		position: absolute;
-	}
+.game-over{
+	font-family: Impact, Charcoal, sans-serif;
+	font-size: calc(16px + 2vw);
+	color: #000000;
+	font-weight: 700;
+	padding: 3%;
+	text-shadow: 0.2vw 0.2vw 0vw #bcbcbc, 0.4vw 0.4vw 0vw #9c9c9c, 0.8vw 0.8vw 0.8vw rgba(206,89,55,0.05)
+}
 
-	.restart-button {
-		font-weight: bold;
-		position: absolute;
-		top: 49%;
-		left: 45%;
-		color: rgb(8, 12, 30); 
-		font-size: 24px; 
-		line-height: 21px; padding: 8px; border-radius: 38px; 
-		font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-		font-weight: normal; 
-		font-style: normal; 
-		font-variant: normal; 
-		background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); box-shadow: rgb(0, 0, 0) 5px 5px 15px 5px; border: 2px solid rgb(28, 110, 164); display: inline-block;
-	}
+.game-score{
+	font-size: calc(14px + 1.5vw);
+	color: #000000;
+	font-weight: 70;
+	padding: 3%;
+}
+
+.restart-button {
+	color: rgb(8, 12, 30); 
+	font-size: calc(16px + 0.5vw); 
+	padding: 1%; 
+	border-radius: calc(16px + 1.5vw); 
+	font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
+	background-image: linear-gradient(to right, rgb(28, 110, 164) 0%, rgb(35, 136, 203) 50%, rgb(20, 78, 117) 100%); 
+	box-shadow: black calc(1px + 0.1vw) calc(1px + 0.1vw) calc(11px + 0.5vw) calc(2px + 0.2vw);
+	border: 0.2vw solid rgb(28, 110, 164); 
 }

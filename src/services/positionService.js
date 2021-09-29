@@ -6,7 +6,8 @@ const hundred = 100;
 const two = 2;
 
 const project = (data) =>
-	Math.max(data - width, 0);
+	Math.min(data.view.innerWidth - width, Math
+		.max(data.clientX - (width / two), 0));
 
 const getRandomValue = (data) =>
 	rndBetween(data / two, hundred - (data / two));

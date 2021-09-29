@@ -2,6 +2,7 @@
 
 import * as random from '@laufire/utils/random';
 import positionService from './positionService';
+import config from '../core/config';
 
 describe('PositionService', () => {
 	const { project, getRandomValue } = positionService;
@@ -9,17 +10,26 @@ describe('PositionService', () => {
 	const hundred = 100;
 	const two = 2;
 	const range = random.rndBetween(twentyFive, hundred);
+	const returnValue = Symbol('returnValue');
 
 	test('project returns value greater than or equal to 0', () => {
-		let i = 0;
-		const maxLoop = 1001;
+		jest.spyOn(Math, 'max').mockReturnValue(returnValue);
+		jest.spyOn(Math, 'min').mockReturnValue(returnValue);
+		const data = {
+			view: {
+				innerWidth: 1200,
+			},
+			clientX: 1300,
+		};
 
-		for(i = 0; i < maxLoop; i++) {
-			const data = Math.floor(Math.random() * maxLoop);
-			const result = project(data);
+		const result = project(data);
 
-			expect(result).toBeGreaterThanOrEqual(0);
-		}
+		expect(Math.max)
+			.toHaveBeenCalledWith(data.clientX - (config.width / two), 0);
+		expect(Math.min)
+			.toHaveBeenCalledWith(data.view.innerWidth - config.width,
+				returnValue);
+		expect(result).toEqual(returnValue);
 	});
 
 	test('get random value for height and width',
@@ -27,7 +37,6 @@ describe('PositionService', () => {
 			const data = range;
 			const min = range / two;
 			const max = hundred - min;
-			const returnValue = Symbol('returnValue');
 
 			jest.spyOn(random, 'rndBetween').mockReturnValue(returnValue);
 

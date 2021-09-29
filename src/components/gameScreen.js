@@ -14,7 +14,7 @@ const GameScreen = () =>
 		className="game-screen"
 		style={ style() }
 		onMouseMove={ (event) =>
-			context.actions.updateMousePosition(event.clientX) }
+			context.actions.updateMousePosition(event) }
 	>
 		{ HealthBar() }
 		{ Score() }

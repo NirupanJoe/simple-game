@@ -6,6 +6,7 @@ const seed = {
 	bgnScreenY: 0,
 	flight: {
 		x: 0,
+		width: 6,
 	},
 	targets: [],
 };

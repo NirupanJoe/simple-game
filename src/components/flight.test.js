@@ -13,7 +13,7 @@ describe('testing Flight', () => {
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveClass('flight');
 		expect(component).toHaveStyle({
-			left: `${ context.state.flight.x }px`,
+			left: `${ context.state.flight.x }%`,
 		});
 	});
 });

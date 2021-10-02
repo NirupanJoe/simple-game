@@ -13,8 +13,11 @@ const addTargets = (context) => ({
 const backGroundMovingAxis = (context) =>
 	PlayerManager.backGroundMovingAxis(context);
 
-const updateMousePosition = ({ data }) => ({
-	flight: { x: PositionService.project(data) },
+const updateMousePosition = ({ state, data }) => ({
+	flight: { x: PositionService
+		.project(PositionService
+			.pxToPercentage(data.clientX, data.view.innerWidth),
+		state.flight.width) },
 });
 
 const actions = {

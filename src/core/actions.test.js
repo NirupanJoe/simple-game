@@ -40,12 +40,22 @@ describe('actions', () => {
 
 	test('updateMousePosition returns flight.x', () => {
 		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
-		const data = 100;
-		const result = updateMousePosition({ data });
+		jest.spyOn(PositionService, 'pxToPercentage')
+			.mockReturnValue(returnValue);
 		const expected = { flight: { x: returnValue }};
+		const state = { flight: { x: Symbol('x'), width: Symbol('width') }};
+		const data = {
+			view: { innerWidth: Symbol('innerWidth') },
+			clientX: Symbol('clientX'),
+		};
+
+		const result = updateMousePosition({ state, data });
 
 		expect(result).toMatchObject(expected);
-		expect(PositionService.project).toHaveBeenCalledWith(data);
+		expect(PositionService.pxToPercentage)
+			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
+		expect(PositionService.project)
+			.toHaveBeenCalledWith(returnValue, state.flight.width);
 	});
 
 	test('add Targets ', () => {

@@ -5,7 +5,7 @@ const Flight = () =>
 	<div
 		role="flight"
 		className="flight"
-		style={ { left: `${ context.state.flight.x }px` } }
+		style={ { left: `${ context.state.flight.x }%` } }
 	/>;
 
 export default Flight;

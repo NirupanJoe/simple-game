@@ -13,11 +13,15 @@ import { React } from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import GameScreen from './gameScreen';
 import context from '../core/context';
+import * as Container from './container';
+import Target from './target';
 
 describe('testing GameScreen', () => {
 	const { actions } = context;
 
 	test('gameScreen visible', () => {
+		jest.spyOn(Container, 'default')
+			.mockReturnValue(<div role="targets"/>);
 		const component = render(GameScreen()).getByRole('gameScreen');
 
 		expect(component).toBeInTheDocument();
@@ -28,6 +32,8 @@ describe('testing GameScreen', () => {
 	});
 
 	test('gameScreen renders healthBar and score', () => {
+		jest.spyOn(Container, 'default')
+			.mockReturnValue(<div role="targets"/>);
 		const { getByRole } = render(GameScreen());
 
 		expect(getByRole('healthBar')).toBeInTheDocument();
@@ -37,11 +43,23 @@ describe('testing GameScreen', () => {
 
 	test('event check', () => {
 		jest.spyOn(actions, 'updateMousePosition');
-
+		jest.spyOn(Container, 'default')
+			.mockReturnValue(<div role="targets"/>);
 		const component = render(GameScreen()).getByRole('gameScreen');
 
 		fireEvent.mouseMove(component);
 
 		expect(actions.updateMousePosition).toHaveBeenCalled();
+	});
+	test('gameScreen renders the board,targets,powers', () => {
+		jest.spyOn(Container, 'default')
+			.mockReturnValue(<div role="targets"/>);
+
+		const { getByRole } = render(GameScreen());
+
+		expect(getByRole('targets')).toBeInTheDocument();
+
+		expect(Container.default)
+			.toHaveBeenCalledWith(context.state.targets, Target);
 	});
 });

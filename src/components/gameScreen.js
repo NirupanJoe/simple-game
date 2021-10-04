@@ -3,6 +3,8 @@ import Flight from './flight';
 import HealthBar from './healthBar';
 import Score from './score';
 import context from '../core/context';
+import Target from './target';
+import Container from './container';
 
 const style = () => ({
 	backgroundPositionY: `${ context.state.bgnScreenY }%`,
@@ -19,6 +21,7 @@ const GameScreen = () =>
 		{ HealthBar() }
 		{ Score() }
 		{ Flight() }
+		{ Container(context.state.targets, Target) }
 	</div>;
 
 export default GameScreen;

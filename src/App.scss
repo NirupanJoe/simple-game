@@ -15,6 +15,11 @@
 	background-repeat: repeat;
 	height: 100%;
 	width: 100%;
+
+	.target {
+		position: absolute;
+		transform: rotate(180deg);
+	}
 }
 
 .flight {

@@ -4,6 +4,7 @@ import Target from './target';
 
 describe('Target', () => {
 	const two = 2;
+	const ten = 10;
 
 	test('renders the component with appropriate styling', () => {
 		const target = {
@@ -20,11 +21,11 @@ describe('Target', () => {
 
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveStyle({
-			position: 'absolute',
 			top: `${ y }%`,
 			left: `${ x - (width / two) }%`,
 			height: `${ height }vw`,
 			width: `${ width }vw`,
+			filter: `hue-rotate(${ x * ten }deg)`,
 		});
 	});
 });

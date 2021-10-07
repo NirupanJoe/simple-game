@@ -6,7 +6,7 @@ const Target = (target) => {
 	const style = {
 		position: 'absolute',
 		left: `${ x - (width / two) }%`,
-		top: `${ y - (height / two) }%`,
+		top: `${ y }%`,
 		height: `${ height }vw`,
 		width: `${ width }vw`,
 	};

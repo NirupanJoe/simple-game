@@ -21,7 +21,7 @@ describe('Target', () => {
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveStyle({
 			position: 'absolute',
-			top: `${ y - (height / two) }%`,
+			top: `${ y }%`,
 			left: `${ x - (width / two) }%`,
 			height: `${ height }vw`,
 			width: `${ width }vw`,

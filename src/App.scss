@@ -9,12 +9,12 @@
 }
 
 .game-screen {
-	position: absolute;
-	pointer-events: all;
+	display: flex;
+	justify-content: space-between;
 	background-image: url('./images/ocean-image.jpg');
 	background-repeat: repeat;
-	height: 100%;
-	width: 100%;
+	height: 100vh;
+	width: 100vw;
 
 	.target {
 		position: absolute;
@@ -33,12 +33,9 @@
 }
 
 .health-bar {
-	position: absolute;
-	height: 3%;
-	width: 15%;
-	top: 5%;
-	left: calc(50% - 7.5%);
-	border: 3px solid black;
+		height: 4vmin;
+		width: 20vmin;
+		border: 3px solid black;
 	}
 
 .container{

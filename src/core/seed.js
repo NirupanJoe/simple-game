@@ -13,11 +13,13 @@ const seed = {
 		x: 20,
 		y: -20,
 		type: 'Cloud',
+		id: 'vvv',
 	},
 	{
 		x: 50,
 		y: -20,
 		type: 'Cloud',
+		id: 'aa',
 	}],
 };
 

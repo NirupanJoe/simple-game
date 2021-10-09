@@ -1,7 +1,7 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable react/display-name */
 jest.mock('../core/context', () => ({
-	state: { bgnScreenY: 0 },
+	state: { bgnScreenY: 0, objects: [] },
 	actions: { updateMousePosition: jest.fn() },
 }));
 
@@ -15,6 +15,7 @@ import GameScreen from './gameScreen';
 import context from '../core/context';
 import * as Container from './container';
 import Target from './target';
+import Cloud from '../components/cloud';
 
 describe('testing GameScreen', () => {
 	const { actions } = context;
@@ -51,6 +52,7 @@ describe('testing GameScreen', () => {
 
 		expect(actions.updateMousePosition).toHaveBeenCalled();
 	});
+
 	test('gameScreen renders the board,targets,powers', () => {
 		jest.spyOn(Container, 'default')
 			.mockReturnValue(<div role="targets"/>);
@@ -61,5 +63,18 @@ describe('testing GameScreen', () => {
 
 		expect(Container.default)
 			.toHaveBeenCalledWith(context.state.targets, Target);
+	});
+
+	test('Cloud Map Test', () => {
+		jest.spyOn(Container, 'default')
+			.mockReturnValue(<div role="targets"/>);
+			
+		jest.spyOn(context.state.objects, 'map')
+			.mockReturnValue(<div role="Cloud"/>);
+
+		const component = render(GameScreen()).getByRole('Cloud');
+
+		expect(context.state.objects.map).toHaveBeenCalledWith(Cloud);
+		expect(component).toBeInTheDocument();
 	});
 });

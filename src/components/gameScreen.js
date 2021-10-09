@@ -5,6 +5,7 @@ import Score from './score';
 import context from '../core/context';
 import Target from './target';
 import Container from './container';
+import Cloud from './cloud';
 
 const style = () => ({
 	backgroundPositionY: `${ context.state.bgnScreenY }%`,
@@ -19,6 +20,7 @@ const GameScreen = () =>
 			context.actions.updateMousePosition(event) }
 	>
 		{ HealthBar() }
+		{ context.state.objects.map(Cloud) }
 		{ Score() }
 		{ Flight() }
 		{ Container(context.state.targets, Target) }

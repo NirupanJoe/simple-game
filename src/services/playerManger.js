@@ -9,6 +9,13 @@ const PlayerManager = {
 		({ bgnScreenY:
 			(state.bgnScreenY + config.bgnScreenYIncre) % hundred }),
 
+	updateCloudPosition: ({ state, config }) => state.objects.map((obj) => ({
+		...obj,
+		y: obj.y + config.bgnScreenYIncre,
+	})),
+
+	resetCloudPosition: ({ state }) =>
+		state.objects.filter((obj) => obj.y < hundred),
 };
 
 export default PlayerManager;

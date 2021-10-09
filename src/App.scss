@@ -103,3 +103,11 @@
 	background-size: contain;
 	background-repeat: no-repeat;
 }
+.cloud {
+	position: absolute;
+	background-color: white;
+	height: 10vh;
+	width: 20vh;
+	border-radius: 50%;
+	box-shadow: 9px 12px 12px 0px #000000;
+}

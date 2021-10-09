@@ -20,12 +20,22 @@ const updateMousePosition = ({ state, data }) => ({
 		state.flight.width) },
 });
 
+const updateCloudPosition = (context) => ({
+	objects: PlayerManager.updateCloudPosition(context),
+});
+
+const resetCloudPosition = (context) => ({
+	objects: PlayerManager.resetCloudPosition(context),
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
 	decreaseHealth,
 	backGroundMovingAxis,
 	addTargets,
+	updateCloudPosition,
+	resetCloudPosition,
 };
 
 export default actions;

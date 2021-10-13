@@ -1,16 +1,15 @@
 import { React } from 'react';
 
 const two = 2;
-const ten = 10;
 
 const Target = (target) => {
-	const { id, height, width, x, y, image } = target;
+	const { id, height, width, x, y, image, filter } = target;
 	const style = {
 		left: `${ x - (width / two) }%`,
 		top: `${ y }%`,
 		height: `${ height }vw`,
 		width: `${ width }vw`,
-		filter: `hue-rotate(${ x * ten }deg)`,
+		filter: `hue-rotate(${ filter }deg)`,
 	};
 
 	return (

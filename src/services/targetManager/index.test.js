@@ -1,5 +1,3 @@
-/* eslint-disable max-lines */
-/* eslint-disable max-statements */
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable max-lines-per-function */
 
@@ -73,7 +71,6 @@ describe('target Manager', () => {
 	});
 
 	describe('getTarget returns target', () => {
-		const currentTime = Symbol('currentTime');
 		const type = 'shooter';
 		const typeConfig = config.targets[type];
 		const { variance } = typeConfig;
@@ -82,19 +79,21 @@ describe('target Manager', () => {
 			height: height * variance,
 			width: width * variance,
 		};
+		const sixtyFive = 65;
+		const threeHundredFifty = 350;
+		const filter = Symbol('filter');
 
 		test('returns a target while params are passed', () => {
-			jest.spyOn(HelperService, 'getId')
-				.mockReturnValue(id);
-			jest.spyOn(HelperService, 'getVariance')
-				.mockReturnValue(variance);
-			jest.spyOn(Date, 'now').mockReturnValue(currentTime);
+			jest.spyOn(HelperService, 'getId').mockReturnValue(id);
+			jest.spyOn(HelperService, 'getVariance').mockReturnValue(variance);
+			jest.spyOn(random, 'rndBetween').mockReturnValue(filter);
 
 			const expectedResult = {
 				id,
 				x,
 				y,
 				type,
+				filter,
 				...typeConfig,
 				...size,
 			};
@@ -103,6 +102,8 @@ describe('target Manager', () => {
 
 			expect(HelperService.getId).toHaveBeenCalled();
 			expect(HelperService.getVariance).toHaveBeenCalledWith(variance);
+			expect(random.rndBetween)
+				.toHaveBeenCalledWith(sixtyFive, threeHundredFifty);
 			expect(result).toMatchObject(expectedResult);
 		});
 

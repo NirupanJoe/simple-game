@@ -1,19 +1,13 @@
-/* eslint-disable max-lines-per-function */
 import { render } from '@testing-library/react';
 import Target from './target';
+import targetManager from '../services/targetManager/index';
 
 describe('Target', () => {
 	const two = 2;
-	const ten = 10;
 
 	test('renders the component with appropriate styling', () => {
-		const target = {
-			x: 10,
-			y: 15,
-			width: 20,
-			height: 25,
-		};
-		const { x, y, width, height } = target;
+		const target = targetManager.getTargets();
+		const { x, y, width, height, filter } = target;
 
 		const { getByRole } = render(Target(target));
 
@@ -25,7 +19,7 @@ describe('Target', () => {
 			left: `${ x - (width / two) }%`,
 			height: `${ height }vw`,
 			width: `${ width }vw`,
-			filter: `hue-rotate(${ x * ten }deg)`,
+			filter: `hue-rotate(${ filter }deg)`,
 		});
 	});
 });

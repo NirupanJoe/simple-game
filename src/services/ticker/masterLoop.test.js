@@ -1,18 +1,18 @@
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
-import Actions from '../../core/actions';
+import actions from '../../core/actions';
 import MasterLoop from './masterLoop';
 
 describe('masterLoop', () => {
 	test('masterLoop', () => {
 		MasterLoop.masterLoop.forEach((item) => {
-			jest.spyOn(Actions, item)
+			jest.spyOn(actions, item)
 				.mockReturnValue();
 		});
 		MasterLoop.runMasterLoop();
 
 		MasterLoop.masterLoop.forEach((item) => {
-			expect(Actions[item])
+			expect(actions[item])
 				.toHaveBeenCalled();
 		});
 	});

@@ -1,11 +1,12 @@
 import fighterJet from '../images/fighterJet.png';
 
 const config = {
-	tickerDelay: 1000,
+	tickerDelay: 100,
 	health: 100,
-	damage: 1,
+	damage: 0.1,
 	rndLength: 16,
 	bulletWidth: 2,
+	moveBulletPercentage: 5,
 	bgnScreenYIncre: 1,
 	maxTargets: 5,
 	targets: {

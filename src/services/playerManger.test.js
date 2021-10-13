@@ -5,7 +5,7 @@ import config from '../core/config';
 
 describe('PlayerManger', () => {
 	const { isAlive, decreaseHealth, backGroundMovingAxis,
-		updateCloudPosition, resetCloudPosition } = PlayerManager;
+		updateCloudPosition, resetCloudPosition, moveBullets } = PlayerManager;
 	const hundred = 100;
 
 	describe('isAlive', () => {
@@ -85,6 +85,23 @@ describe('PlayerManger', () => {
 			}];
 
 			expect(result).toMatchObject(expectation);
+		});
+	});
+
+	describe('moveBullets', () => {
+		const state = {
+			bullets: [{
+				y: 100,
+			}],
+		};
+
+		test('moveBullets decrease yPos', () => {
+			const expected = [{
+				y: 95,
+			}];
+			const result = moveBullets({ state, config });
+
+			expect(result).toEqual(expected);
 		});
 	});
 });

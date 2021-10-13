@@ -37,6 +37,10 @@ const generateBullets = ({ state, data }) => ({
 		config.bulletWidth)),
 });
 
+const moveBullets = (context) => ({
+	bullets: PlayerManager.moveBullets(context),
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -46,6 +50,7 @@ const actions = {
 	updateCloudPosition,
 	resetCloudPosition,
 	generateBullets,
+	moveBullets,
 };
 
 export default actions;

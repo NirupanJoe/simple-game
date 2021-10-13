@@ -16,6 +16,12 @@ const PlayerManager = {
 
 	resetCloudPosition: ({ state }) =>
 		state.objects.filter((obj) => obj.y < hundred),
+
+	moveBullets: ({ state, config }) =>
+		state.bullets.map((bullet) => ({
+			...bullet,
+			y: bullet.y - config.moveBulletPercentage,
+		})),
 };
 
 export default PlayerManager;

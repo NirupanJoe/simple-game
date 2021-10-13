@@ -14,7 +14,8 @@ describe('actions', () => {
 		addTargets,
 		updateCloudPosition,
 		resetCloudPosition,
-		generateBullets } = actions;
+		generateBullets,
+		moveBullets } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -122,5 +123,16 @@ describe('actions', () => {
 
 		expect(PlayerManager.resetCloudPosition).toHaveBeenCalledWith(context);
 		expect(result).toMatchObject(expected);
+	});
+
+	test('Move Bullets by decreasing bullet yPos0', () => {
+		jest.spyOn(PlayerManager, 'moveBullets').mockReturnValue(returnValue);
+
+		const expected = { bullets: returnValue };
+
+		const result = moveBullets(context);
+
+		expect(result).toEqual(expected);
+		expect(PlayerManager.moveBullets).toHaveBeenCalledWith(context);
 	});
 });

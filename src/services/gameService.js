@@ -1,3 +1,5 @@
+import { rndString } from '@laufire/utils/random';
+import config from '../core/config';
 
 const low = 20;
 const mid = 50;
@@ -9,8 +11,19 @@ const healthColor = (health) =>
 			? 'yellow'
 			: 'greenYellow');
 
+const makeBullet = (xPos) => ({
+	id: rndString(config.rndLength),
+	type: 'normal',
+	x: xPos,
+	y: 90,
+});
+
+const generateBullets = (bullets, xPos) =>
+	bullets.concat(makeBullet(xPos));
+
 const GameService = {
 	healthColor,
+	generateBullets,
 };
 
 export default GameService;

@@ -1,3 +1,5 @@
+import config from './config';
+import GameService from '../services/gameService';
 import PlayerManager from '../services/playerManger';
 import PositionService from '../services/positionService';
 import targetManager from '../services/targetManager';
@@ -28,6 +30,13 @@ const resetCloudPosition = (context) => ({
 	objects: PlayerManager.resetCloudPosition(context),
 });
 
+const generateBullets = ({ state, data }) => ({
+	bullets: GameService.generateBullets(state.bullets,
+		PositionService.project(PositionService
+			.pxToPercentage(data.clientX, data.view.innerWidth),
+		config.bulletWidth)),
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -36,6 +45,7 @@ const actions = {
 	addTargets,
 	updateCloudPosition,
 	resetCloudPosition,
+	generateBullets,
 };
 
 export default actions;

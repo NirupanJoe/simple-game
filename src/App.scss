@@ -94,13 +94,10 @@
 	box-shadow: black calc(1px + 0.1vw) calc(1px + 0.1vw) calc(11px + 0.5vw) calc(2px + 0.2vw);
 	border: 0.2vw solid rgb(28, 110, 164);
 }
-.leftBullet {
+.bullet {
 	position: absolute;
-	width: 3%;
-	height: 5%;
-	top: 90%;
-	left: 50%;
-	background-image: url('./images/left-Bullet.png');
+	max-width: 2vw;
+	max-height: 5vh;
 	background-size: contain;
 	background-repeat: no-repeat;
 }

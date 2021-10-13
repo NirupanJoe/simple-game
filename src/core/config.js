@@ -4,6 +4,8 @@ const config = {
 	tickerDelay: 1000,
 	health: 100,
 	damage: 1,
+	rndLength: 16,
+	bulletWidth: 2,
 	bgnScreenYIncre: 1,
 	maxTargets: 5,
 	targets: {

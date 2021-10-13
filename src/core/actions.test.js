@@ -1,13 +1,21 @@
+/* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
-import Actions from '../core/actions';
+import actions from '../core/actions';
 import PlayerManager from '../services/playerManger';
 import context from '../core/context';
 import PositionService from '../services/positionService';
 import targetManager from '../services/targetManager';
+import config from './config';
+import GameService from '../services/gameService';
 
 describe('actions', () => {
-	const { restart, updateMousePosition, addTargets,
-		updateCloudPosition, resetCloudPosition } = Actions;
+	const { restart,
+		updateMousePosition,
+		addTargets,
+		updateCloudPosition,
+		resetCloudPosition,
+		generateBullets } = actions;
+
 	const returnValue = Symbol('return');
 
 	test('restart returns seed', () => {
@@ -21,7 +29,7 @@ describe('actions', () => {
 		jest.spyOn(PlayerManager, 'decreaseHealth')
 			.mockReturnValue(returnValue);
 
-		const result = Actions.decreaseHealth(context);
+		const result = actions.decreaseHealth(context);
 
 		expect(PlayerManager.decreaseHealth)
 			.toHaveBeenCalledWith(context);
@@ -32,7 +40,7 @@ describe('actions', () => {
 		jest.spyOn(PlayerManager, 'backGroundMovingAxis')
 			.mockReturnValue(returnValue);
 
-		const result = Actions.backGroundMovingAxis(context);
+		const result = actions.backGroundMovingAxis(context);
 
 		expect(PlayerManager.backGroundMovingAxis)
 			.toHaveBeenCalledWith(context);
@@ -43,6 +51,7 @@ describe('actions', () => {
 		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
 		jest.spyOn(PositionService, 'pxToPercentage')
 			.mockReturnValue(returnValue);
+
 		const expected = { flight: { x: returnValue }};
 		const state = { flight: { x: Symbol('x'), width: Symbol('width') }};
 		const data = {
@@ -57,6 +66,30 @@ describe('actions', () => {
 			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
 		expect(PositionService.project)
 			.toHaveBeenCalledWith(returnValue, state.flight.width);
+	});
+
+	test('generateBullets returns bullets[]', () => {
+		jest.spyOn(GameService, 'generateBullets').mockReturnValue(returnValue);
+		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
+		jest.spyOn(PositionService, 'pxToPercentage')
+			.mockReturnValue(returnValue);
+
+		const expected = { bullets: returnValue };
+		const state = { bullets: [] };
+		const data = {
+			view: { innerWidth: Symbol('innerWidth') },
+			clientX: Symbol('clientX'),
+		};
+
+		const result = generateBullets({ state, data });
+
+		expect(result).toEqual(expected);
+		expect(PositionService.pxToPercentage)
+			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
+		expect(PositionService.project)
+			.toHaveBeenCalledWith(returnValue, config.bulletWidth);
+		expect(GameService.generateBullets)
+			.toHaveBeenCalledWith(state.bullets, returnValue);
 	});
 
 	test('add Targets ', () => {

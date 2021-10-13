@@ -21,6 +21,7 @@ const seed = {
 		type: 'Cloud',
 		id: 'aa',
 	}],
+	bullets: [],
 };
 
 export default seed;

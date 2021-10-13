@@ -1,13 +1,16 @@
 /* eslint-disable max-lines-per-function */
 /* eslint-disable react/display-name */
+
 jest.mock('../core/context', () => ({
 	state: { bgnScreenY: 0, objects: [] },
-	actions: { updateMousePosition: jest.fn() },
+	actions: { updateMousePosition: jest.fn(),
+		generateBullets: jest.fn() },
 }));
 
 jest.mock('../components/healthBar', () => () => <div role="healthBar"/>);
 jest.mock('../components/score', () => () => <div role="score"/>);
 jest.mock('../components/flight', () => () => <div role="flight"/>);
+jest.mock('../components/bullet', () => () => <div role="bullet"/>);
 
 import { React } from 'react';
 import { render, fireEvent } from '@testing-library/react';
@@ -40,17 +43,27 @@ describe('testing GameScreen', () => {
 		expect(getByRole('healthBar')).toBeInTheDocument();
 		expect(getByRole('score')).toBeInTheDocument();
 		expect(getByRole('flight')).toBeInTheDocument();
+		expect(getByRole('bullet')).toBeInTheDocument();
 	});
 
 	test('event check', () => {
 		jest.spyOn(actions, 'updateMousePosition');
 		jest.spyOn(Container, 'default')
 			.mockReturnValue(<div role="targets"/>);
+		jest.spyOn(actions, 'generateBullets');
+
 		const component = render(GameScreen()).getByRole('gameScreen');
 
-		fireEvent.mouseMove(component);
+		const mouseEvent = { _reactName: 'onMouseMove', type: 'mousemove' };
+		const clickEvent = { _reactName: 'onClick', type: 'click' };
 
-		expect(actions.updateMousePosition).toHaveBeenCalled();
+		fireEvent.mouseMove(component, mouseEvent);
+		fireEvent.click(component, clickEvent);
+
+		expect(actions.updateMousePosition).toHaveBeenCalledWith(expect
+			.objectContaining(mouseEvent));
+		expect(actions.generateBullets).toHaveBeenCalledWith(expect
+			.objectContaining(clickEvent));
 	});
 
 	test('gameScreen renders the board,targets,powers', () => {
@@ -68,7 +81,7 @@ describe('testing GameScreen', () => {
 	test('Cloud Map Test', () => {
 		jest.spyOn(Container, 'default')
 			.mockReturnValue(<div role="targets"/>);
-			
+
 		jest.spyOn(context.state.objects, 'map')
 			.mockReturnValue(<div role="Cloud"/>);
 

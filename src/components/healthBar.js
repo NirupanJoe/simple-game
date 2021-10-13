@@ -11,7 +11,7 @@ const getStyle = () => ({
 const HealthBar = () =>
 	<div role="healthBar" className="health-bar">
 		<div style={ getStyle() }>
-			{context.state.health}
+			{ Math.ceil(context.state.health) }
 		</div>
 	</div>;
 

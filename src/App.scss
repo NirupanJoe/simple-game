@@ -11,10 +11,11 @@
 .game-screen {
 	display: flex;
 	justify-content: space-between;
-	background-image: url('./images/ocean-image.jpg');
+	// background-image: url('./images/ocean-image.jpg');
 	background-repeat: repeat;
 	height: 100vh;
 	width: 100vw;
+	user-select: none;
 
 	.target {
 		position: absolute;

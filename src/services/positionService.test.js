@@ -6,7 +6,8 @@ import positionService from './positionService';
 describe('PositionService', () => {
 	const { project,
 		pxToPercentage,
-		getRandomValue } = positionService;
+		getRandomValue,
+		bulletProject } = positionService;
 	const twentyFive = 25;
 	const hundred = 100;
 	const two = 2;
@@ -50,5 +51,11 @@ describe('PositionService', () => {
 
 		expect(random.rndBetween).toHaveBeenCalledWith(min, max);
 		expect(result).toEqual(returnValue);
+	});
+
+	test('bulletProject returns xPos', () => {
+		const result = bulletProject(width, xPos);
+
+		expect(result).toBeTruthy();
 	});
 });

@@ -1,4 +1,3 @@
-import config from './config';
 import GameService from '../services/gameService';
 import PlayerManager from '../services/playerManger';
 import PositionService from '../services/positionService';
@@ -32,9 +31,10 @@ const resetCloudPosition = (context) => ({
 
 const generateBullets = ({ state, data }) => ({
 	bullets: GameService.generateBullets(state.bullets,
-		PositionService.project(PositionService
-			.pxToPercentage(data.clientX, data.view.innerWidth),
-		config.bulletWidth)),
+		PositionService.bulletProject(state.flight.width,
+			PositionService.project(PositionService
+				.pxToPercentage(data.clientX, data.view.innerWidth),
+			state.flight.width))),
 });
 
 const moveBullets = (context) => ({

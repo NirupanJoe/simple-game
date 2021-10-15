@@ -74,9 +74,11 @@ describe('actions', () => {
 		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
 		jest.spyOn(PositionService, 'pxToPercentage')
 			.mockReturnValue(returnValue);
+		jest.spyOn(PositionService, 'bulletProject')
+			.mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };
-		const state = { bullets: [] };
+		const state = { flight: { width: Symbol('width') }, bullets: [] };
 		const data = {
 			view: { innerWidth: Symbol('innerWidth') },
 			clientX: Symbol('clientX'),
@@ -88,7 +90,9 @@ describe('actions', () => {
 		expect(PositionService.pxToPercentage)
 			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
 		expect(PositionService.project)
-			.toHaveBeenCalledWith(returnValue, config.bulletWidth);
+			.toHaveBeenCalledWith(returnValue, state.flight.width);
+		expect(PositionService.bulletProject)
+			.toHaveBeenCalledWith(state.flight.width, returnValue);
 		expect(GameService.generateBullets)
 			.toHaveBeenCalledWith(state.bullets, returnValue);
 	});

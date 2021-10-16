@@ -9,12 +9,15 @@ jest.mock('../core/context', () => ({
 
 describe('testing HealthBar', () => {
 	test('healthBar is visible?', () => {
+		jest.spyOn(GameService, 'ceilHealth');
 		jest.spyOn(GameService, 'healthColor');
 		const component = render(HealthBar()).getByRole('healthBar');
 
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveClass('health-bar');
 		expect(GameService.healthColor)
+			.toHaveBeenCalledWith(context.state.health);
+		expect(GameService.ceilHealth)
 			.toHaveBeenCalledWith(context.state.health);
 	});
 });

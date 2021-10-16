@@ -11,7 +11,7 @@ const getStyle = () => ({
 const HealthBar = () =>
 	<div role="healthBar" className="health-bar">
 		<div style={ getStyle() }>
-			{ context.state.health }
+			{ GameService.ceilHealth(context.state.health) }
 		</div>
 	</div>;
 

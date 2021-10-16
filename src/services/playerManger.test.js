@@ -29,15 +29,12 @@ describe('PlayerManger', () => {
 		};
 
 		test('decrease Health', () => {
-			jest.spyOn(Math, 'ceil');
 			const result = decreaseHealth({ state, config });
 			const expectation = {
-				health: state.health,
+				health: state.health - config.damage,
 			};
 
 			expect(result).toEqual(expectation);
-			expect(Math.ceil)
-				.toHaveBeenCalledWith(state.health - config.damage);
 		});
 	});
 

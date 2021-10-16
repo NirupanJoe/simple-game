@@ -4,7 +4,7 @@ import { random } from '@laufire/utils';
 import config from '../core/config';
 
 describe('testing gameService', () => {
-	const { healthColor, generateBullets } = GameService;
+	const { healthColor, generateBullets, ceilHealth } = GameService;
 
 	test('healthColor returns appropriate color for given health', () => {
 		let i = 0;
@@ -41,6 +41,14 @@ describe('testing gameService', () => {
 		const result = generateBullets(bullets, xPos);
 
 		expect(random.rndString).toHaveBeenCalledWith(config.rndLength);
+		expect(result).toEqual(expected);
+	});
+
+	test('ceilBullet', () => {
+		const health = 99.01;
+		const expected = 100;
+		const result = ceilHealth(health);
+
 		expect(result).toEqual(expected);
 	});
 });

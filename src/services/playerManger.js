@@ -3,7 +3,7 @@ const PlayerManager = {
 	isAlive: ({ state }) => state.health > 0,
 
 	decreaseHealth: ({ state, config }) =>
-		({ health: Math.ceil(state.health - config.damage) }),
+		({ health: state.health - config.damage }),
 
 	backGroundMovingAxis: ({ state, config }) =>
 		({ bgnScreenY:

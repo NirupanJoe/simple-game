@@ -21,9 +21,13 @@ const makeBullet = (xPos) => ({
 const generateBullets = (bullets, xPos) =>
 	bullets.concat(makeBullet(xPos));
 
+const ceilHealth = (health) =>
+	Math.ceil(health);
+
 const GameService = {
 	healthColor,
 	generateBullets,
+	ceilHealth,
 };
 
 export default GameService;

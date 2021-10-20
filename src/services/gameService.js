@@ -18,6 +18,7 @@ const makeBullet = (xPos) => ({
 	y: 90,
 	height: config.bullet.height,
 	width: config.bullet.width,
+	isHit: false,
 });
 
 const generateBullets = (bullets, xPos) =>

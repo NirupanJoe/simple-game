@@ -33,6 +33,8 @@ describe('testing gameService', () => {
 			type: 'normal',
 			x: xPos,
 			y: 90,
+			height: config.bullet.height,
+			width: config.bullet.width,
 		}];
 
 		jest.spyOn(random, 'rndString')

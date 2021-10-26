@@ -1,7 +1,6 @@
 import React from 'react';
 import context from '../core/context';
 import bulletImg from '../images/bullet.png';
-import config from '../core/config';
 
 const typeComponents = {
 	normal: {
@@ -11,8 +10,8 @@ const typeComponents = {
 };
 
 const style = (bullet) => ({
-	height: '2vw',
-	width: `${ config.bulletWidth }vw`,
+	height: `${ bullet.height }vw`,
+	width: `${ bullet.width }vw`,
 	left: `${ bullet.x - typeComponents[bullet.type].left }%`,
 	top: `${ bullet.y }%`,
 });

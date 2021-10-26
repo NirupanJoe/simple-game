@@ -1,6 +1,6 @@
+/* eslint-disable max-lines-per-function */
 import { render } from '@testing-library/react';
 import Bullet from './bullet';
-import config from '../core/config';
 
 jest.mock('../core/context', () => ({
 	state: { bullets: [{
@@ -8,13 +8,16 @@ jest.mock('../core/context', () => ({
 		type: 'normal',
 		x: 100,
 		y: 100,
+		height: 2,
+		width: 1,
 	}] },
 }));
 
 describe('test bullets', () => {
 	test('bullet is rendered when type normal', () => {
 		const component = render(Bullet()).getByRole('bullet');
-		const bullet = { type: 'normal', x: 100, y: 100 };
+		const bullet = { type: 'normal',
+			x: 100, y: 100, height: 2, width: 1 };
 		const typeComponents = {
 			normal: {
 				image: 'bullet.png',
@@ -24,8 +27,8 @@ describe('test bullets', () => {
 
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveClass('bullet');
-		expect(component).toHaveStyle({ height: '2vw',
-			width: `${ config.bulletWidth }vw`,
+		expect(component).toHaveStyle({ height: `${ bullet.height }vw`,
+			width: `${ bullet.width }vw`,
 			left: `${ bullet.x - typeComponents[bullet.type].left }%`,
 			top: `${ bullet.y }%` });
 		expect(component).toHaveAttribute('src',

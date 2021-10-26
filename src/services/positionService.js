@@ -11,7 +11,7 @@ const pxToPercentage = (xPos, innerWidth) =>
 	xPos / innerWidth * hundred;
 
 const bulletPos = ({ state, config }) =>
-	(state.flight.width / two) + state.flight.x - (config.bulletWidth / two);
+	(state.flight.width / two) + state.flight.x - (config.bullet.width / two);
 
 const getRandomValue = (data) =>
 	rndBetween(data / two, hundred - (data / two));

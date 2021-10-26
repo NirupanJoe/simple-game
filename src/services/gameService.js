@@ -16,6 +16,8 @@ const makeBullet = (xPos) => ({
 	type: 'normal',
 	x: xPos,
 	y: 90,
+	height: config.bullet.height,
+	width: config.bullet.width,
 });
 
 const generateBullets = (bullets, xPos) =>

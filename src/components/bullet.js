@@ -1,6 +1,7 @@
 import React from 'react';
 import context from '../core/context';
 import bulletImg from '../images/bullet.png';
+import config from '../core/config';
 
 const typeComponents = {
 	normal: {
@@ -8,6 +9,14 @@ const typeComponents = {
 		left: 0,
 	},
 };
+
+const style = (bullet) => ({
+	height: '2vw',
+	width: `${ config.bulletWidth }vw`,
+	left: `${ bullet.x - typeComponents[bullet.type].left }%`,
+	top: `${ bullet.y }%`,
+});
+
 const Bullet = () =>
 	context.state.bullets.map((bullet) =>
 		<img
@@ -15,8 +24,7 @@ const Bullet = () =>
 			src={ typeComponents[bullet.type].image }
 			role="bullet"
 			className="bullet"
-			style={ { left: `${ bullet.x - typeComponents[bullet.type].left }%`,
-				top: `${ bullet.y }%` } }
+			style={ style(bullet) }
 		/>);
 
 export default Bullet;

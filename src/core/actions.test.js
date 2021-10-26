@@ -5,7 +5,6 @@ import PlayerManager from '../services/playerManger';
 import context from '../core/context';
 import PositionService from '../services/positionService';
 import targetManager from '../services/targetManager';
-import config from './config';
 import GameService from '../services/gameService';
 
 describe('actions', () => {
@@ -15,7 +14,8 @@ describe('actions', () => {
 		updateCloudPosition,
 		resetCloudPosition,
 		generateBullets,
-		moveBullets } = actions;
+		moveBullets,
+		updateFlightPosition } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -48,53 +48,50 @@ describe('actions', () => {
 		expect(result).toEqual(returnValue);
 	});
 
-	test('updateMousePosition returns flight.x', () => {
-		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
+	test('updateMousePosition', () => {
 		jest.spyOn(PositionService, 'pxToPercentage')
 			.mockReturnValue(returnValue);
 
-		const expected = { flight: { x: returnValue }};
-		const state = { flight: { x: Symbol('x'), width: Symbol('width') }};
+		const expected = { position: { x: returnValue, y: returnValue }};
 		const data = {
 			view: { innerWidth: Symbol('innerWidth') },
 			clientX: Symbol('clientX'),
 		};
 
-		const result = updateMousePosition({ state, data });
+		const result = updateMousePosition({ data });
 
 		expect(result).toMatchObject(expected);
 		expect(PositionService.pxToPercentage)
 			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
-		expect(PositionService.project)
-			.toHaveBeenCalledWith(returnValue, state.flight.width);
+	});
+
+	test('updateFlightPosition', () => {
+		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
+
+		const expected = { flight: { x: returnValue }};
+		const state = { flight: { x: returnValue, width: returnValue },
+			position: { x: returnValue }};
+
+		const result = updateFlightPosition({ state });
+
+		expect(result).toEqual(expected);
 	});
 
 	test('generateBullets returns bullets[]', () => {
 		jest.spyOn(GameService, 'generateBullets').mockReturnValue(returnValue);
-		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
-		jest.spyOn(PositionService, 'pxToPercentage')
-			.mockReturnValue(returnValue);
-		jest.spyOn(PositionService, 'bulletProject')
+		jest.spyOn(PositionService, 'bulletPos')
 			.mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };
-		const state = { flight: { width: Symbol('width') }, bullets: [] };
-		const data = {
-			view: { innerWidth: Symbol('innerWidth') },
-			clientX: Symbol('clientX'),
-		};
+		const con = { state: { bullets: [] }};
 
-		const result = generateBullets({ state, data });
+		const result = generateBullets(con);
 
 		expect(result).toEqual(expected);
-		expect(PositionService.pxToPercentage)
-			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
-		expect(PositionService.project)
-			.toHaveBeenCalledWith(returnValue, state.flight.width);
-		expect(PositionService.bulletProject)
-			.toHaveBeenCalledWith(state.flight.width, returnValue);
+		expect(PositionService.bulletPos)
+			.toHaveBeenCalledWith(con);
 		expect(GameService.generateBullets)
-			.toHaveBeenCalledWith(state.bullets, returnValue);
+			.toHaveBeenCalledWith(con.state.bullets, returnValue);
 	});
 
 	test('add Targets ', () => {
@@ -129,7 +126,7 @@ describe('actions', () => {
 		expect(result).toMatchObject(expected);
 	});
 
-	test('Move Bullets by decreasing bullet yPos0', () => {
+	test('Move Bullets by decreasing bullet yPos', () => {
 		jest.spyOn(PlayerManager, 'moveBullets').mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };

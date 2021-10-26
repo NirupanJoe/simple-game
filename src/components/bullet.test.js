@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react';
 import Bullet from './bullet';
+import config from '../core/config';
 
 jest.mock('../core/context', () => ({
 	state: { bullets: [{
@@ -13,7 +14,7 @@ jest.mock('../core/context', () => ({
 describe('test bullets', () => {
 	test('bullet is rendered when type normal', () => {
 		const component = render(Bullet()).getByRole('bullet');
-		const bullet = { x: 100, y: 100 };
+		const bullet = { type: 'normal', x: 100, y: 100 };
 		const typeComponents = {
 			normal: {
 				image: 'bullet.png',
@@ -23,7 +24,9 @@ describe('test bullets', () => {
 
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveClass('bullet');
-		expect(component).toHaveStyle({ left: `${ bullet.x - typeComponents.normal.left }%`,
+		expect(component).toHaveStyle({ height: '2vw',
+			width: `${ config.bulletWidth }vw`,
+			left: `${ bullet.x - typeComponents[bullet.type].left }%`,
 			top: `${ bullet.y }%` });
 		expect(component).toHaveAttribute('src',
 			typeComponents.normal.image);

@@ -1,10 +1,12 @@
+/* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 /* eslint-disable react/display-name */
 
 jest.mock('../core/context', () => ({
 	state: { bgnScreenY: 0, objects: [] },
 	actions: { updateMousePosition: jest.fn(),
-		generateBullets: jest.fn() },
+		generateBullets: jest.fn(),
+		updateFlightPosition: jest.fn() },
 }));
 
 jest.mock('../components/healthBar', () => () => <div role="healthBar"/>);
@@ -35,7 +37,7 @@ describe('testing GameScreen', () => {
 		});
 	});
 
-	test('gameScreen renders healthBar and score', () => {
+	test('gameScreen renders healthBar, score, flight, bullet', () => {
 		jest.spyOn(Container, 'default')
 			.mockReturnValue(<div role="targets"/>);
 		const { getByRole } = render(GameScreen());
@@ -48,6 +50,7 @@ describe('testing GameScreen', () => {
 
 	test('event check', () => {
 		jest.spyOn(actions, 'updateMousePosition');
+		jest.spyOn(actions, 'updateFlightPosition');
 		jest.spyOn(Container, 'default')
 			.mockReturnValue(<div role="targets"/>);
 		jest.spyOn(actions, 'generateBullets');
@@ -62,6 +65,7 @@ describe('testing GameScreen', () => {
 
 		expect(actions.updateMousePosition).toHaveBeenCalledWith(expect
 			.objectContaining(mouseEvent));
+		expect(actions.updateFlightPosition).toHaveBeenCalledWith();
 		expect(actions.generateBullets).toHaveBeenCalledWith(expect
 			.objectContaining(clickEvent));
 	});

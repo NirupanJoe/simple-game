@@ -1,13 +1,14 @@
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 import * as random from '@laufire/utils/random';
+import config from '../core/config';
 import positionService from './positionService';
 
 describe('PositionService', () => {
 	const { project,
 		pxToPercentage,
 		getRandomValue,
-		bulletProject } = positionService;
+		bulletPos } = positionService;
 	const twentyFive = 25;
 	const hundred = 100;
 	const two = 2;
@@ -53,8 +54,10 @@ describe('PositionService', () => {
 		expect(result).toEqual(returnValue);
 	});
 
-	test('bulletProject returns xPos', () => {
-		const result = bulletProject(width, xPos);
+	test('bulletPos returns xPos', () => {
+		const state = { flight: { x: 100,
+			width: 100 }};
+		const result = bulletPos({ state, config });
 
 		expect(result).toBeTruthy();
 	});

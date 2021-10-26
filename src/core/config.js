@@ -5,7 +5,7 @@ const config = {
 	health: 100,
 	damage: 0.1,
 	rndLength: 16,
-	bulletWidth: 2,
+	bulletWidth: 1,
 	moveBulletPercentage: 5,
 	bgnScreenYIncre: 1,
 	maxTargets: 5,

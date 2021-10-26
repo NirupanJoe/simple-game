@@ -26,11 +26,11 @@
 .flight {
 	position: absolute;
 	background-image: url('./images/fighterJet.png');
-	background-size: contain;
+	background-size: 100%;
 	background-repeat: no-repeat;
 	width: 6vw;
 	height: 10%;
-	top: 90%;
+	bottom: 0%;
 }
 
 .health-bar {
@@ -96,9 +96,7 @@
 }
 .bullet {
 	position: absolute;
-	max-width: 2vw;
-	max-height: 5vh;
-	background-size: contain;
+	background-size: 100%;
 	background-repeat: no-repeat;
 }
 .cloud {

@@ -14,11 +14,17 @@ const addTargets = (context) => ({
 const backGroundMovingAxis = (context) =>
 	PlayerManager.backGroundMovingAxis(context);
 
-const updateMousePosition = ({ state, data }) => ({
-	flight: { x: PositionService
-		.project(PositionService
-			.pxToPercentage(data.clientX, data.view.innerWidth),
-		state.flight.width) },
+const updateMousePosition = ({ data }) => ({
+	position: {
+		x: PositionService.pxToPercentage(data.clientX, data.view.innerWidth),
+		y: PositionService.pxToPercentage(data.clientY, data.view.innerWidth),
+	},
+});
+
+const updateFlightPosition = ({ state }) => ({
+	flight: {
+		x: PositionService.project(state.position.x, state.flight.width),
+	},
 });
 
 const updateCloudPosition = (context) => ({
@@ -29,12 +35,10 @@ const resetCloudPosition = (context) => ({
 	objects: PlayerManager.resetCloudPosition(context),
 });
 
-const generateBullets = ({ state, data }) => ({
-	bullets: GameService.generateBullets(state.bullets,
-		PositionService.bulletProject(state.flight.width,
-			PositionService.project(PositionService
-				.pxToPercentage(data.clientX, data.view.innerWidth),
-			state.flight.width))),
+const generateBullets = (context) => ({
+	bullets: GameService
+		.generateBullets(context.state.bullets,
+			PositionService.bulletPos(context)),
 });
 
 const moveBullets = (context) => ({
@@ -51,6 +55,7 @@ const actions = {
 	resetCloudPosition,
 	generateBullets,
 	moveBullets,
+	updateFlightPosition,
 };
 
 export default actions;

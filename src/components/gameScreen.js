@@ -17,16 +17,18 @@ const GameScreen = () =>
 		role="gameScreen"
 		className="game-screen"
 		style={ style() }
-		onMouseMove={ (event) =>
-			context.actions.updateMousePosition(event) }
+		onMouseMove={ (event) => {
+			context.actions.updateMousePosition(event);
+			context.actions.updateFlightPosition();
+		} }
 		onClick={ (event) => context.actions.generateBullets(event) }
 	>
 		{ HealthBar() }
 		{ context.state.objects.map(Cloud) }
 		{ Score() }
+		{ Bullet() }
 		{ Flight() }
 		{ Container(context.state.targets, Target) }
-		{ Bullet() }
 	</div>;
 
 export default GameScreen;

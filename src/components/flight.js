@@ -1,8 +1,9 @@
 import React from 'react';
 import context from '../core/context';
+import PositionService from '../services/positionService';
 
 const style = () => ({
-	left: `${ context.state.flight.x }%`,
+	left: `${ PositionService.project(context.state.flight) }%`,
 });
 
 const Flight = () =>

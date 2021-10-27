@@ -21,9 +21,9 @@ const updateMousePosition = ({ data }) => ({
 	},
 });
 
-const updateFlightPosition = ({ state }) => ({
+const updateFlightPosition = (context) => ({
 	flight: {
-		x: PositionService.project(state.position.x, state.flight.width),
+		x: PositionService.limitMovement(context),
 	},
 });
 

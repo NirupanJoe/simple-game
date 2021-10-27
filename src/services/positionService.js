@@ -5,9 +5,12 @@ const hundred = 100;
 const two = 2;
 
 const PositionService = {
-	project: (xPos, width) =>
-		Math.min(hundred - width, Math
-			.max(xPos - (width / two), 0)),
+	project: ({ x, width }) =>
+		x - (width / two),
+
+	limitMovement: ({ state: { flight: { width }, position: { x }}}) =>
+		Math.min(hundred - (width / two), Math
+			.max(x, 0 + (width / two))),
 
 	pxToPercentage: (xPos, innerWidth) =>
 		xPos / innerWidth * hundred,

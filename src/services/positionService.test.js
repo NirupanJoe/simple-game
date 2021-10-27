@@ -6,6 +6,7 @@ import positionService from './positionService';
 
 describe('PositionService', () => {
 	const { project,
+		limitMovement,
 		pxToPercentage,
 		getRandomValue,
 		bulletPos,
@@ -28,16 +29,27 @@ describe('PositionService', () => {
 	const rectWidth = random.rndBetween(twentyFive, hundred);
 	const height = random.rndBetween(twentyFive, hundred);
 
-	test('project returns value greater than or equal to 0', () => {
+	test('project', () => {
+		const data = { x: 10, width: 1 };
+		const result = project(data);
+
+		expect(result).toBeTruthy();
+	});
+
+	test('limitMovement returns value greater than or equal to 0', () => {
 		jest.spyOn(Math, 'max').mockReturnValue(returnValue);
 		jest.spyOn(Math, 'min').mockReturnValue(returnValue);
 
-		const result = project(xPos, width);
+		const context = { state: { flight: { width: 6 }, position: { x: 1 }}};
 
+		const result = limitMovement(context);
+
+		expect(result).toEqual(returnValue);
 		expect(Math.max)
-			.toHaveBeenCalledWith(xPos - (width / two), 0);
+			.toHaveBeenCalledWith(context.state.position.x,
+				context.state.flight.width / two);
 		expect(Math.min)
-			.toHaveBeenCalledWith(hundred - width, returnValue);
+			.toHaveBeenCalledWith(hundred - (width / two), returnValue);
 		expect(result).toEqual(returnValue);
 	});
 

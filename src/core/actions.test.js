@@ -67,15 +67,15 @@ describe('actions', () => {
 	});
 
 	test('updateFlightPosition', () => {
-		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
+		jest.spyOn(PositionService, 'limitMovement')
+			.mockReturnValue(returnValue);
 
 		const expected = { flight: { x: returnValue }};
-		const state = { flight: { x: returnValue, width: returnValue },
-			position: { x: returnValue }};
 
-		const result = updateFlightPosition({ state });
+		const result = updateFlightPosition(context);
 
 		expect(result).toEqual(expected);
+		expect(PositionService.limitMovement).toBeCalledWith(context);
 	});
 
 	test('generateBullets returns bullets[]', () => {

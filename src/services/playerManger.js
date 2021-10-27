@@ -1,3 +1,5 @@
+import PositionService from './positionService';
+
 const hundred = 100;
 const PlayerManager = {
 	isAlive: ({ state }) => state.health > 0,
@@ -22,6 +24,13 @@ const PlayerManager = {
 			...bullet,
 			y: bullet.y - config.moveBulletPercentage,
 		})),
+
+	detectBulletHit: ({ state: { targets, bullets }}) =>
+		bullets.map((bullet) => ({
+			...bullet,
+			isHit: PositionService.isBulletHit(targets, bullet),
+		})),
+
 };
 
 export default PlayerManager;

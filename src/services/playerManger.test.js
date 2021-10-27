@@ -1,11 +1,13 @@
 /* eslint-disable max-nested-callbacks */
 /* eslint-disable max-lines-per-function */
+import PositionService from './positionService';
 import PlayerManager from './playerManger';
 import config from '../core/config';
 
 describe('PlayerManger', () => {
 	const { isAlive, decreaseHealth, backGroundMovingAxis,
-		updateCloudPosition, resetCloudPosition, moveBullets } = PlayerManager;
+		updateCloudPosition, resetCloudPosition, moveBullets,
+		detectBulletHit } = PlayerManager;
 	const hundred = 100;
 
 	describe('isAlive', () => {
@@ -103,5 +105,30 @@ describe('PlayerManger', () => {
 
 			expect(result).toEqual(expected);
 		});
+	});
+
+	test('detectBulletHit', () => {
+		const targets = Symbol('targets');
+		const returnValue = Symbol('returnValue');
+		const bullets = [
+			{ id: 14569,
+				isHit: true },
+		];
+		const state = {
+			targets, bullets,
+		};
+		const expectation = [
+			{ id: 14569,
+				isHit: returnValue },
+		];
+
+		jest.spyOn(PositionService, 'isBulletHit')
+			.mockReturnValue(returnValue);
+
+		const result = detectBulletHit({ state });
+
+		expect(result).toMatchObject(expectation);
+		expect(PositionService.isBulletHit)
+			.toHaveBeenCalledWith(targets, bullets[0]);
 	});
 });

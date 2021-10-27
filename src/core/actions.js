@@ -48,6 +48,10 @@ const moveBullets = (context) => ({
 	bullets: PlayerManager.moveBullets(context),
 });
 
+const clearHitBullets = (context) => ({
+	bullets: PlayerManager.removeHitBullets(context),
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -60,6 +64,7 @@ const actions = {
 	moveBullets,
 	updateFlightPosition,
 	processBullet,
+	clearHitBullets,
 };
 
 export default actions;

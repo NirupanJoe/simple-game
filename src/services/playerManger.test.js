@@ -7,7 +7,7 @@ import config from '../core/config';
 describe('PlayerManger', () => {
 	const { isAlive, decreaseHealth, backGroundMovingAxis,
 		updateCloudPosition, resetCloudPosition, moveBullets,
-		detectBulletHit } = PlayerManager;
+		detectBulletHit, removeHitBullets } = PlayerManager;
 	const hundred = 100;
 
 	describe('isAlive', () => {
@@ -89,7 +89,29 @@ describe('PlayerManger', () => {
 			expect(result).toMatchObject(expectation);
 		});
 	});
+	describe('removeHitBullets test', () => {
+		const state = {
+			bullets: [{
+				id: 320,
+				isHit: true,
+			},
+			{
+				id: 201,
+				isHit: false,
+			}],
+		};
 
+		test('Test removeHitBullets', () => {
+			const result = removeHitBullets({ state });
+
+			const expectation = [{
+				id: 201,
+				isHit: false,
+			}];
+
+			expect(result).toMatchObject(expectation);
+		});
+	});
 	describe('moveBullets', () => {
 		const state = {
 			bullets: [{

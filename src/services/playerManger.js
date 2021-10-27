@@ -31,6 +31,8 @@ const PlayerManager = {
 			isHit: PositionService.isBulletHit(targets, bullet),
 		})),
 
+	removeHitBullets: ({ state: { bullets }}) =>
+		bullets.filter((data) => data.isHit !== true),
 };
 
 export default PlayerManager;

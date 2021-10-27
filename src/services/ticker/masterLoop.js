@@ -8,6 +8,7 @@ const masterLoop = [
 	'resetCloudPosition',
 	'moveBullets',
 	'processBullet',
+	'clearHitBullets',
 ];
 
 const runMasterLoop = () =>

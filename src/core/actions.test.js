@@ -16,7 +16,8 @@ describe('actions', () => {
 		generateBullets,
 		moveBullets,
 		updateFlightPosition,
-		processBullet } = actions;
+		processBullet,
+		clearHitBullets } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -144,5 +145,16 @@ describe('actions', () => {
 
 		expect(result).toEqual(expected);
 		expect(PlayerManager.detectBulletHit).toHaveBeenCalledWith(context);
+	});
+
+	test('clearHitBullets test', () => {
+		jest.spyOn(PlayerManager, 'removeHitBullets')
+			.mockReturnValue(returnValue);
+
+		const result = clearHitBullets(context);
+		const expected = { bullets: returnValue };
+
+		expect(PlayerManager.removeHitBullets).toHaveBeenCalledWith(context);
+		expect(result).toMatchObject(expected);
 	});
 });

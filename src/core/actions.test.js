@@ -92,7 +92,7 @@ describe('actions', () => {
 		expect(PositionService.bulletPos)
 			.toHaveBeenCalledWith(con);
 		expect(GameService.generateBullets)
-			.toHaveBeenCalledWith(con.state.bullets, returnValue);
+			.toHaveBeenCalledWith(con, returnValue);
 	});
 
 	test('add Targets ', () => {

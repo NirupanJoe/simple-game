@@ -37,7 +37,7 @@ const resetCloudPosition = (context) => ({
 
 const generateBullets = (context) => ({
 	bullets: GameService
-		.generateBullets(context.state.bullets,
+		.generateBullets(context,
 			PositionService.bulletPos(context)),
 });
 

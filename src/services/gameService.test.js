@@ -27,7 +27,8 @@ describe('testing gameService', () => {
 
 	test('generateBullets renders bullets[{}]', () => {
 		const xPos = Symbol('xPos');
-		const bullets = [];
+		const context = { state: { bullets: [] },
+			config: { bullet: { height: 2, width: 1 }, rndLength: 16 }};
 		const expected = [{
 			id: Symbol('id'),
 			type: 'normal',
@@ -41,7 +42,7 @@ describe('testing gameService', () => {
 		jest.spyOn(random, 'rndString')
 			.mockReturnValue(expected[0].id);
 
-		const result = generateBullets(bullets, xPos);
+		const result = generateBullets(context, xPos);
 
 		expect(random.rndString).toHaveBeenCalledWith(config.rndLength);
 		expect(result).toEqual(expected);

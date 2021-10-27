@@ -1,5 +1,4 @@
 import { rndString } from '@laufire/utils/random';
-import config from '../core/config';
 
 const low = 20;
 const mid = 50;
@@ -11,7 +10,7 @@ const healthColor = (health) =>
 			? 'yellow'
 			: 'greenYellow');
 
-const makeBullet = (xPos) => ({
+const makeBullet = (xPos, config) => ({
 	id: rndString(config.rndLength),
 	type: 'normal',
 	x: xPos,
@@ -21,8 +20,8 @@ const makeBullet = (xPos) => ({
 	isHit: false,
 });
 
-const generateBullets = (bullets, xPos) =>
-	bullets.concat(makeBullet(xPos));
+const generateBullets = ({ state, config }, xPos) =>
+	state.bullets.concat(makeBullet(xPos, config));
 
 const ceilHealth = (health) =>
 	Math.ceil(health);

@@ -7,6 +7,7 @@ const masterLoop = [
 	'updateCloudPosition',
 	'resetCloudPosition',
 	'moveBullets',
+	'processBullet',
 ];
 
 const runMasterLoop = () =>

@@ -80,8 +80,6 @@ describe('actions', () => {
 
 	test('generateBullets returns bullets[]', () => {
 		jest.spyOn(GameService, 'generateBullets').mockReturnValue(returnValue);
-		jest.spyOn(PositionService, 'bulletPos')
-			.mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };
 		const con = { state: { bullets: [] }};
@@ -89,10 +87,8 @@ describe('actions', () => {
 		const result = generateBullets(con);
 
 		expect(result).toEqual(expected);
-		expect(PositionService.bulletPos)
-			.toHaveBeenCalledWith(con);
 		expect(GameService.generateBullets)
-			.toHaveBeenCalledWith(con, returnValue);
+			.toHaveBeenCalledWith(con);
 	});
 
 	test('add Targets ', () => {

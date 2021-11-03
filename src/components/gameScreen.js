@@ -26,7 +26,7 @@ const GameScreen = () =>
 		{ HealthBar() }
 		{ context.state.objects.map(Cloud) }
 		{ Score() }
-		{ Bullet() }
+		{ Container(context.state.bullets, Bullet) }
 		{ Flight() }
 		{ Container(context.state.targets, Target) }
 	</div>;

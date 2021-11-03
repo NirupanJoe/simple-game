@@ -1,4 +1,5 @@
 import fighterJet from '../images/fighterJet.png';
+import bulletImage from '../images/bullet.png';
 
 const config = {
 	tickerDelay: 100,
@@ -6,8 +7,11 @@ const config = {
 	damage: 0.1,
 	rndLength: 16,
 	bullet: {
-		height: 2,
-		width: 1,
+		normal: {
+			height: 2,
+			width: 1,
+			image: bulletImage,
+		},
 	},
 	moveBulletPercentage: 5,
 	bgnScreenYIncre: 1,

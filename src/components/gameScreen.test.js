@@ -12,7 +12,6 @@ jest.mock('../core/context', () => ({
 jest.mock('../components/healthBar', () => () => <div role="healthBar"/>);
 jest.mock('../components/score', () => () => <div role="score"/>);
 jest.mock('../components/flight', () => () => <div role="flight"/>);
-jest.mock('../components/bullet', () => () => <div role="bullet"/>);
 
 import { React } from 'react';
 import { render, fireEvent } from '@testing-library/react';
@@ -21,13 +20,14 @@ import context from '../core/context';
 import * as Container from './container';
 import Target from './target';
 import Cloud from '../components/cloud';
+import Bullet from './bullet';
 
 describe('testing GameScreen', () => {
 	const { actions } = context;
 
 	test('gameScreen visible', () => {
 		jest.spyOn(Container, 'default')
-			.mockReturnValue(<div role="targets"/>);
+			.mockReturnValue();
 		const component = render(GameScreen()).getByRole('gameScreen');
 
 		expect(component).toBeInTheDocument();
@@ -39,13 +39,12 @@ describe('testing GameScreen', () => {
 
 	test('gameScreen renders healthBar, score, flight, bullet', () => {
 		jest.spyOn(Container, 'default')
-			.mockReturnValue(<div role="targets"/>);
+			.mockReturnValue();
 		const { getByRole } = render(GameScreen());
 
 		expect(getByRole('healthBar')).toBeInTheDocument();
 		expect(getByRole('score')).toBeInTheDocument();
 		expect(getByRole('flight')).toBeInTheDocument();
-		expect(getByRole('bullet')).toBeInTheDocument();
 	});
 
 	test('event check', () => {
@@ -70,21 +69,25 @@ describe('testing GameScreen', () => {
 			.objectContaining(clickEvent));
 	});
 
-	test('gameScreen renders the board,targets,powers', () => {
+	test('gameScreen renders the board,targets,powers and bullets', () => {
 		jest.spyOn(Container, 'default')
-			.mockReturnValue(<div role="targets"/>);
+			.mockReturnValueOnce(<div role="bullet"/>)
+			.mockReturnValueOnce(<div role="targets"/>);
 
 		const { getByRole } = render(GameScreen());
 
+		expect(getByRole('bullet')).toBeInTheDocument();
 		expect(getByRole('targets')).toBeInTheDocument();
 
+		expect(Container.default)
+			.toHaveBeenCalledWith(context.state.bullets, Bullet);
 		expect(Container.default)
 			.toHaveBeenCalledWith(context.state.targets, Target);
 	});
 
 	test('Cloud Map Test', () => {
 		jest.spyOn(Container, 'default')
-			.mockReturnValue(<div role="targets"/>);
+			.mockReturnValue();
 
 		jest.spyOn(context.state.objects, 'map')
 			.mockReturnValue(<div role="Cloud"/>);

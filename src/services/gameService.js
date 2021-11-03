@@ -10,18 +10,19 @@ const healthColor = (health) =>
 			? 'yellow'
 			: 'greenYellow');
 
-const makeBullet = (xPos, config) => ({
-	id: rndString(config.rndLength),
+const makeBullet = (xPos, { rndLength, bullet }) => ({
+	id: rndString(rndLength),
 	type: 'normal',
 	x: xPos,
 	y: 90,
-	height: config.bullet.height,
-	width: config.bullet.width,
+	height: bullet.normal.height,
+	width: bullet.normal.width,
+	image: bullet.normal.image,
 	isHit: false,
 });
 
-const generateBullets = ({ state, config }, xPos) =>
-	state.bullets.concat(makeBullet(xPos, config));
+const generateBullets = ({ state: { bullets, flight }, config }) =>
+	bullets.concat(makeBullet(flight.x, config));
 
 const ceilHealth = (health) =>
 	Math.ceil(health);

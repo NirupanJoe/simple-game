@@ -1,29 +1,24 @@
 import React from 'react';
-import context from '../core/context';
-import bulletImg from '../images/bullet.png';
-
-const typeComponents = {
-	normal: {
-		image: bulletImg,
-		left: 0,
-	},
-};
+import PositionService from '../services/positionService';
 
 const style = (bullet) => ({
 	height: `${ bullet.height }vw`,
 	width: `${ bullet.width }vw`,
-	left: `${ bullet.x - typeComponents[bullet.type].left }%`,
+	left: `${ PositionService.project(bullet) }%`,
 	top: `${ bullet.y }%`,
 });
 
-const Bullet = () =>
-	context.state.bullets.map((bullet) =>
+const Bullet = (bullet) => {
+	const { image, id } = bullet;
+
+	return (
 		<img
-			key={ bullet.id }
-			src={ typeComponents[bullet.type].image }
+			key={ id }
+			src={ image }
 			role="bullet"
 			className="bullet"
 			style={ style(bullet) }
 		/>);
+};
 
 export default Bullet;

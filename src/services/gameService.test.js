@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-lines-per-function */
 import GameService from './gameService';
 import { random } from '@laufire/utils';
@@ -26,23 +27,31 @@ describe('testing gameService', () => {
 	});
 
 	test('generateBullets renders bullets[{}]', () => {
-		const xPos = Symbol('xPos');
-		const context = { state: { bullets: [] },
-			config: { bullet: { height: 2, width: 1 }, rndLength: 16 }};
+		const xPos = Symbol('x');
+		const image = Symbol('image');
+		const context = { state: { bullets: [], flight: { x: xPos }},
+			config: { bullet:
+				{ normal:
+					{ height: 2,
+						width: 1,
+						image: image }},
+			rndLength: 16 }};
+
 		const expected = [{
 			id: Symbol('id'),
 			type: 'normal',
 			x: xPos,
 			y: 90,
-			height: config.bullet.height,
-			width: config.bullet.width,
+			height: 2,
+			width: 1,
+			image: image,
 			isHit: false,
 		}];
 
 		jest.spyOn(random, 'rndString')
 			.mockReturnValue(expected[0].id);
 
-		const result = generateBullets(context, xPos);
+		const result = generateBullets(context);
 
 		expect(random.rndString).toHaveBeenCalledWith(config.rndLength);
 		expect(result).toEqual(expected);

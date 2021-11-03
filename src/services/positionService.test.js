@@ -1,7 +1,6 @@
 /* eslint-disable max-statements */
 /* eslint-disable max-lines-per-function */
 import * as random from '@laufire/utils/random';
-import config from '../core/config';
 import positionService from './positionService';
 
 describe('PositionService', () => {
@@ -9,7 +8,6 @@ describe('PositionService', () => {
 		limitMovement,
 		pxToPercentage,
 		getRandomValue,
-		bulletPos,
 		getAllPoints,
 		isPointInRect,
 		detectOverLapping,
@@ -18,7 +16,6 @@ describe('PositionService', () => {
 	const twentyFive = 25;
 	const hundred = 100;
 	const two = 2;
-	const xPos = 80;
 	const width = 6;
 	const innerWidth = 1000;
 	const thousand = 1000;
@@ -75,13 +72,6 @@ describe('PositionService', () => {
 		expect(result).toEqual(returnValue);
 	});
 
-	test('bulletPos returns xPos', () => {
-		const state = { flight: { x: 100,
-			width: 100 }};
-		const result = bulletPos({ state, config });
-
-		expect(result).toBeTruthy();
-	});
 	describe('detectOverLapping', () => {
 		const targetValue = Symbol('targetValue');
 		const expectations = [

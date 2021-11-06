@@ -73,16 +73,16 @@ describe('PositionService', () => {
 	});
 
 	describe('detectOverLapping', () => {
-		const targetValue = Symbol('targetValue');
+		const bulletValue = Symbol('bulletValue');
 		const expectations = [
 			[false, undefined],
-			[true, targetValue],
+			[true, bulletValue],
 		];
 
 		test.each(expectations)('detectOverLapping %p',
 			(returnFlag, expected) => {
-				const target = { targetValue };
-				const bullet = Symbol('bullet');
+				const bullet = { bulletValue };
+				const target = Symbol('target');
 
 				jest.spyOn(positionService, 'isPointInRect')
 					.mockReturnValue(returnFlag);
@@ -91,7 +91,7 @@ describe('PositionService', () => {
 
 				expect(result).toEqual(expected);
 				expect(positionService.isPointInRect)
-					.toHaveBeenCalledWith(targetValue, bullet);
+					.toHaveBeenCalledWith(bulletValue, target);
 			});
 	});
 
@@ -104,12 +104,12 @@ describe('PositionService', () => {
 		test.each(expectations)('isPointInRect %p', (expected, point) => {
 			const topLeft = {
 				x: 15,
-				y: 20,
+				y: 10,
 			};
 
 			const bottomRight = {
 				x: 20,
-				y: 10,
+				y: 20,
 			};
 			const rectPoints = { topLeft, bottomRight };
 
@@ -122,20 +122,12 @@ describe('PositionService', () => {
 		const rect = { x, y, height };
 		const expectation = {
 			topLeft: {
-				x,
-				y,
-			},
-			topRight: {
-				x: x + rectWidth,
-				y: y,
-			},
-			bottomLeft: {
-				x: x,
-				y: y + height,
+				x: x - (rectWidth / two),
+				y: y - (height / two),
 			},
 			bottomRight: {
-				x: x + rectWidth,
-				y: y + height,
+				x: x + (rectWidth / two),
+				y: y + (height / two),
 			},
 		};
 		const result = getAllPoints({ ...rect, width: rectWidth });

@@ -27,29 +27,21 @@ const PositionService = {
 				PositionService.getAllPoints(bullet))) !== undefined,
 
 	detectOverLapping: (target, bullet) =>
-		find(target, (value) =>
-			PositionService.isPointInRect(value, bullet)),
+		find(bullet, (value) =>
+			PositionService.isPointInRect(value, target)),
 
 	isPointInRect: ({ x, y }, { topLeft, bottomRight }) =>
 		topLeft.x <= x && x <= bottomRight.x
-			&& topLeft.y >= y && y >= bottomRight.y,
+		&& topLeft.y <= y && y <= bottomRight.y,
 
 	getAllPoints: (rec) => ({
 		topLeft: {
-			x: rec.x,
-			y: rec.y,
-		},
-		topRight: {
-			x: rec.x + rec.width,
-			y: rec.y,
-		},
-		bottomLeft: {
-			x: rec.x,
-			y: rec.y + rec.height,
+			x: rec.x - (rec.width / two),
+			y: rec.y - (rec.height / two),
 		},
 		bottomRight: {
-			x: rec.x + rec.width,
-			y: rec.y + rec.height,
+			x: rec.x + (rec.width / two),
+			y: rec.y + (rec.height / two),
 		},
 	}),
 };

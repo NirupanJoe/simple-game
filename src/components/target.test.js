@@ -1,13 +1,16 @@
 import { render } from '@testing-library/react';
 import Target from './target';
 import targetManager from '../services/targetManager/index';
+import PositionService from '../services/positionService';
 
 describe('Target', () => {
-	const two = 2;
+	const returnValue = 'return';
 
 	test('renders the component with appropriate styling', () => {
+		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
+
 		const target = targetManager.getTargets();
-		const { x, y, width, height, filter } = target;
+		const { y, width, height, filter } = target;
 
 		const { getByRole } = render(Target(target));
 
@@ -16,10 +19,11 @@ describe('Target', () => {
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveStyle({
 			top: `${ y }%`,
-			left: `${ x - (width / two) }%`,
+			left: `${ returnValue }%`,
 			height: `${ height }vw`,
 			width: `${ width }vw`,
 			filter: `hue-rotate(${ filter }deg)`,
 		});
+		expect(PositionService.project).toHaveBeenCalledWith(target);
 	});
 });

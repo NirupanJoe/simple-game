@@ -1,11 +1,10 @@
 import { React } from 'react';
-
-const two = 2;
+import PositionService from '../services/positionService';
 
 const Target = (target) => {
-	const { id, height, width, x, y, image, filter } = target;
+	const { id, height, width, y, image, filter } = target;
 	const style = {
-		left: `${ x - (width / two) }%`,
+		left: `${ PositionService.project(target) }%`,
 		top: `${ y }%`,
 		height: `${ height }vw`,
 		width: `${ width }vw`,

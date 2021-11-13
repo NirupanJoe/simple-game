@@ -3,6 +3,7 @@ import { find } from '@laufire/utils/collection';
 import * as helper from './helperService';
 
 const hundred = 100;
+
 const PlayerManager = {
 	isAlive: ({ state }) => state.health > 0,
 

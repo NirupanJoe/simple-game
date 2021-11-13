@@ -1,5 +1,5 @@
 import PositionService from './positionService';
-import PlayerManager from './playerManger';
+import PlayerManager from './playerManager';
 import config from '../core/config';
 import { range, secure } from '@laufire/utils/collection';
 import { random } from '@laufire/utils';

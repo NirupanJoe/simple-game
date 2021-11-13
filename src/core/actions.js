@@ -1,5 +1,5 @@
 import GameService from '../services/gameService';
-import PlayerManager from '../services/playerManger';
+import PlayerManager from '../services/playerManager';
 import PositionService from '../services/positionService';
 import targetManager from '../services/targetManager';
 

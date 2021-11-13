@@ -1,5 +1,5 @@
 import actions from '../core/actions';
-import PlayerManager from '../services/playerManger';
+import playerManager from '../services/playerManager';
 import context from '../core/context';
 import PositionService from '../services/positionService';
 import targetManager from '../services/targetManager';
@@ -29,24 +29,24 @@ describe('actions', () => {
 	});
 
 	test('decrease Health', () => {
-		jest.spyOn(PlayerManager, 'decreaseHealth')
+		jest.spyOn(playerManager, 'decreaseHealth')
 			.mockReturnValue(returnValue);
 
 		const result = actions.decreaseHealth(context);
 
-		expect(PlayerManager.decreaseHealth)
+		expect(playerManager.decreaseHealth)
 			.toHaveBeenCalledWith(context);
 
 		expect(result).toEqual(returnValue);
 	});
 
 	test('Background Moving Axis check', () => {
-		jest.spyOn(PlayerManager, 'backGroundMovingAxis')
+		jest.spyOn(playerManager, 'backGroundMovingAxis')
 			.mockReturnValue(returnValue);
 
 		const result = actions.backGroundMovingAxis(context);
 
-		expect(PlayerManager.backGroundMovingAxis)
+		expect(playerManager.backGroundMovingAxis)
 			.toHaveBeenCalledWith(context);
 
 		expect(result).toEqual(returnValue);
@@ -115,90 +115,88 @@ describe('actions', () => {
 	});
 
 	test('Update cloud Position Test ', () => {
-		jest.spyOn(PlayerManager, 'updateCloudPosition')
+		jest.spyOn(playerManager, 'updateCloudPosition')
 			.mockReturnValue(returnValue);
 
 		const result = updateCloudPosition(context);
 		const expected = { objects: returnValue };
 
-		expect(PlayerManager.updateCloudPosition).toHaveBeenCalledWith(context);
+		expect(playerManager.updateCloudPosition).toHaveBeenCalledWith(context);
 
 		expect(result).toMatchObject(expected);
 	});
 
 	test('Reset cloud Position Test ', () => {
-		jest.spyOn(PlayerManager, 'resetCloudPosition')
+		jest.spyOn(playerManager, 'resetCloudPosition')
 			.mockReturnValue(returnValue);
 
 		const result = resetCloudPosition(context);
 		const expected = { objects: returnValue };
 
-		expect(PlayerManager.resetCloudPosition).toHaveBeenCalledWith(context);
-
+		expect(playerManager.resetCloudPosition).toHaveBeenCalledWith(context);
 		expect(result).toMatchObject(expected);
 	});
 
 	test('Move Bullets by decreasing bullet yPos', () => {
-		jest.spyOn(PlayerManager, 'moveBullets').mockReturnValue(returnValue);
+		jest.spyOn(playerManager, 'moveBullets').mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };
 
 		const result = moveBullets(context);
 
-		expect(PlayerManager.moveBullets).toHaveBeenCalledWith(context);
-
 		expect(result).toEqual(expected);
+		expect(playerManager.moveBullets).toHaveBeenCalledWith(context);
 	});
 
 	test('process Bullets', () => {
-		jest.spyOn(PlayerManager, 'processHits')
+		jest.spyOn(playerManager, 'processHits')
 			.mockReturnValue(returnValue);
 
 		const expected = returnValue;
 
 		const result = processBullets(context);
 
-		expect(PlayerManager.processHits).toHaveBeenCalledWith(context);
-
+		expect(playerManager.processHits).toHaveBeenCalledWith(context);
 		expect(result).toEqual(expected);
 	});
 
 	test('clearHitBullets test', () => {
-		jest.spyOn(PlayerManager, 'removeHitBullets')
+		jest.spyOn(playerManager, 'removeHitBullets')
 			.mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };
 
 		const result = clearHitBullets(context);
 
-		expect(PlayerManager.removeHitBullets).toHaveBeenCalledWith(context);
+		expect(playerManager.removeHitBullets).toHaveBeenCalledWith(context);
 
 		expect(result).toMatchObject(expected);
 	});
 
 	test('updateScore test', () => {
-		jest.spyOn(PlayerManager, 'updateScore')
+		jest.spyOn(playerManager, 'updateScore')
 			.mockReturnValue(returnValue);
 
 		const expected = { score: returnValue };
 
 		const result = updateScore(context);
 
-		expect(PlayerManager.updateScore).toHaveBeenCalledWith(context);
+		expect(playerManager.updateScore).toHaveBeenCalledWith(context);
 
 		expect(result).toMatchObject(expected);
 	});
 
 	test('removeTargets test', () => {
-		jest.spyOn(PlayerManager, 'removeTargets')
+		jest.spyOn(playerManager, 'removeTargets')
 			.mockReturnValue(returnValue);
 
 		const expected = { targets: returnValue };
 
 		const result = removeTargets(context);
 
-		expect(PlayerManager.removeTargets).toHaveBeenCalledWith(context);
+		expect(playerManager.removeTargets).toHaveBeenCalledWith(context);
 
+		expect(playerManager.removeHitBullets).toHaveBeenCalledWith(context);
 		expect(result).toMatchObject(expected);
 	});
 });

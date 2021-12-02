@@ -16,7 +16,8 @@ describe('test bullets', () => {
 			y: 100,
 			height: 2,
 			width: 1,
-			image: bulletImg };
+			image: bulletImg,
+			hue: 0 };
 
 		const component = render(Bullet(bullet)).getByRole('bullet');
 
@@ -25,7 +26,8 @@ describe('test bullets', () => {
 		expect(component).toHaveStyle({ height: `${ bullet.height }vw`,
 			width: `${ bullet.width }vw`,
 			left: `${ returnValue }%`,
-			top: `${ bullet.y }%` });
+			top: `${ bullet.y }%`,
+			filter: `hue-rotate(${ bullet.color }deg)` });
 		expect(PositionService.project).toBeCalledWith(bullet);
 		expect(component).toHaveAttribute('src', bulletImg);
 	});

@@ -6,13 +6,26 @@ const config = {
 	health: 100,
 	damage: 0.1,
 	rndLength: 16,
-	bullet: {
+	bulletsType: {
 		normal: {
+			type: 'normal',
 			height: 2,
 			width: 1,
 			image: bulletImage,
+			color: 0,
+			prob: 0.6,
+		},
+		superBullet: {
+			type: 'superBullet',
+			height: 4,
+			width: 1,
+			image: bulletImage,
+			color: 330,
+			prob: 0.3,
 		},
 	},
+	defaultBulletType: 'normal',
+	bulletYAxis: 90,
 	moveBulletPercentage: 5,
 	bgnScreenYIncre: 1,
 	maxTargets: 5,

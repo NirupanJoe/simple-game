@@ -1,36 +1,47 @@
 import { rndString } from '@laufire/utils/random';
+import * as HelperService from './helperService';
+import { keys } from '@laufire/utils/collection';
 
 const low = 20;
 const mid = 50;
 
-const healthColor = (health) =>
-	(health <= low
-		? 'red'
-		: health <= mid
-			? 'yellow'
-			: 'greenYellow');
-
-const makeBullet = (xPos, { rndLength, bullet }) => ({
-	id: rndString(rndLength),
-	type: 'normal',
-	x: xPos,
-	y: 90,
-	height: bullet.normal.height,
-	width: bullet.normal.width,
-	image: bullet.normal.image,
-	isHit: false,
-});
-
-const generateBullets = ({ state: { bullets, flight }, config }) =>
-	bullets.concat(makeBullet(flight.x, config));
-
-const ceilHealth = (health) =>
-	Math.ceil(health);
-
 const GameService = {
-	healthColor,
-	generateBullets,
-	ceilHealth,
+
+	healthColor: (health) =>
+		(health <= low
+			? 'red'
+			: health <= mid
+				? 'yellow'
+				: 'greenYellow'),
+
+	makeBullet: ({ state: { flight: { x }}, config, data }) =>
+		({ ...data,
+			id: rndString(config.rndLength),
+			x: x,
+			y: config.bulletYAxis,
+			isHit: false }),
+
+	getType: ({ config: { bulletsType, defaultBulletType }}) => {
+		const bulletTypeKeys = keys(bulletsType);
+
+		const type = bulletTypeKeys.find((key) =>
+			HelperService.isProbable(bulletsType[key].prob));
+
+		return type !== undefined
+			? bulletsType[type]
+			: bulletsType[defaultBulletType];
+	},
+
+	generateBullets: (context) => {
+		const { state: { bullets }} = context;
+
+		return bullets.concat(GameService
+			.makeBullet({ ...context,
+				data: GameService.getType(context) }));
+	},
+
+	ceilHealth: (health) =>
+		Math.ceil(health),
 };
 
 export default GameService;

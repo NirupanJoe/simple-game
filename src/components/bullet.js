@@ -6,6 +6,7 @@ const style = (bullet) => ({
 	width: `${ bullet.width }vw`,
 	left: `${ PositionService.project(bullet) }%`,
 	top: `${ bullet.y }%`,
+	filter: `hue-rotate(${ bullet.color }deg)`,
 });
 
 const Bullet = (bullet) => {

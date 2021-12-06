@@ -3,12 +3,12 @@ import './App.scss';
 import Game from './components/game';
 import ticker from './services/ticker';
 
-const App = () => {
+const App = (context) => {
 	useEffect(ticker.start, []);
 
 	return (
 		<div className="App">
-			{Game()}
+			{Game(context)}
 		</div>
 	);
 };

@@ -1,16 +1,15 @@
 import React from 'react';
 import GameOverScreen from './gameOverScreen';
 import GameScreen from './gameScreen';
-import context from '../core/context';
 import PlayerManager from '../services/playerManger';
 
-const Game = () => {
+const Game = (context) => {
 	const Screen = PlayerManager.isAlive(context)
 		? GameScreen
 		: GameOverScreen;
 
 	return (
-		<div role="game">
+		<div className="game" role="game">
 			{Screen()}
 		</div>
 	);

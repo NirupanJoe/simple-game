@@ -1,19 +1,22 @@
 /* eslint-disable react/display-name */
 
-jest.mock('./components/game', () => () => <div role="game"/>);
-
 import React from 'react';
 import { render } from '@testing-library/react';
 import ticker from './services/ticker';
 
 import App from './App';
+import * as Game from './components/game';
 
-test('renders learn react link', () => {
+test('App renders Game', () => {
 	jest.spyOn(React, 'useEffect');
 	jest.spyOn(ticker, 'start').mockReturnValue();
+	jest.spyOn(Game, 'default').mockReturnValue(<div role="game"/>);
 
-	const { getByRole } = render(<App/>);
+	const context = Symbol('context');
+
+	const { getByRole } = render(<App context={ context }/>);
 
 	expect(React.useEffect).toHaveBeenCalledWith(ticker.start, []);
 	expect(getByRole('game')).toBeInTheDocument();
+	expect(Game.default).toHaveBeenCalledWith({ context });
 });

@@ -17,17 +17,20 @@
 }
 
 .game-screen {
-	display: flex;
-	justify-content: space-between;
 	// background-image: url('./images/ocean-image.jpg');
 	background-repeat: repeat;
 	height: 100vh;
 	width: 100vw;
 	user-select: none;
 
-	.target {
+	.twoDMode {
+	display: flex;
+	justify-content: space-between;
+
+		.target {
 		position: absolute;
 		transform: rotate(180deg);
+		}
 	}
 }
 

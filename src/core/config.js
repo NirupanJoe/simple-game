@@ -6,6 +6,7 @@ const config = {
 	health: 100,
 	damage: 0.1,
 	rndLength: 16,
+	defaultMode: '2d',
 	bulletsType: {
 		normal: {
 			type: 'normal',

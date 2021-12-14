@@ -1,34 +1,31 @@
-/* eslint-disable max-statements */
-/* eslint-disable max-lines-per-function */
 /* eslint-disable react/display-name */
+jest.mock('./3dMode/3dMode', () => () => <div role="3d"/>);
+jest.mock('./2dMode/2dMode', () => () => <div role="2d"/>);
 
-jest.mock('../core/context', () => ({
-	state: { bgnScreenY: 0, objects: [] },
-	actions: { updateMousePosition: jest.fn(),
-		generateBullets: jest.fn(),
-		updateFlightPosition: jest.fn() },
-}));
-
-jest.mock('../components/healthBar', () => () => <div role="healthBar"/>);
-jest.mock('../components/score', () => () => <div role="score"/>);
-jest.mock('../components/flight', () => () => <div role="flight"/>);
-
-import { React } from 'react';
+import React from 'react';
+import { rndString, rndValue } from '@laufire/utils/random';
 import { render, fireEvent } from '@testing-library/react';
+import * as getMode from '../services/urlService';
 import GameScreen from './gameScreen';
-import context from '../core/context';
-import * as Container from './container';
-import Target from './target';
-import Cloud from '../components/cloud';
-import Bullet from './bullet';
 
 describe('testing GameScreen', () => {
+	const context = {
+		state: {
+			bgnScreenY: rndString(),
+		},
+		actions: {
+			updateMousePosition: jest.fn(),
+			updateFlightPosition: jest.fn(),
+			generateBullets: jest.fn(),
+		},
+	};
 	const { actions } = context;
+	const GameMode = ['3d', '2d'];
+	const rndMode = rndValue(GameMode);
 
 	test('gameScreen visible', () => {
-		jest.spyOn(Container, 'default')
-			.mockReturnValue();
-		const component = render(GameScreen()).getByRole('gameScreen');
+		jest.spyOn(getMode, 'default').mockReturnValue(rndMode);
+		const component = render(GameScreen(context)).getByRole('gameScreen');
 
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveClass('game-screen');
@@ -37,24 +34,13 @@ describe('testing GameScreen', () => {
 		});
 	});
 
-	test('gameScreen renders healthBar, score, flight, bullet', () => {
-		jest.spyOn(Container, 'default')
-			.mockReturnValue();
-		const { getByRole } = render(GameScreen());
-
-		expect(getByRole('healthBar')).toBeInTheDocument();
-		expect(getByRole('score')).toBeInTheDocument();
-		expect(getByRole('flight')).toBeInTheDocument();
-	});
-
 	test('event check', () => {
 		jest.spyOn(actions, 'updateMousePosition');
 		jest.spyOn(actions, 'updateFlightPosition');
-		jest.spyOn(Container, 'default')
-			.mockReturnValue(<div role="targets"/>);
 		jest.spyOn(actions, 'generateBullets');
+		jest.spyOn(getMode, 'default').mockReturnValue(rndMode);
 
-		const component = render(GameScreen()).getByRole('gameScreen');
+		const component = render(GameScreen(context)).getByRole('gameScreen');
 
 		const mouseEvent = { _reactName: 'onMouseMove', type: 'mousemove' };
 		const clickEvent = { _reactName: 'onClick', type: 'click' };
@@ -69,32 +55,13 @@ describe('testing GameScreen', () => {
 			.objectContaining(clickEvent));
 	});
 
-	test('gameScreen renders the board,targets,powers and bullets', () => {
-		jest.spyOn(Container, 'default')
-			.mockReturnValueOnce(<div role="bullet"/>)
-			.mockReturnValueOnce(<div role="targets"/>);
+	test('gameMode', () => {
+		jest.spyOn(getMode, 'default').mockReturnValue(rndMode);
 
-		const { getByRole } = render(GameScreen());
+		const { getByRole } = render(GameScreen(context));
 
-		expect(getByRole('bullet')).toBeInTheDocument();
-		expect(getByRole('targets')).toBeInTheDocument();
-
-		expect(Container.default)
-			.toHaveBeenCalledWith(context.state.bullets, Bullet);
-		expect(Container.default)
-			.toHaveBeenCalledWith(context.state.targets, Target);
-	});
-
-	test('Cloud Map Test', () => {
-		jest.spyOn(Container, 'default')
-			.mockReturnValue();
-
-		jest.spyOn(context.state.objects, 'map')
-			.mockReturnValue(<div role="Cloud"/>);
-
-		const component = render(GameScreen()).getByRole('Cloud');
-
-		expect(context.state.objects.map).toHaveBeenCalledWith(Cloud);
-		expect(component).toBeInTheDocument();
+		expect(getByRole('gameScreen')).toBeInTheDocument();
+		expect(getByRole(rndMode)).toBeInTheDocument();
+		expect(getMode.default).toHaveBeenCalledWith(context);
 	});
 });

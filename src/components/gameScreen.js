@@ -1,34 +1,29 @@
 import React from 'react';
-import Flight from './flight';
-import HealthBar from './healthBar';
-import Score from './score';
-import context from '../core/context';
-import Target from './target';
-import Container from './container';
-import Cloud from './cloud';
-import Bullet from './bullet';
+import getMode from '../services/urlService';
+import TwoDMode from './2dMode/2dMode';
+import ThreeDMode from './3dMode/3dMode';
 
-const style = () => ({
+const style = (context) => ({
 	backgroundPositionY: `${ context.state.bgnScreenY }%`,
 });
 
-const GameScreen = () =>
+const GameMode = {
+	'3d': ThreeDMode,
+	'2d': TwoDMode,
+};
+
+const GameScreen = (context) =>
 	<div
 		role="gameScreen"
 		className="game-screen"
-		style={ style() }
+		style={ style(context) }
 		onMouseMove={ (event) => {
 			context.actions.updateMousePosition(event);
 			context.actions.updateFlightPosition();
 		} }
 		onClick={ (event) => context.actions.generateBullets(event) }
 	>
-		{ HealthBar() }
-		{ context.state.objects.map(Cloud) }
-		{ Score() }
-		{ Container(context.state.bullets, Bullet) }
-		{ Flight() }
-		{ Container(context.state.targets, Target) }
+		{GameMode[getMode(context)](context)}
 	</div>;
 
 export default GameScreen;

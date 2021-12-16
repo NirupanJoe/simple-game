@@ -1,5 +1,3 @@
-/* eslint-disable max-statements */
-/* eslint-disable max-lines-per-function */
 import actions from '../core/actions';
 import PlayerManager from '../services/playerManger';
 import context from '../core/context';
@@ -52,12 +50,17 @@ describe('actions', () => {
 
 	test('updateMousePosition', () => {
 		jest.spyOn(PositionService, 'pxToPercentage')
-			.mockReturnValue(returnValue);
+			.mockReturnValueOnce(returnValue)
+			.mockReturnValueOnce(returnValue);
 
 		const expected = { position: { x: returnValue, y: returnValue }};
 		const data = {
-			view: { innerWidth: Symbol('innerWidth') },
+			view: {
+				innerWidth: Symbol('innerWidth'),
+				innerHeight: Symbol('innerHeight'),
+			},
 			clientX: Symbol('clientX'),
+			clientY: Symbol('clientY'),
 		};
 
 		const result = updateMousePosition({ data });
@@ -65,6 +68,8 @@ describe('actions', () => {
 		expect(result).toMatchObject(expected);
 		expect(PositionService.pxToPercentage)
 			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
+		expect(PositionService.pxToPercentage)
+			.toHaveBeenCalledWith(data.clientY, data.view.innerHeight);
 	});
 
 	test('updateFlightPosition', () => {

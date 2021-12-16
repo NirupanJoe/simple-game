@@ -17,7 +17,7 @@ const backGroundMovingAxis = (context) =>
 const updateMousePosition = ({ data }) => ({
 	position: {
 		x: PositionService.pxToPercentage(data.clientX, data.view.innerWidth),
-		y: PositionService.pxToPercentage(data.clientY, data.view.innerWidth),
+		y: PositionService.pxToPercentage(data.clientY, data.view.innerHeight),
 	},
 });
 
@@ -36,8 +36,7 @@ const resetCloudPosition = (context) => ({
 });
 
 const generateBullets = (context) => ({
-	bullets: GameService
-		.generateBullets(context),
+	bullets: GameService.generateBullets(context),
 });
 
 const processBullet = (context) => ({

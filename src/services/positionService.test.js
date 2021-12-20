@@ -2,23 +2,17 @@ import * as random from '@laufire/utils/random';
 import positionService from './positionService';
 
 describe('PositionService', () => {
-	const {
-		project,
+	const { project,
 		limitMovement,
 		pxToPercentage,
 		getRandomValue,
-		getAllPoints,
 		isPointInRect,
-		detectOverLapping,
-		isBulletHit,
-		getTargetsPoints,
-	} = positionService;
+		getAllPoints } = positionService;
 	const twentyFive = 25;
 	const hundred = 100;
 	const two = 2;
 	const innerWidth = 1000;
 	const thousand = 1000;
-	const range = random.rndBetween(twentyFive, hundred);
 	const returnValue = Symbol('returnValue');
 	const x = random.rndBetween(twentyFive, hundred);
 	const y = random.rndBetween(twentyFive, hundred);
@@ -67,8 +61,8 @@ describe('PositionService', () => {
 	});
 
 	test('get random value for height and width', () => {
-		const data = range;
-		const min = range / two;
+		const data = random.rndBetween(twentyFive, hundred);
+		const min = data / two;
 		const max = hundred - min;
 
 		jest.spyOn(random, 'rndBetween').mockReturnValue(returnValue);
@@ -79,51 +73,30 @@ describe('PositionService', () => {
 		expect(result).toEqual(returnValue);
 	});
 
-	describe('detectOverLapping', () => {
-		const bulletValue = Symbol('bulletValue');
-		const expectations = [
-			[false, undefined],
-			[true, bulletValue],
-		];
-
-		test.each(expectations)('detectOverLapping %p',
-			(returnFlag, expected) => {
-				const bullet = { bulletValue };
-				const target = Symbol('target');
-
-				jest.spyOn(positionService, 'isPointInRect')
-					.mockReturnValue(returnFlag);
-
-				const result = detectOverLapping(target, bullet);
-
-				expect(result).toEqual(expected);
-				expect(positionService.isPointInRect)
-					.toHaveBeenCalledWith(bulletValue, target);
-			});
-	});
-
 	describe('isPointInRect', () => {
-		const expectations = [
-			['toBeTruthy', { x: 17, y: 13 }],
-			['toBeFalsy', { x: 21, y: 13 }],
+		const bulletPoints = [
+			{ x: 52, y: 63 },
+			{ x: 111, y: 125 },
+			{ x: 110, y: 125 },
 		];
 
-		test.each(expectations)('isPointInRect %p', (expected, point) => {
-			const topLeft = {
-				x: 15,
-				y: 10,
-			};
+		const targetsValue = {
+			topLeft: { x: 10, y: 15 },
+			bottomRight: { x: 110, y: 125 },
+		};
 
-			const bottomRight = {
-				x: 20,
-				y: 20,
-			};
-			const rectPoints = { topLeft, bottomRight };
+		const expectations = [
+			[bulletPoints[0], true],
+			[bulletPoints[1], false],
+			[bulletPoints[2], true],
+		];
 
-			const result = isPointInRect(point, rectPoints);
+		test.each(expectations)('isPointInRect %p',
+			(bulletPoint, isHit) => {
+				const result = isPointInRect(bulletPoint, targetsValue);
 
-			expect(result)[expected]();
-		});
+				expect(result).toEqual(isHit);
+			});
 	});
 	test('getAllPoints', () => {
 		const rect = { x, y, height };
@@ -140,50 +113,5 @@ describe('PositionService', () => {
 		const result = getAllPoints({ ...rect, width });
 
 		expect(result).toMatchObject(expectation);
-	});
-
-	describe('isBulletHit', () => {
-		const target = Symbol('target');
-		const expectations = [
-			['toBeFalsy', undefined],
-			['toBeTruthy', target],
-		];
-
-		test.each(expectations)('isBulletHit %p',
-			(expected, detectOverlap) => {
-				const targets = Symbol('targetsValue');
-				const bullet = Symbol('bulletValue');
-
-				jest.spyOn(positionService, 'getTargetsPoints')
-					.mockReturnValue([target]);
-				jest.spyOn(positionService, 'detectOverLapping')
-					.mockReturnValue(detectOverlap);
-				jest.spyOn(positionService, 'getAllPoints')
-					.mockReturnValue(bullet);
-
-				const result = isBulletHit(targets, bullet);
-
-				expect(positionService.getTargetsPoints)
-					.toHaveBeenCalledWith(targets);
-				expect(positionService.detectOverLapping)
-					.toHaveBeenCalledWith(target, bullet);
-				expect(positionService.getAllPoints)
-					.toHaveBeenCalledWith(bullet);
-
-				expect(result)[expected]();
-			});
-	});
-
-	test('getTargetsPoints', () => {
-		const targets = [Symbol('targets')];
-		const target = Symbol('target');
-
-		jest.spyOn(targets, 'map').mockReturnValue(target);
-		jest.spyOn(positionService, 'getAllPoints');
-
-		const result = getTargetsPoints(targets);
-
-		expect(result).toEqual(target);
-		expect(targets.map).toHaveBeenCalledWith(positionService.getAllPoints);
 	});
 });

@@ -11,5 +11,8 @@ const getVariance = (variance) =>
 const isProbable = (probability) =>
 	rndBetween(1, hundred) <= probability * hundred;
 
+const flattenBullets = (hits) => hits.reduce((acc, { bullets }) =>
+	[...acc, ...bullets], []);
+
 export { getId,
-	getVariance, isProbable };
+	getVariance, isProbable, flattenBullets };

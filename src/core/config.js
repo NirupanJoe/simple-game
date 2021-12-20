@@ -20,6 +20,7 @@ const config = {
 			image: bulletImage,
 			color: 0,
 			prob: 0.6,
+			damage: 1,
 		},
 		superBullet: {
 			type: 'superBullet',
@@ -28,6 +29,7 @@ const config = {
 			image: bulletImage,
 			color: 330,
 			prob: 0.3,
+			damage: 2,
 		},
 	},
 	defaultBulletType: 'normal',

@@ -140,16 +140,16 @@ describe('actions', () => {
 		expect(PlayerManager.moveBullets).toHaveBeenCalledWith(context);
 	});
 
-	test('process Bullet', () => {
-		jest.spyOn(PlayerManager, 'detectBulletHit')
+	test('process Bullets', () => {
+		jest.spyOn(PlayerManager, 'processHits')
 			.mockReturnValue(returnValue);
 
-		const expected = { bullets: returnValue };
+		const expected = returnValue;
 
 		const result = processBullet(context);
 
+		expect(PlayerManager.processHits).toHaveBeenCalledWith(context);
 		expect(result).toEqual(expected);
-		expect(PlayerManager.detectBulletHit).toHaveBeenCalledWith(context);
 	});
 
 	test('clearHitBullets test', () => {

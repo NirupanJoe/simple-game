@@ -4,10 +4,12 @@
 import config from '../core/config';
 import * as random from '@laufire/utils/random';
 import * as helper from './helperService';
+import { range } from '@laufire/utils/collection';
 
 describe('HelperService', () => {
 	const { getId, getVariance } = helper;
 	const hundred = 100;
+	const one = 1;
 	const ten = 10;
 	const twenty = 20;
 
@@ -62,5 +64,19 @@ describe('HelperService', () => {
 
 		expect(rndBetween).toHaveBeenCalledWith(1, hundred);
 		expect(result).toBeFalsy();
+	});
+
+	test('flattenBullets', () => {
+		const hits = range(0, random.rndBetween(one, ten)).map(() => ({
+			targets: Symbol('targetValue'),
+			bullets: range(0, random.rndBetween(one, ten))
+				.map((data) => ({ id: data, isHit: false })),
+		}));
+
+		const expectation = hits.map(({ bullets }) => bullets).flat();
+
+		const result = helper.flattenBullets(hits);
+
+		expect(result).toMatchObject(expectation);
 	});
 });

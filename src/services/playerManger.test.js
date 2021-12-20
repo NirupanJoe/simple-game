@@ -3,12 +3,32 @@
 import PositionService from './positionService';
 import PlayerManager from './playerManger';
 import config from '../core/config';
+import { range, secure } from '@laufire/utils/collection';
+import { random } from '@laufire/utils';
+import * as helper from './helperService';
 
 describe('PlayerManger', () => {
-	const { isAlive, decreaseHealth, backGroundMovingAxis,
-		updateCloudPosition, resetCloudPosition, moveBullets,
-		detectBulletHit, removeHitBullets } = PlayerManager;
+	const { isAlive,
+		decreaseHealth,
+		backGroundMovingAxis,
+		updateCloudPosition,
+		resetCloudPosition,
+		moveBullets,
+		detectBulletHit,
+		removeHitBullets,
+		detectOverLapping,
+		isBulletHit,
+		processHits,
+		updateHealth,
+		collectHits,
+		calDamage,
+		filterBullet } = PlayerManager;
 	const hundred = 100;
+	const two = 2;
+	const four = 4;
+	const ten = 10;
+	const returnValue = Symbol('returnValue');
+	const rndRange = secure(range(0, random.rndBetween(1, ten)));
 
 	describe('isAlive', () => {
 		const expectations = [
@@ -52,6 +72,7 @@ describe('PlayerManger', () => {
 
 		expect(result).toEqual(expectation);
 	});
+
 	describe('Cloud services test', () => {
 		const state = {
 			objects: [{
@@ -89,6 +110,7 @@ describe('PlayerManger', () => {
 			expect(result).toMatchObject(expectation);
 		});
 	});
+
 	describe('removeHitBullets test', () => {
 		const state = {
 			bullets: [{
@@ -112,6 +134,7 @@ describe('PlayerManger', () => {
 			expect(result).toMatchObject(expectation);
 		});
 	});
+
 	describe('moveBullets', () => {
 		const state = {
 			bullets: [{
@@ -131,7 +154,6 @@ describe('PlayerManger', () => {
 
 	test('detectBulletHit', () => {
 		const targets = Symbol('targets');
-		const returnValue = Symbol('returnValue');
 		const bullets = [
 			{ id: 14569,
 				isHit: true },
@@ -144,13 +166,191 @@ describe('PlayerManger', () => {
 				isHit: returnValue },
 		];
 
-		jest.spyOn(PositionService, 'isBulletHit')
+		jest.spyOn(PlayerManager, 'isBulletHit')
 			.mockReturnValue(returnValue);
 
 		const result = detectBulletHit({ state });
 
 		expect(result).toMatchObject(expectation);
-		expect(PositionService.isBulletHit)
+		expect(PlayerManager.isBulletHit)
 			.toHaveBeenCalledWith(targets, bullets[0]);
+	});
+
+	describe('isBulletHit', () => {
+		const target = Symbol('targetValue');
+		const bullet = Symbol('bulletValue');
+
+		const expectations = [
+			[false, undefined],
+			[true, bullet],
+		];
+
+		test.each(expectations)('isBulletHit %p',
+			(expected, detectOverlap) => {
+				jest.spyOn(PlayerManager, 'detectOverLapping')
+					.mockReturnValue(detectOverlap);
+				jest.spyOn(PositionService, 'getAllPoints')
+					.mockReturnValueOnce(bullet)
+					.mockReturnValue(target);
+
+				const result = isBulletHit(bullet, target);
+
+				expect(PlayerManager.detectOverLapping)
+					.toHaveBeenCalledWith(bullet, target);
+				[bullet, target].map((data) =>
+					expect(PositionService.getAllPoints)
+						.toHaveBeenCalledWith(data));
+
+				expect(result).toEqual(expected);
+			});
+	});
+
+	test('calDamage', () => {
+		const target = { health: random.rndBetween(0, ten) };
+		const bullets = secure(rndRange.map((data) => ({ damage: data })));
+
+		let sum = 0;
+
+		bullets.forEach((bullet) => {
+			sum += bullet.damage;
+		});
+
+		const expectation = Math.max(target.health - sum, 0);
+
+		const result = calDamage(target, bullets);
+
+		expect(result).toEqual(expectation);
+	});
+
+	describe('detectOverLapping', () => {
+		const bulletValue = Symbol('bulletValue');
+		const targetValue = Symbol('targetValue');
+		const expectations = [
+			[false, undefined],
+			[true, bulletValue],
+		];
+
+		const bullet = { bulletValue };
+		const target = { targetValue };
+
+		test.each(expectations)('detectOverLapping %p',
+			(returnFlag, expected) => {
+				jest.spyOn(PositionService, 'isPointInRect')
+					.mockReturnValue(returnFlag);
+
+				const result = detectOverLapping(bullet, target);
+
+				expect(result).toEqual(expected);
+				expect(PositionService.isPointInRect)
+					.toHaveBeenCalledWith(bulletValue, target);
+			});
+	});
+
+	test('collectHits', () => {
+		const targets = secure(rndRange.map((data) => ({ id: data })));
+
+		const bullets = Symbol('bullets');
+
+		const context = { state: { targets, bullets }};
+
+		const expectation = targets.map((data) =>
+			({ target: data, bullets: returnValue }));
+
+		jest.spyOn(PlayerManager, 'filterBullet').mockReturnValue(returnValue);
+
+		const result = collectHits(context);
+
+		targets.forEach((target) => expect(PlayerManager.filterBullet)
+			.toHaveBeenCalledWith(bullets, target));
+		expect(result).toMatchObject(expectation);
+	});
+
+	test('updateHealth', () => {
+		const target = { target: Symbol('targetValue') };
+		const bullets = Symbol('bullets');
+
+		const hits = [{ target, bullets }];
+
+		const expectation = [{ ...target, health: two }];
+
+		jest.spyOn(PlayerManager, 'calDamage').mockReturnValue(two);
+
+		const result = updateHealth(hits);
+
+		expect(result).toMatchObject(expectation);
+	});
+
+	describe('updateBulletIsHit', () => {
+		const bullets = secure(rndRange
+			.map((data) => ({ id: data, isHit: false })));
+
+		const hitBullets = random.rndValues(bullets, two)
+			.map((data) => ({ ...data, isHit: true }));
+
+		const hitBulletIds = hitBullets.map((bullet) => bullet.id);
+
+		const bulletsExpected = bullets.map((bullet) => (
+			{ ...bullet, isHit: hitBulletIds.includes(bullet.id) }));
+
+		const expectations = [
+			[hitBullets, bulletsExpected],
+			[[{}], bullets],
+		];
+
+		test.each(expectations)('updateBulletIsHit %p',
+			(hits, expected) => {
+				const result = PlayerManager
+					.updateBulletIsHit(hits, { state: { bullets }});
+				const resultCheck = result;
+
+				expect(resultCheck).toMatchObject(expected);
+			});
+	});
+
+	test('processHits', () => {
+		const targets = Symbol('targets');
+		const bullets = Symbol('bullets');
+		const flattenBulletsValue = Symbol('flattenBulletsValue');
+		const context = Symbol('context');
+		const expected = { targets, bullets };
+
+		jest.spyOn(PlayerManager, 'collectHits').mockReturnValue(returnValue);
+		jest.spyOn(PlayerManager, 'updateHealth').mockReturnValue(targets);
+		jest.spyOn(PlayerManager, 'updateBulletIsHit')
+			.mockReturnValue(bullets);
+		jest.spyOn(helper, 'flattenBullets')
+			.mockReturnValue(flattenBulletsValue);
+
+		const result = processHits(context);
+
+		expect(PlayerManager.collectHits).toHaveBeenCalledWith(context);
+		expect(PlayerManager.updateHealth).toHaveBeenCalledWith(returnValue);
+		expect(helper.flattenBullets).toHaveBeenCalledWith(returnValue);
+		expect(PlayerManager.updateBulletIsHit)
+			.toHaveBeenCalledWith(flattenBulletsValue, context);
+
+		expect(result).toMatchObject(expected);
+	});
+
+	test('filterBullet', () => {
+		const bullets = secure(rndRange.map((data) => ({ id: data })));
+
+		const rndBullets = random.rndValues(bullets, four);
+		const rndBulletIds = rndBullets.map((data) => data.id);
+
+		const target = Symbol('target');
+
+		const expectation = rndBullets;
+
+		jest.spyOn(PlayerManager, 'isBulletHit')
+			.mockImplementation((bullet) => rndBulletIds.includes(bullet.id));
+
+		const result = filterBullet(bullets, target);
+
+		bullets.forEach((bullet) =>
+			expect(PlayerManager.isBulletHit)
+				.toHaveBeenCalledWith(bullet, target));
+
+		expect(result).toMatchObject(expectation);
 	});
 });

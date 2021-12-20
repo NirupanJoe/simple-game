@@ -2,15 +2,19 @@ import { render } from '@testing-library/react';
 import Target from './target';
 import targetManager from '../services/targetManager/index';
 import PositionService from '../services/positionService';
+import { rndBetween } from '@laufire/utils/lib';
 
 describe('Target', () => {
-	const returnValue = 'return';
+	const returnValue = {
+		x: rndBetween(),
+		y: rndBetween(),
+	};
 
 	test('renders the component with appropriate styling', () => {
 		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
 
 		const target = targetManager.getTargets();
-		const { y, width, height, filter } = target;
+		const { width, height, filter } = target;
 
 		const { getByRole } = render(Target(target));
 
@@ -18,8 +22,8 @@ describe('Target', () => {
 
 		expect(component).toBeInTheDocument();
 		expect(component).toHaveStyle({
-			top: `${ y }%`,
-			left: `${ returnValue }%`,
+			top: `${ returnValue.y }%`,
+			left: `${ returnValue.x }%`,
 			height: `${ height }vw`,
 			width: `${ width }vw`,
 			filter: `hue-rotate(${ filter }deg)`,

@@ -5,8 +5,10 @@ const hundred = 100;
 const two = 2;
 
 const PositionService = {
-	project: ({ x, width }) =>
-		x - (width / two),
+	project: ({ x, y, width, height }) => ({
+		x: x - (width / two),
+		y: y - (height / two),
+	}),
 
 	limitMovement: ({ state: { flight: { width }, position: { x }}}) =>
 		Math.min(hundred - (width / two), Math

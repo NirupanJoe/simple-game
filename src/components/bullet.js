@@ -1,13 +1,18 @@
 import React from 'react';
 import PositionService from '../services/positionService';
 
-const style = (bullet) => ({
-	height: `${ bullet.height }vw`,
-	width: `${ bullet.width }vw`,
-	left: `${ PositionService.project(bullet) }%`,
-	top: `${ bullet.y }%`,
-	filter: `hue-rotate(${ bullet.color }deg)`,
-});
+const style = (bullet) => {
+	const { width, height, color } = bullet;
+	const { x, y } = PositionService.project(bullet);
+
+	return {
+		height: `${ height }vw`,
+		width: `${ width }vw`,
+		left: `${ x }%`,
+		top: `${ y }%`,
+		filter: `hue-rotate(${ color }deg)`,
+	};
+};
 
 const Bullet = (bullet) => {
 	const { image, id } = bullet;

@@ -26,10 +26,19 @@ describe('PositionService', () => {
 	const height = random.rndBetween(twentyFive, hundred);
 
 	test('project', () => {
-		const data = { x: 10, width: 1 };
+		const data = {
+			x,
+			y,
+			width,
+			height,
+		};
 		const result = project(data);
+		const expected = {
+			x: result.x + (width / two),
+			y: result.y + (height / two),
+		};
 
-		expect(result).toBeTruthy();
+		expect(data).toMatchObject(expected);
 	});
 
 	test('limitMovement returns value greater than or equal to 0', () => {

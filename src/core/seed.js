@@ -8,10 +8,7 @@ const seed = {
 	health: config.health,
 	score: 0,
 	bgnScreenY: 10,
-	flight: {
-		x: 50,
-		width: 6,
-	},
+	flight: config.flight,
 	targets: [],
 	objects: [{
 		x: 20,

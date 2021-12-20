@@ -7,6 +7,11 @@ const config = {
 	damage: 0.1,
 	rndLength: 16,
 	defaultMode: '2d',
+	flight: {
+		x: 50,
+		y: 90,
+		width: 6,
+	},
 	bulletsType: {
 		normal: {
 			type: 'normal',
@@ -38,6 +43,7 @@ const config = {
 			image: fighterJet,
 			height: 6,
 			width: 6,
+			y: 10,
 			variance: 0.2,
 			prop: {
 				spawn: 1,

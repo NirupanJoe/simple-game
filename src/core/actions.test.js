@@ -14,7 +14,7 @@ describe('actions', () => {
 		generateBullets,
 		moveBullets,
 		updateFlightPosition,
-		processBullet,
+		processBullets,
 		clearHitBullets } = actions;
 
 	const returnValue = Symbol('return');
@@ -146,7 +146,7 @@ describe('actions', () => {
 
 		const expected = returnValue;
 
-		const result = processBullet(context);
+		const result = processBullets(context);
 
 		expect(PlayerManager.processHits).toHaveBeenCalledWith(context);
 		expect(result).toEqual(expected);

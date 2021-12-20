@@ -1,10 +1,9 @@
-/* eslint-disable max-statements */
-/* eslint-disable max-lines-per-function */
 import * as random from '@laufire/utils/random';
 import positionService from './positionService';
 
 describe('PositionService', () => {
-	const { project,
+	const {
+		project,
 		limitMovement,
 		pxToPercentage,
 		getRandomValue,
@@ -12,18 +11,18 @@ describe('PositionService', () => {
 		isPointInRect,
 		detectOverLapping,
 		isBulletHit,
-		getTargetsPoints } = positionService;
+		getTargetsPoints,
+	} = positionService;
 	const twentyFive = 25;
 	const hundred = 100;
 	const two = 2;
-	const width = 6;
 	const innerWidth = 1000;
 	const thousand = 1000;
 	const range = random.rndBetween(twentyFive, hundred);
 	const returnValue = Symbol('returnValue');
 	const x = random.rndBetween(twentyFive, hundred);
 	const y = random.rndBetween(twentyFive, hundred);
-	const rectWidth = random.rndBetween(twentyFive, hundred);
+	const width = random.rndBetween(twentyFive, hundred);
 	const height = random.rndBetween(twentyFive, hundred);
 
 	test('project', () => {
@@ -37,11 +36,10 @@ describe('PositionService', () => {
 		jest.spyOn(Math, 'max').mockReturnValue(returnValue);
 		jest.spyOn(Math, 'min').mockReturnValue(returnValue);
 
-		const context = { state: { flight: { width: 6 }, position: { x: 1 }}};
+		const context = { state: { flight: { width }, position: { x }}};
 
 		const result = limitMovement(context);
 
-		expect(result).toEqual(returnValue);
 		expect(Math.max)
 			.toHaveBeenCalledWith(context.state.position.x,
 				context.state.flight.width / two);
@@ -122,15 +120,15 @@ describe('PositionService', () => {
 		const rect = { x, y, height };
 		const expectation = {
 			topLeft: {
-				x: x - (rectWidth / two),
+				x: x - (width / two),
 				y: y - (height / two),
 			},
 			bottomRight: {
-				x: x + (rectWidth / two),
+				x: x + (width / two),
 				y: y + (height / two),
 			},
 		};
-		const result = getAllPoints({ ...rect, width: rectWidth });
+		const result = getAllPoints({ ...rect, width });
 
 		expect(result).toMatchObject(expectation);
 	});

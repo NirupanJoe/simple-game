@@ -81,19 +81,19 @@ describe('target Manager', () => {
 		};
 		const sixtyFive = 65;
 		const threeHundredFifty = 350;
-		const filter = Symbol('filter');
+		const color = Symbol('color');
 
 		test('returns a target while params are passed', () => {
 			jest.spyOn(HelperService, 'getId').mockReturnValue(id);
 			jest.spyOn(HelperService, 'getVariance').mockReturnValue(variance);
-			jest.spyOn(random, 'rndBetween').mockReturnValue(filter);
+			jest.spyOn(random, 'rndBetween').mockReturnValue(color);
 
 			const expectedResult = {
 				id,
 				x,
 				y,
 				type,
-				filter,
+				color,
 				...typeConfig,
 				...size,
 			};

@@ -23,7 +23,7 @@ const targetManager = {
 			id: getId(config),
 			x: x !== undefined ? x : positionService.getRandomValue(size.width),
 			y: y !== undefined ? y : 0,
-			filter: rndBetween(sixtyFive, threeHundredFifty),
+			color: rndBetween(sixtyFive, threeHundredFifty),
 			...typeConfig,
 			...size,
 		};

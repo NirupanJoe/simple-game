@@ -14,7 +14,7 @@ describe('Target', () => {
 		jest.spyOn(PositionService, 'project').mockReturnValue(returnValue);
 
 		const target = targetManager.getTargets();
-		const { width, height, filter } = target;
+		const { width, height, color } = target;
 
 		const { getByRole } = render(Target(target));
 
@@ -26,7 +26,7 @@ describe('Target', () => {
 			left: `${ returnValue.x }%`,
 			height: `${ height }vw`,
 			width: `${ width }vw`,
-			filter: `hue-rotate(${ filter }deg)`,
+			filter: `hue-rotate(${ color }deg)`,
 		});
 		expect(PositionService.project).toHaveBeenCalledWith(target);
 	});

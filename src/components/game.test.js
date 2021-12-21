@@ -3,12 +3,12 @@
 jest.mock('../components/gameScreen', () => () => <div role="gameScreen"/>);
 jest.mock('../components/gameOverScreen', () => () =>
 	<div role="game-over-screen"/>);
-jest.mock('../services/playerManger');
+jest.mock('../services/playerManager');
 
 import React from 'react';
 import { render } from '@testing-library/react';
 import Game from '../components/game';
-import playerManager from '../services/playerManger';
+import playerManager from '../services/playerManager';
 
 describe('Game in Dom', () => {
 	const context = Symbol('context');

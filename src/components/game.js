@@ -1,6 +1,6 @@
 import React from 'react';
 import GameOverScreen from './gameOverScreen';
-import PlayerManager from '../services/playerManger';
+import PlayerManager from '../services/playerManager';
 import GameScreen from './gameScreen';
 
 const Game = (context) => {

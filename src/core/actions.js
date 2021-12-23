@@ -39,12 +39,12 @@ const generateBullets = (context) => ({
 	bullets: GameService.generateBullets(context),
 });
 
-const processBullets = (context) =>
-	PlayerManager.processHits(context);
-
 const moveBullets = (context) => ({
 	bullets: PlayerManager.moveBullets(context),
 });
+
+const processBullets = (context) =>
+	PlayerManager.processHits(context);
 
 const clearHitBullets = (context) => ({
 	bullets: PlayerManager.removeHitBullets(context),

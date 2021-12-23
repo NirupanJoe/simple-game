@@ -34,6 +34,7 @@ describe('actions', () => {
 
 		expect(PlayerManager.decreaseHealth)
 			.toHaveBeenCalledWith(context);
+
 		expect(result).toEqual(returnValue);
 	});
 
@@ -45,6 +46,7 @@ describe('actions', () => {
 
 		expect(PlayerManager.backGroundMovingAxis)
 			.toHaveBeenCalledWith(context);
+
 		expect(result).toEqual(returnValue);
 	});
 
@@ -65,11 +67,12 @@ describe('actions', () => {
 
 		const result = updateMousePosition({ data });
 
-		expect(result).toMatchObject(expected);
 		expect(PositionService.pxToPercentage)
 			.toHaveBeenCalledWith(data.clientX, data.view.innerWidth);
 		expect(PositionService.pxToPercentage)
 			.toHaveBeenCalledWith(data.clientY, data.view.innerHeight);
+
+		expect(result).toMatchObject(expected);
 	});
 
 	test('updateFlightPosition', () => {
@@ -80,21 +83,22 @@ describe('actions', () => {
 
 		const result = updateFlightPosition(context);
 
-		expect(result).toEqual(expected);
 		expect(PositionService.limitMovement).toBeCalledWith(context);
+
+		expect(result).toEqual(expected);
 	});
 
 	test('generateBullets returns bullets[]', () => {
 		jest.spyOn(GameService, 'generateBullets').mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };
-		const con = { state: { bullets: [] }};
 
-		const result = generateBullets(con);
+		const result = generateBullets(context);
+
+		expect(GameService.generateBullets)
+			.toHaveBeenCalledWith(context);
 
 		expect(result).toEqual(expected);
-		expect(GameService.generateBullets)
-			.toHaveBeenCalledWith(con);
 	});
 
 	test('add Targets ', () => {
@@ -104,6 +108,7 @@ describe('actions', () => {
 		const result = addTargets(context);
 
 		expect(targetManager.addTargets).toHaveBeenCalledWith(context);
+
 		expect(result).toMatchObject({ targets: returnValue });
 	});
 
@@ -115,6 +120,7 @@ describe('actions', () => {
 		const expected = { objects: returnValue };
 
 		expect(PlayerManager.updateCloudPosition).toHaveBeenCalledWith(context);
+
 		expect(result).toMatchObject(expected);
 	});
 
@@ -126,6 +132,7 @@ describe('actions', () => {
 		const expected = { objects: returnValue };
 
 		expect(PlayerManager.resetCloudPosition).toHaveBeenCalledWith(context);
+
 		expect(result).toMatchObject(expected);
 	});
 
@@ -136,8 +143,9 @@ describe('actions', () => {
 
 		const result = moveBullets(context);
 
-		expect(result).toEqual(expected);
 		expect(PlayerManager.moveBullets).toHaveBeenCalledWith(context);
+
+		expect(result).toEqual(expected);
 	});
 
 	test('process Bullets', () => {
@@ -149,6 +157,7 @@ describe('actions', () => {
 		const result = processBullets(context);
 
 		expect(PlayerManager.processHits).toHaveBeenCalledWith(context);
+
 		expect(result).toEqual(expected);
 	});
 
@@ -156,10 +165,12 @@ describe('actions', () => {
 		jest.spyOn(PlayerManager, 'removeHitBullets')
 			.mockReturnValue(returnValue);
 
-		const result = clearHitBullets(context);
 		const expected = { bullets: returnValue };
 
+		const result = clearHitBullets(context);
+
 		expect(PlayerManager.removeHitBullets).toHaveBeenCalledWith(context);
+
 		expect(result).toMatchObject(expected);
 	});
 });

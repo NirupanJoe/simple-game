@@ -8,10 +8,10 @@
     "@react-spring/three": "^9.3.1",
     "@react-three/drei": "^7.25.4",
     "@react-three/fiber": "^7.0.21",
-    "@types/three": "^0.134.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
+    "@types/three": "^0.134.0",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -66,6 +66,7 @@
     ]
   },
   "devDependencies": {
+    "@react-three/test-renderer": "^7.0.23",
     "eslint": "^7.29.0",
     "eslint-plugin-react": "^7.24.0"
   },

@@ -2,6 +2,7 @@ import React from 'react';
 import { useThree } from '@react-three/fiber';
 import Target from './scene/targets';
 import Flight from './scene/flight';
+import Bullets from './scene/bullets';
 
 const x = 1;
 const y = 2;
@@ -18,6 +19,7 @@ const Base = (context) => {
 			<mesh>
 				<Target { ...enrichedContext }/>
 				<Flight { ...enrichedContext }/>
+				<Bullets { ...enrichedContext }/>
 			</mesh>
 		</>
 	);

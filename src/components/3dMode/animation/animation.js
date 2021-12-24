@@ -26,6 +26,18 @@ const animation = {
 		position: [x, y, 0],
 		config: config.wobbly,
 	}),
+
+	bullet: ({ x, y }) => ({
+		loop: true,
+		from: {
+			position: [x, y, 0],
+			rotation: [0, 0, 0],
+		},
+		color: 'red',
+		rotation: [0, yRotation, 0],
+		position: [x, y, 0],
+		config: config.wobbly,
+	}),
 };
 
 export default animation;

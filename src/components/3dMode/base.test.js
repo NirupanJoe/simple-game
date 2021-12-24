@@ -6,6 +6,7 @@ import { range } from '@laufire/utils/collection';
 import helper from '../../testHelper/helper';
 import * as Target from './scene/targets';
 import * as Flight from './scene/flight';
+import * as Bullet from './scene/bullets';
 
 test('base', async () => {
 	const x = 1;
@@ -19,13 +20,15 @@ test('base', async () => {
 	const { mouse, viewport } = useThree;
 	const enrichedContext = { ...context, mouse, viewport };
 	const childCount = 3;
-	const meshChildCount = 2;
+	const meshChildCount = 3;
 	const three = 3;
 	const ranges = range(0, three);
 	const targetPosition = ranges.map(() => rndBetween());
 	const flightPosition = ranges.map(() => rndBetween());
+	const bulletPosition = ranges.map(() => rndBetween());
 	const targetMesh = <mesh position={ targetPosition }/>;
 	const flightMesh = <mesh position={ flightPosition }/>;
+	const bulletMesh = <mesh position={ bulletPosition }/>;
 	const ambientLightProps = {
 		color: 'black',
 		intensity: 0.3,
@@ -38,6 +41,7 @@ test('base', async () => {
 	jest.spyOn(ReactFiber, 'useThree').mockReturnValue(useThree);
 	jest.spyOn(Target, 'default').mockReturnValue(targetMesh);
 	jest.spyOn(Flight, 'default').mockReturnValue(flightMesh);
+	jest.spyOn(Bullet, 'default').mockReturnValue(bulletMesh);
 
 	const scene = await helper.getScene(<Base { ...context }/>);
 	const mesh = scene.children[2].allChildren;
@@ -49,6 +53,8 @@ test('base', async () => {
 	expect(mesh.length).toBe(meshChildCount);
 	expect(Target.default.mock.calls[0][0]).toEqual(enrichedContext);
 	expect(Flight.default.mock.calls[0][0]).toEqual(enrichedContext);
+	expect(Bullet.default.mock.calls[0][0]).toEqual(enrichedContext);
 	expect(mesh[0].props.position).toBe(targetPosition);
 	expect(mesh[1].props.position).toBe(flightPosition);
+	expect(mesh[2].props.position).toBe(bulletPosition);
 });

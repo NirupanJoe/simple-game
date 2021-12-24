@@ -2,12 +2,15 @@ import * as random from '@laufire/utils/random';
 import positionService from './positionService';
 
 describe('PositionService', () => {
-	const { project,
+	const {
+		project,
 		limitMovement,
 		pxToPercentage,
 		getRandomValue,
 		isPointInRect,
-		getAllPoints } = positionService;
+		getAllPoints,
+		threeDProject,
+	} = positionService;
 	const twentyFive = 25;
 	const hundred = 100;
 	const two = 2;
@@ -113,5 +116,27 @@ describe('PositionService', () => {
 		const result = getAllPoints({ ...rect, width });
 
 		expect(result).toMatchObject(expectation);
+	});
+	test('ThreeDProject', () => {
+		const rndViewport = random.rndBetween(1, twentyFive);
+		const data = {
+			x,
+			y,
+		};
+		const viewport = {
+			width: rndViewport,
+			height: rndViewport,
+		};
+		const context = { data, viewport };
+		const result = threeDProject(context);
+
+		const expectation = {
+			x: Math.round((result.x + (viewport.width / two))
+			* (hundred / viewport.width)),
+			y: Math.round((-result.y + (viewport.height / two))
+			* (hundred / viewport.height)),
+		};
+
+		expect(data).toEqual(expectation);
 	});
 });

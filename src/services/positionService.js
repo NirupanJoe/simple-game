@@ -33,6 +33,12 @@ const PositionService = {
 			y: rec.y + (rec.height / two),
 		},
 	}),
+
+	threeDProject: ({ data, viewport: { width, height }}) => ({
+		...data,
+		x: (data.x * width / hundred) - (width / two),
+		y: (-data.y * height / hundred) + (height / two),
+	}),
 };
 
 export default PositionService;

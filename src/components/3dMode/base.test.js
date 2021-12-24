@@ -1,10 +1,11 @@
 import React from 'react';
 import * as ReactFiber from '@react-three/fiber';
 import Base from './base';
-import helper from '../../testHelper/helper';
-import * as Target from './scene/targets';
 import { rndBetween } from '@laufire/utils/random';
 import { range } from '@laufire/utils/collection';
+import helper from '../../testHelper/helper';
+import * as Target from './scene/targets';
+import * as Flight from './scene/flight';
 
 test('base', async () => {
 	const x = 1;
@@ -18,11 +19,13 @@ test('base', async () => {
 	const { mouse, viewport } = useThree;
 	const enrichedContext = { ...context, mouse, viewport };
 	const childCount = 3;
-	const meshChildCount = 1;
+	const meshChildCount = 2;
 	const three = 3;
 	const ranges = range(0, three);
 	const targetPosition = ranges.map(() => rndBetween());
+	const flightPosition = ranges.map(() => rndBetween());
 	const targetMesh = <mesh position={ targetPosition }/>;
+	const flightMesh = <mesh position={ flightPosition }/>;
 	const ambientLightProps = {
 		color: 'black',
 		intensity: 0.3,
@@ -34,6 +37,7 @@ test('base', async () => {
 
 	jest.spyOn(ReactFiber, 'useThree').mockReturnValue(useThree);
 	jest.spyOn(Target, 'default').mockReturnValue(targetMesh);
+	jest.spyOn(Flight, 'default').mockReturnValue(flightMesh);
 
 	const scene = await helper.getScene(<Base { ...context }/>);
 	const mesh = scene.children[2].allChildren;
@@ -44,5 +48,7 @@ test('base', async () => {
 	expect(scene.children[1].props).toMatchObject(directionalLightProps);
 	expect(mesh.length).toBe(meshChildCount);
 	expect(Target.default.mock.calls[0][0]).toEqual(enrichedContext);
+	expect(Flight.default.mock.calls[0][0]).toEqual(enrichedContext);
 	expect(mesh[0].props.position).toBe(targetPosition);
+	expect(mesh[1].props.position).toBe(flightPosition);
 });

@@ -1,11 +1,10 @@
-/* eslint-disable max-nested-callbacks */
-/* eslint-disable max-lines-per-function */
 import PositionService from './positionService';
 import PlayerManager from './playerManger';
 import config from '../core/config';
 import { range, secure } from '@laufire/utils/collection';
 import { random } from '@laufire/utils';
 import * as helper from './helperService';
+import { rndBetween } from '@laufire/utils/lib';
 
 describe('PlayerManger', () => {
 	const { isAlive,
@@ -22,7 +21,8 @@ describe('PlayerManger', () => {
 		updateHealth,
 		collectHits,
 		calDamage,
-		filterBullet } = PlayerManager;
+		filterBullet,
+		removeTargets } = PlayerManager;
 	const hundred = 100;
 	const two = 2;
 	const four = 4;
@@ -339,7 +339,6 @@ describe('PlayerManger', () => {
 		const rndBulletIds = rndBullets.map((data) => data.id);
 
 		const target = Symbol('target');
-
 		const expectation = rndBullets;
 
 		jest.spyOn(PlayerManager, 'isBulletHit')
@@ -350,6 +349,19 @@ describe('PlayerManger', () => {
 		bullets.forEach((bullet) =>
 			expect(PlayerManager.isBulletHit)
 				.toHaveBeenCalledWith(bullet, target));
+
+		expect(result).toMatchObject(expectation);
+	});
+
+	test('removeTargets', () => {
+		const targets = secure(rndRange.map((data) =>
+			({ id: data, health: rndBetween(0, four) })));
+		const expectation = [];
+
+		targets.forEach((target) =>
+			target.health !== 0 && expectation.push(target));
+
+		const result = removeTargets({ state: { targets }});
 
 		expect(result).toMatchObject(expectation);
 	});

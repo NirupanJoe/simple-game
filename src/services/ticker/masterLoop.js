@@ -9,6 +9,7 @@ const masterLoop = [
 	'moveBullets',
 	'processBullets',
 	'clearHitBullets',
+	'removeTargets',
 ];
 
 const runMasterLoop = () =>

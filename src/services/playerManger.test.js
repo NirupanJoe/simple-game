@@ -22,6 +22,7 @@ describe('PlayerManger', () => {
 		collectHits,
 		calDamage,
 		filterBullet,
+		updateScore,
 		removeTargets } = PlayerManager;
 	const hundred = 100;
 	const two = 2;
@@ -351,6 +352,21 @@ describe('PlayerManger', () => {
 				.toHaveBeenCalledWith(bullet, target));
 
 		expect(result).toMatchObject(expectation);
+	});
+
+	test('updateScore', () => {
+		const targets = secure(rndRange.map((data) => ({ id: data, health:
+			rndBetween(0, four) })));
+		const score = rndBetween(0, ten);
+
+		const damagedTargets = targets.filter((target) =>
+			target.health === 0);
+
+		const expectation = damagedTargets.length + score;
+
+		const result = updateScore({ state: { targets, score }});
+
+		expect(result).toEqual(expectation);
 	});
 
 	test('removeTargets', () => {

@@ -78,6 +78,10 @@ const PlayerManager = {
 	calDamage: (target, bullets) => Math.max(target.health - bullets
 		.reduce((a, c) => a + c.damage, 0), 0),
 
+	updateScore: ({ state: { targets, score }}) =>
+		targets.reduce((a, target) =>
+			(target.health === 0 ? a + 1 : a), score),
+
 	removeTargets: ({ state: { targets }}) =>
 		targets.filter((target) => target.health !== 0),
 

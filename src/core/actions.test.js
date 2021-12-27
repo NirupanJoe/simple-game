@@ -176,6 +176,19 @@ describe('actions', () => {
 		expect(result).toMatchObject(expected);
 	});
 
+	test('updateScore test', () => {
+		jest.spyOn(PlayerManager, 'updateScore')
+			.mockReturnValue(returnValue);
+
+		const expected = { score: returnValue };
+
+		const result = updateScore(context);
+
+		expect(PlayerManager.updateScore).toHaveBeenCalledWith(context);
+
+		expect(result).toMatchObject(expected);
+	});
+
 	test('removeTargets test', () => {
 		jest.spyOn(PlayerManager, 'removeTargets')
 			.mockReturnValue(returnValue);

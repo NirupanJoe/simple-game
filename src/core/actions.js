@@ -50,6 +50,10 @@ const clearHitBullets = (context) => ({
 	bullets: PlayerManager.removeHitBullets(context),
 });
 
+const updateScore = (context) => ({
+	score: PlayerManager.updateScore(context),
+});
+
 const removeTargets = (context) => ({
 	targets: PlayerManager.removeTargets(context),
 });
@@ -67,6 +71,7 @@ const actions = {
 	updateFlightPosition,
 	processBullets,
 	clearHitBullets,
+	updateScore,
 	removeTargets,
 };
 

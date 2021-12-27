@@ -196,7 +196,6 @@ describe('actions', () => {
 
 		expect(playerManager.removeTargets).toHaveBeenCalledWith(context);
 
-		expect(playerManager.removeHitBullets).toHaveBeenCalledWith(context);
 		expect(result).toMatchObject(expected);
 	});
 });

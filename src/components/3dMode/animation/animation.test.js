@@ -12,6 +12,8 @@ describe('animation', () => {
 	const y = rndBetween();
 	const yRotation = 360;
 	const xRotation = 180;
+	const flightYRotation = 3.1;
+	const flightXRotation = 1.5;
 
 	test('target', () => {
 		const result = target({ x, y });
@@ -35,10 +37,9 @@ describe('animation', () => {
 			loop: true,
 			from: {
 				position: [x, y, 0],
-				rotation: [0, 0, 0],
 			},
 			color: 'royalBlue',
-			rotation: [0, yRotation, 0],
+			rotation: [flightXRotation, flightYRotation, 0],
 			position: [x, y, 0],
 			config: config.wobbly,
 		};

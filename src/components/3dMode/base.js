@@ -1,4 +1,4 @@
-import React from 'react';
+import { React } from 'react';
 import { useThree } from '@react-three/fiber';
 import Target from './scene/targets';
 import Flight from './scene/flight';
@@ -16,11 +16,9 @@ const Base = (context) => {
 			<color attach="background" args={ ['lightblue'] }/>
 			<ambientLight color="black" intensity={ 0.3 }/>
 			<directionalLight position={ [-x, y, z] } intensity={ 2 }/>
-			<mesh>
-				<Target { ...enrichedContext }/>
-				<Flight { ...enrichedContext }/>
-				<Bullets { ...enrichedContext }/>
-			</mesh>
+			<Target { ...enrichedContext }/>
+			<Flight { ...enrichedContext }/>
+			<Bullets { ...enrichedContext }/>
 		</>
 	);
 };

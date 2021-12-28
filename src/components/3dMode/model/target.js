@@ -1,20 +1,30 @@
-import React from 'react';
+import { React } from 'react';
 import { a } from '@react-spring/three';
-import { Cone } from '@react-three/drei';
+// import { useGLTF } from '@react-three/drei';
 
-const radius = 0.35;
-const height = 2;
-const radialSegments = 8;
+const Target = ({ data:
+	{ rotation, position, color, id, scene, materials }}) => {
+	// const { scene, materials } = useGLTF(`${ process.env.PUBLIC_URL }/target/target.gltf`);
+	// const { actions } = useAnimations(animations);
 
-const Target = ({ data: { rotation, position, color, id }}) =>
-	<a.mesh
-		key={ id }
-		rotation={ rotation }
-		position={ position }
-	>
-		<Cone args={ [radius, height, radialSegments] } scale={ 0.5 }>
-			<a.meshStandardMaterial color={ color }/>
-		</Cone>
-	</a.mesh>;
+	// useEffect(() => actions.default.play(), []);
+	// eslint-disable-next-line no-console
+	console.log();
+	return (
+		<a.mesh
+			key={ id }
+			rotation={ rotation }
+			position={ position }
+		>
+			<directionalLight intensity={ 0.8 }/>
+			<a.primitive
+				object={ scene }
+				scale={ 0.8 }
+				material={ materials.flight }
+				material-color={ color }
+			/>
+		</a.mesh>
+	);
+};
 
 export default Target;

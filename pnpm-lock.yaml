@@ -19,6 +19,7 @@ specifiers:
   react-scripts: 4.0.3
   react-spring: ^9.3.2
   three: ^0.135.0
+  three-stdlib: ^2.6.2
   web-vitals: ^1.1.2
 
 dependencies:
@@ -37,6 +38,7 @@ dependencies:
   react-scripts: 4.0.3_node-sass@6.0.1+react@17.0.2
   react-spring: 9.3.2_48df485e15ddf70fdc8a9c35e45a700b
   three: 0.135.0
+  three-stdlib: 2.6.2_three@0.135.0
   web-vitals: 1.1.2
 
 devDependencies:
@@ -2030,7 +2032,7 @@ packages:
       stats.js: 0.17.0
       three: 0.135.0
       three-mesh-bvh: 0.5.2_three@0.135.0
-      three-stdlib: 2.6.1_three@0.135.0
+      three-stdlib: 2.6.2_three@0.135.0
       troika-three-text: 0.44.0_three@0.135.0
       use-asset: 1.0.4_react@17.0.2
       utility-types: 3.10.0
@@ -11442,8 +11444,8 @@ packages:
       three: 0.135.0
     dev: false
 
-  /three-stdlib/2.6.1_three@0.135.0:
-    resolution: {integrity: sha512-6GulvDfTnJ8KmJmhwrKnLWAepRysb+9mH6fiDGQnZVai9O1Pg/Gr8pYKOX3+GD9VVxyGqhsEbApcsRmRJaIsCQ==}
+  /three-stdlib/2.6.2_three@0.135.0:
+    resolution: {integrity: sha512-xkgRswTTWlsxMfSmafXztUNwwdIQuZ28AG8PAp+PI0BHHY5ssgTDdb2PIwFimznEoYa012HcnhAa0vhUoBc1/Q==}
     peerDependencies:
       three: '>=0.128.0'
     dependencies:

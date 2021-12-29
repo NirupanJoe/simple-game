@@ -1,15 +1,9 @@
 import { React } from 'react';
 import { a } from '@react-spring/three';
-// import { useGLTF } from '@react-three/drei';
 
 const Target = ({ data:
+	// eslint-disable-next-line arrow-body-style
 	{ rotation, position, color, id, scene, materials }}) => {
-	// const { scene, materials } = useGLTF(`${ process.env.PUBLIC_URL }/target/target.gltf`);
-	// const { actions } = useAnimations(animations);
-
-	// useEffect(() => actions.default.play(), []);
-	// eslint-disable-next-line no-console
-	console.log();
 	return (
 		<a.mesh
 			key={ id }

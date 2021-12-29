@@ -16,8 +16,8 @@ const Target = (context) => {
 				data: {
 					...enrichedTargets[i],
 					...animationData,
-					scene,
-					materials,
+					scene: scene.clone(true),
+					material: materials,
 				},
 			}))
 	);

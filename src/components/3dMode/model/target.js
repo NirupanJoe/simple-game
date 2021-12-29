@@ -1,23 +1,19 @@
 import { React } from 'react';
 import { a } from '@react-spring/three';
+import Stacy from './stacy';
 
-const Target = ({ data:
-	// eslint-disable-next-line arrow-body-style
-	{ rotation, position, color, id, scene, materials }}) => {
+// eslint-disable-next-line max-lines-per-function
+const Target = ({ data }) => {
+	const { rotation, position, id } = data;
+
 	return (
-		<a.mesh
+		<a.group
 			key={ id }
 			rotation={ rotation }
 			position={ position }
 		>
-			<directionalLight intensity={ 0.8 }/>
-			<a.primitive
-				object={ scene }
-				scale={ 0.8 }
-				material={ materials.flight }
-				material-color={ color }
-			/>
-		</a.mesh>
+			<Stacy { ...data }/>
+		</a.group>
 	);
 };
 

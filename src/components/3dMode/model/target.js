@@ -1,20 +1,18 @@
 import { React } from 'react';
 import { a } from '@react-spring/three';
-import Stacy from './stacy';
 
-// eslint-disable-next-line max-lines-per-function
-const Target = ({ data }) => {
-	const { rotation, position, id } = data;
-
-	return (
-		<a.group
-			key={ id }
-			rotation={ rotation }
-			position={ position }
-		>
-			<Stacy { ...data }/>
-		</a.group>
-	);
-};
+const Target = ({ data: { rotation, position, id, scene }}) =>
+	<a.group
+		key={ id }
+		dispose={ null }
+		rotation={ rotation }
+		position={ position }
+	>
+		<directionalLight intensity={ 0.8 }/>
+		<primitive
+			object={ scene }
+			scale={ 0.8 }
+		/>
+	</a.group>;
 
 export default Target;

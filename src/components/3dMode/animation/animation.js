@@ -1,20 +1,22 @@
-/* eslint-disable no-magic-numbers */
 import { config } from '@react-spring/three';
 
 const yRotation = 360;
 const flightYRotation = 3.1;
 const flightXRotation = 1.5;
-const targetYPosition = 2;
+const targetYRotation = 1.6;
+const power = 10;
+const radix = 16;
+const end = 8;
 
 const animation = {
-	target: ({ x, color }) => ({
+	target: ({ x, y, color }) => ({
 		loop: true,
 		from: {
-			position: [x, targetYPosition, 0],
+			position: [x, y, 0],
 		},
-		color: `#${ Math.pow(color, 10).toString(16)
-			.slice(0, 8) }`,
-		rotation: [0, 0, 0],
+		color: `#${ Math.pow(color, power).toString(radix)
+			.slice(0, end) }`,
+		rotation: [targetYRotation, 0, 0],
 		config: config.wobbly,
 	}),
 

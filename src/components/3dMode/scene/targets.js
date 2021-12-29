@@ -1,12 +1,15 @@
-import { useGLTF, useTexture } from '@react-three/drei';
+import { useGLTF } from '@react-three/drei';
+import { useMemo } from 'react';
+import { SkeletonUtils } from 'three-stdlib';
 import PositionService from '../../../services/positionService';
 import getSprings from '../animation';
 import TargetModel from '../model/target';
 
 const Target = (context) => {
 	const { state: { targets }} = context;
-	const { nodes, materials } = useGLTF(`${ process.env.PUBLIC_URL }/target/stacy.gltf`);
-	const texture = useTexture(`${ process.env.PUBLIC_URL }/target/stacy.jpg`);
+	const { scene } = useGLTF(`${ process.env.PUBLIC_URL }/target/target.gltf`);
+	const clones = useMemo(() => targets.map(() =>
+		SkeletonUtils.clone(scene)), [targets.length]);
 	const enrichedTargets = targets.map((data) =>
 		PositionService.threeDProject({ ...context, data }));
 
@@ -17,9 +20,7 @@ const Target = (context) => {
 				data: {
 					...enrichedTargets[i],
 					...animationData,
-					nodes,
-					materials,
-					texture,
+					scene: clones[i],
 				},
 			}))
 	);

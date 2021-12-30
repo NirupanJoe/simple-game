@@ -17,7 +17,8 @@ describe('actions', () => {
 		processBullets,
 		clearHitBullets,
 		updateScore,
-		removeTargets } = actions;
+		removeTargets,
+		generateClouds } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -196,6 +197,15 @@ describe('actions', () => {
 
 		expect(playerManager.removeTargets).toHaveBeenCalledWith(context);
 
+		expect(result).toMatchObject(expected);
+	});
+	test('test generateClouds', () => {
+		jest.spyOn(playerManager, 'generateClouds')
+			.mockReturnValue(returnValue);
+		const result = generateClouds(context);
+		const expected = { objects: returnValue };
+
+		expect(playerManager.generateClouds).toHaveBeenCalledWith(context);
 		expect(result).toMatchObject(expected);
 	});
 });

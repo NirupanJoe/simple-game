@@ -1,29 +1,20 @@
+/* eslint-disable max-lines */
 import PositionService from './positionService';
 import PlayerManager from './playerManager';
 import config from '../core/config';
 import { range, secure } from '@laufire/utils/collection';
 import { random } from '@laufire/utils';
-import * as helper from './helperService';
+import * as helperService from './helperService';
 import { rndBetween } from '@laufire/utils/lib';
 
-describe('PlayerManger', () => {
-	const { isAlive,
-		decreaseHealth,
-		backGroundMovingAxis,
-		updateCloudPosition,
-		resetCloudPosition,
-		moveBullets,
-		detectBulletHit,
-		removeHitBullets,
-		detectOverLapping,
-		isBulletHit,
-		processHits,
-		updateHealth,
-		collectHits,
-		calDamage,
-		filterBullet,
-		updateScore,
-		removeTargets } = PlayerManager;
+describe('PlayerManager', () => {
+	const { isAlive, decreaseHealth, backGroundMovingAxis,
+		updateCloudPosition, resetCloudPosition, moveBullets,
+		detectBulletHit, removeHitBullets,
+		generateClouds, createCloud, removeTargets,
+		isBulletHit, calDamage, detectOverLapping
+		, collectHits, updateHealth, processHits,
+		filterBullet, updateScore } = PlayerManager;
 	const hundred = 100;
 	const two = 2;
 	const four = 4;
@@ -319,14 +310,14 @@ describe('PlayerManger', () => {
 		jest.spyOn(PlayerManager, 'updateHealth').mockReturnValue(targets);
 		jest.spyOn(PlayerManager, 'updateBulletIsHit')
 			.mockReturnValue(bullets);
-		jest.spyOn(helper, 'flattenBullets')
+		jest.spyOn(helperService, 'flattenBullets')
 			.mockReturnValue(flattenBulletsValue);
 
 		const result = processHits(context);
 
 		expect(PlayerManager.collectHits).toHaveBeenCalledWith(context);
 		expect(PlayerManager.updateHealth).toHaveBeenCalledWith(returnValue);
-		expect(helper.flattenBullets).toHaveBeenCalledWith(returnValue);
+		expect(helperService.flattenBullets).toHaveBeenCalledWith(returnValue);
 		expect(PlayerManager.updateBulletIsHit)
 			.toHaveBeenCalledWith(flattenBulletsValue, context);
 
@@ -380,5 +371,91 @@ describe('PlayerManger', () => {
 		const result = removeTargets({ state: { targets }});
 
 		expect(result).toMatchObject(expectation);
+	});
+	describe('Test Clouds', () => {
+		const prob = Symbol('prob');
+		const height = Symbol('height');
+		const width = Symbol('width');
+		const context = {
+			config: {
+				objects: {
+					cloud: {
+						prob,
+						height,
+						width,
+					},
+				},
+
+			},
+			state: {
+				objects: Symbol('objects'),
+			},
+		};
+
+		test('Generate clouds is performed', () => {
+			jest.spyOn(helperService, 'isProbable').mockReturnValue(true);
+			jest.spyOn(PlayerManager, 'createCloud')
+				.mockReturnValue(returnValue);
+			const result = generateClouds(context);
+
+			expect(helperService.isProbable)
+				.toHaveBeenCalledWith(prob);
+			expect(PlayerManager.createCloud)
+				.toHaveBeenCalledWith(context);
+			expect(result).toEqual(returnValue);
+		});
+
+		test('Generate clouds is not performed', () => {
+			const expected = context.state.objects;
+
+			jest.spyOn(helperService, 'isProbable').mockReturnValue(false);
+
+			const result = generateClouds(context);
+
+			expect(helperService.isProbable)
+				.toHaveBeenCalledWith(context.config.objects.cloud.prob);
+			expect(result).toEqual(expected);
+		});
+
+		// eslint-disable-next-line max-statements
+		test('To test createCLouds', () => {
+			const mockContext = {
+				...context,
+				state: {
+					objects: [Symbol('object1')],
+				},
+
+			};
+			const x = Symbol('x');
+			const y = random.rndBetween(1, hundred);
+			const id = Symbol('id');
+
+			jest.spyOn(PositionService, 'getRandomValue')
+				.mockReturnValueOnce(x)
+				.mockReturnValueOnce(y);
+
+			jest.spyOn(random, 'rndString').mockReturnValue(id);
+
+			const result = createCloud(mockContext);
+			const expectation = [
+				...mockContext.state.objects, {
+					x: x,
+					y: -y,
+					id: id,
+					height: mockContext.config.objects.cloud.height,
+					width: mockContext.config.objects.cloud.width,
+
+				},
+			];
+
+			expect(random.rndString)
+				.toHaveBeenCalledWith(mockContext.config.rndLength);
+			expect(PositionService.getRandomValue)
+				.toHaveBeenCalledWith(mockContext.config.objects.cloud.width);
+			expect(PositionService.getRandomValue)
+				.toHaveBeenCalledWith(mockContext.config.objects.cloud.height);
+
+			expect(result).toMatchObject(expectation);
+		});
 	});
 });

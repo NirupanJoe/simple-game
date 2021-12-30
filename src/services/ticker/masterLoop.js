@@ -4,6 +4,7 @@ const masterLoop = [
 	'decreaseHealth',
 	'backGroundMovingAxis',
 	'addTargets',
+	'generateClouds',
 	'updateCloudPosition',
 	'resetCloudPosition',
 	'moveBullets',

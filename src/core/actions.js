@@ -49,6 +49,9 @@ const processBullets = (context) =>
 const clearHitBullets = (context) => ({
 	bullets: PlayerManager.removeHitBullets(context),
 });
+const generateClouds = (context) => ({
+	objects: PlayerManager.generateClouds(context),
+});
 
 const updateScore = (context) => ({
 	score: PlayerManager.updateScore(context),
@@ -73,6 +76,7 @@ const actions = {
 	clearHitBullets,
 	updateScore,
 	removeTargets,
+	generateClouds,
 };
 
 export default actions;

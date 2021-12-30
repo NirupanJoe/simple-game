@@ -37,6 +37,14 @@ const config = {
 	moveBulletPercentage: 5,
 	bgnScreenYIncre: 1,
 	maxTargets: 5,
+	objects: {
+		cloud: {
+			width: 20,
+			height: 20,
+			type: 'cloud',
+			prob: 0.03,
+		},
+	},
 	targets: {
 		shooter: {
 			health: 1,

@@ -1,6 +1,8 @@
 import PositionService from './positionService';
 import { find } from '@laufire/utils/collection';
 import * as helper from './helperService';
+import { rndString } from '@laufire/utils/random';
+import * as helperService from '../services/helperService';
 
 const hundred = 100;
 
@@ -33,6 +35,20 @@ const PlayerManager = {
 			...bullet,
 			isHit: PlayerManager.isBulletHit(targets, bullet),
 		})),
+	generateClouds: (context) =>
+		(helperService.isProbable(context.config.objects.cloud.prob)
+			? PlayerManager.createCloud(context)
+			: context.state.objects),
+
+	createCloud: ({ config, state }) => [
+		...state.objects, {
+			x: PositionService.getRandomValue(config.objects.cloud.width),
+			y: -PositionService.getRandomValue(config.objects.cloud.height),
+			id: rndString(config.rndLength),
+			height: config.objects.cloud.height,
+			width: config.objects.cloud.width,
+		},
+	],
 
 	removeHitBullets: ({ state: { bullets }}) =>
 		bullets.filter((data) => data.isHit !== true),

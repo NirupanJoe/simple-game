@@ -4,18 +4,16 @@ const yRotation = 360;
 const flightYRotation = 3.1;
 const flightXRotation = 1.5;
 const targetYRotation = 1.6;
-const power = 10;
-const radix = 16;
-const end = 8;
+// const power = 10;
+// const radix = 16;
+// const end = 8;
 
 const animation = {
-	target: ({ x, y, color }) => ({
+	target: ({ x, y }) => ({
 		loop: true,
 		from: {
 			position: [x, y, 0],
 		},
-		color: `#${ Math.pow(color, power).toString(radix)
-			.slice(0, end) }`,
 		rotation: [targetYRotation, 0, 0],
 		config: config.wobbly,
 	}),

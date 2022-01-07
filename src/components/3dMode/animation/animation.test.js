@@ -7,6 +7,7 @@ describe('animation', () => {
 		target,
 		flight,
 		bullet,
+		object,
 	} = animation;
 	const x = rndBetween();
 	const y = rndBetween();
@@ -62,5 +63,11 @@ describe('animation', () => {
 		};
 
 		expect(result).toMatchObject(expected);
+	});
+
+	test('object', () => {
+		const result = object();
+
+		expect(result).toMatchObject({});
 	});
 });

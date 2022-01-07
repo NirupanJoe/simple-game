@@ -3,6 +3,7 @@ import { useThree } from '@react-three/fiber';
 import Target from './scene/targets';
 import Flight from './scene/flight';
 import Bullets from './scene/bullets';
+import Clouds from './scene/clouds';
 
 const x = 1;
 const y = 2;
@@ -20,6 +21,7 @@ const Base = (context) => {
 				<Target { ...enrichedContext }/>
 				<Flight { ...enrichedContext }/>
 				<Bullets { ...enrichedContext }/>
+				<Clouds { ...enrichedContext }/>
 			</Suspense>
 		</>
 	);

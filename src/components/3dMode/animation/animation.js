@@ -39,6 +39,10 @@ const animation = {
 		position: [x, y, 0],
 		config: config.wobbly,
 	}),
+
+	object: () => ({
+
+	}),
 };
 
 export default animation;

@@ -2,6 +2,7 @@ import { rndBetween } from '@laufire/utils/random';
 
 const hundred = 100;
 const two = 2;
+const threeDProjectY = 3;
 
 const PositionService = {
 	project: ({ x, y, width, height }) => ({
@@ -37,7 +38,8 @@ const PositionService = {
 	threeDProject: ({ data, viewport: { width, height }}) => ({
 		...data,
 		x: (data.x * width / hundred) - (width / two),
-		y: (-data.y * height / hundred) + (height / two),
+		y: threeDProjectY,
+		z: (data.y * height / hundred) - (height / two),
 	}),
 };
 

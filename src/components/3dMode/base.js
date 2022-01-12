@@ -7,6 +7,7 @@ import Bullets from './scene/bullets';
 import Clouds from './scene/clouds';
 import { DirectionalLightHelper } from 'three';
 import OrthographicCamera from './orthographicCamera';
+import Plane from './plane';
 
 const x = 2.5;
 const y = 50;
@@ -36,6 +37,7 @@ const Base = (context) => {
 				<Flight { ...enrichedContext }/>
 				<Bullets { ...enrichedContext }/>
 				<Clouds { ...enrichedContext }/>
+				<Plane { ...enrichedContext }/>
 			</Suspense>
 			<OrbitControls/>
 		</>

@@ -2,7 +2,7 @@ import PositionService from '../../../services/positionService';
 import getSprings from '../animation';
 import TargetModel from '../model/target/index';
 
-const Target = (context) => {
+const Targets = (context) => {
 	const { state: { targets }} = context;
 
 	const enrichedTargets = targets.map((data) =>
@@ -20,4 +20,4 @@ const Target = (context) => {
 	);
 };
 
-export default Target;
+export default Targets;

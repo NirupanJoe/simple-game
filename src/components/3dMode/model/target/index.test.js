@@ -1,7 +1,7 @@
 import React from 'react';
 import { rndBetween } from '@laufire/utils/random';
-import Target from './target';
-import helper from '../../../testHelper/helper';
+import Target from '.';
+import helper from '../../../../testHelper/helper';
 
 test('Target', async () => {
 	const data = {

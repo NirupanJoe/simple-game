@@ -2,7 +2,7 @@ import PositionService from '../../../services/positionService';
 import getSprings from '../animation';
 import BulletModel from '../model/bullet';
 
-const Bullet = (context) => {
+const Bullets = (context) => {
 	const { state: { bullets }} = context;
 	const enrichedBullets = bullets.map((data) =>
 		PositionService.threeDProject({ ...context, data }));
@@ -16,4 +16,4 @@ const Bullet = (context) => {
 	);
 };
 
-export default Bullet;
+export default Bullets;

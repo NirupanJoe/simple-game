@@ -1,7 +1,7 @@
 import { OrbitControls, useHelper } from '@react-three/drei';
 import { React, Suspense, useRef } from 'react';
 import { useThree } from '@react-three/fiber';
-import Target from './scene/targets';
+import Targets from './scene/targets';
 import Flight from './scene/flight';
 import Bullets from './scene/bullets';
 import { DirectionalLightHelper } from 'three';
@@ -29,11 +29,11 @@ const Base = (context) => {
 			<directionalLight
 				ref={ ref }
 				position={ [x, y, z] }
-				intensity={ 2 }
+				intensity={ 1 }
 			/>
 			<OrthographicCamera { ...enrichedContext }/>
 			<Suspense fallback={ null }>
-				<Target { ...enrichedContext }/>
+				<Targets { ...enrichedContext }/>
 				<Flight { ...enrichedContext }/>
 				<Bullets { ...enrichedContext }/>
 				<Plane { ...enrichedContext }/>

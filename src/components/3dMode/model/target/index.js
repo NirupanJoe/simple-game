@@ -1,18 +1,16 @@
 import { React } from 'react';
-import { a } from '@react-spring/three';
+import { useSpring } from '@react-spring/three';
 import Model from './model';
+import animation from '../../animation/animation';
 
-const Target = ({ data }) => {
-	const { id, position, rotation } = data;
+const Target = (context) => {
+	const { data } = context;
+	const spring = useSpring(animation.target(data));
+	const enrichedContext = { ...context, data: { ...data, ...spring }};
 
 	return (
-		<a.group
-			key={ id }
-			position={ position }
-			rotation={ rotation }
-		>
-			<Model { ...data }/>
-		</a.group>);
+		<Model { ...enrichedContext }/>
+	);
 };
 
 export default Target;

@@ -2,12 +2,20 @@ import React, { useRef } from 'react';
 import { useGLTF } from '@react-three/drei';
 import { a } from '@react-spring/three';
 
-const Model = ({ color }) => {
+// eslint-disable-next-line max-lines-per-function
+const Model = ({ data }) => {
+	const { color, position, rotation } = data;
 	const group = useRef();
 	const { nodes } = useGLTF(`${ process.env.PUBLIC_URL }/target/paperPlane.gltf`);
 
 	return (
-		<group ref={ group } scale={ 0.5 } dispose={ null }>
+		<a.group
+			ref={ group }
+			scale={ 0.5 }
+			position={ position }
+			rotation={ rotation }
+			dispose={ null }
+		>
 			<mesh
 				castShadow={ true }
 				receiveShadow={ true }
@@ -16,7 +24,7 @@ const Model = ({ color }) => {
 			>
 				<a.meshStandardMaterial attach="material" color={ color }/>
 			</mesh>
-		</group>
+		</a.group>
 	);
 };
 

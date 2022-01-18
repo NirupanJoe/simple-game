@@ -4,19 +4,23 @@ const bulletXRotation = 30;
 const bulletYRotation = 360;
 const flightYRotation = 3.1;
 const flightXRotation = 0;
-const targetXRotation = 0;
-// const power = 10;
-// const radix = 16;
-// const end = 8;
+const targetXRotation = 4.5;
+const targetZRotation = 4.7;
+const power = 10;
+const radix = 16;
+const end = 6;
 
 const animation = {
-	target: ({ x, y, z }) => ({
+	target: ({ x, y, z, color }) => ({
 		loop: true,
 		from: {
 			position: [x, y, z],
 		},
-		rotation: [targetXRotation, 0, 0],
+		rotation: [targetXRotation, 0, targetZRotation],
+		color: `#${ Math.pow(color, power).toString(radix)
+			.slice(0, end) }`,
 		config: config.wobbly,
+
 	}),
 
 	flight: ({ x, y, z }) => ({

@@ -1,6 +1,6 @@
 import PositionService from '../../../services/positionService';
 import getSprings from '../animation';
-import TargetModel from '../model/target';
+import TargetModel from '../model/target/index';
 
 const Target = (context) => {
 	const { state: { targets }} = context;

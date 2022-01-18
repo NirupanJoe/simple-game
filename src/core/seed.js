@@ -12,7 +12,7 @@ const seed = {
 	targets: [
 		{
 			id: 'ZPYPMGFQ',
-			color: 'red',
+			color: 90,
 			damage: 1,
 			health: 1,
 			height: 5.28,
@@ -26,7 +26,7 @@ const seed = {
 		},
 		{
 			id: 'AYEJZGQL',
-			color: 'green',
+			color: 350,
 			damage: 1,
 			health: 1,
 			height: 6.84,

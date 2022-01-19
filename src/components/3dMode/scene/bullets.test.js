@@ -2,7 +2,7 @@ import { range } from '@laufire/utils/collection';
 import { rndBetween } from '@laufire/utils/random';
 import PositionService from '../../../services/positionService';
 import * as getSprings from '../animation';
-import * as BulletModel from '../model/bullet';
+import * as BulletModel from '../model/bullet/index';
 import Bullet from './bullets';
 
 test('Bullet', () => {

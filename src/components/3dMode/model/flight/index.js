@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { a } from '@react-spring/three';
 import { useAnimations, useGLTF } from '@react-three/drei';
+import Audio from './audio';
 
 const Flight = ({ data: { rotation, position }}) => {
 	const { scene, animations } = useGLTF(`${ process.env.PUBLIC_URL }/flight/flight.gltf`);
@@ -16,6 +17,7 @@ const Flight = ({ data: { rotation, position }}) => {
 				rotation={ rotation }
 				position={ position }
 			/>
+			<Audio/>
 		</group>
 	);
 };

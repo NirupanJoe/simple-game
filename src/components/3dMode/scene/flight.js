@@ -1,6 +1,6 @@
 import PositionService from '../../../services/positionService';
 import getSprings from '../animation';
-import FlightModel from '../model/flight';
+import FlightModel from '../model/flight/index';
 
 const Flight = (context) => {
 	const { state: { flight }} = context;

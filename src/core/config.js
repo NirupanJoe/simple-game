@@ -3,7 +3,7 @@ import bulletImage from '../images/bullet.png';
 
 const config = {
 	tickerDelay: 100,
-	health: 100,
+	health: 10,
 	damage: 0.1,
 	rndLength: 16,
 	defaultMode: '3d',

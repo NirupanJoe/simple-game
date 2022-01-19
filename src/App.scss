@@ -9,6 +9,15 @@
 
 	.game {
 		height: 100%;
+
+		.welcomeScreen {
+			height: 100vh;
+			background: gray;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+		}
 	}
 
 	.threeDMode {

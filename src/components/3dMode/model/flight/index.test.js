@@ -1,8 +1,8 @@
 import React from 'react';
 import { rndBetween } from '@laufire/utils/random';
 import * as ReactDrei from '@react-three/drei';
-import Flight from './flight';
-import helper from '../../../testHelper/helper';
+import Flight from '.';
+import helper from '../../../../testHelper/helper';
 
 test('Flight', async () => {
 	const data = {

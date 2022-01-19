@@ -1,6 +1,6 @@
 import React from 'react';
 import { rndBetween } from '@laufire/utils/random';
-import Bullet from './bullet';
+import Bullet from '.';
 import helper from '../../../testHelper/helper';
 
 test('Bullet', async () => {

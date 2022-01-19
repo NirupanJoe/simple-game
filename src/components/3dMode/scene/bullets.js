@@ -1,6 +1,6 @@
 import PositionService from '../../../services/positionService';
 import getSprings from '../animation';
-import BulletModel from '../model/bullet';
+import BulletModel from '../model/bullet/index';
 
 const Bullets = (context) => {
 	const { state: { bullets }} = context;

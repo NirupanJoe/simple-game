@@ -3,7 +3,7 @@ import PlayerManager from '../services/playerManger';
 import PositionService from '../services/positionService';
 import targetManager from '../services/targetManager';
 
-const restart = ({ seed }) => seed;
+const restart = ({ seed }) => ({ ...seed, ready: true });
 
 const decreaseHealth = (context) => PlayerManager.decreaseHealth(context);
 
@@ -58,6 +58,10 @@ const removeTargets = (context) => ({
 	targets: PlayerManager.removeTargets(context),
 });
 
+const gameStart = ({ data }) => ({
+	ready: data,
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -73,6 +77,7 @@ const actions = {
 	clearHitBullets,
 	updateScore,
 	removeTargets,
+	gameStart,
 };
 
 export default actions;

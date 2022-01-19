@@ -8,6 +8,7 @@ const seed = {
 	health: config.health,
 	score: 0,
 	bgnScreenY: 10,
+	ready: false,
 	flight: config.flight,
 	targets: [
 		{

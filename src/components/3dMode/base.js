@@ -8,6 +8,7 @@ import { DirectionalLightHelper } from 'three';
 import OrthographicCamera from './orthographicCamera';
 import Plane from './plane';
 import ContactShadows from './contactShadows';
+import Bgm from './bgm';
 
 const x = 2.5;
 const y = 50;
@@ -37,6 +38,7 @@ const Base = (context) => {
 				<Flight { ...enrichedContext }/>
 				<Bullets { ...enrichedContext }/>
 				<Plane { ...enrichedContext }/>
+				<Bgm { ...enrichedContext }/>
 			</Suspense>
 			<ContactShadows/>
 			<OrbitControls/>

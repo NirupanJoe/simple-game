@@ -17,15 +17,16 @@ describe('actions', () => {
 		processBullets,
 		clearHitBullets,
 		updateScore,
-		removeTargets } = actions;
+		removeTargets,
+		gameStart } = actions;
 
 	const returnValue = Symbol('return');
 
 	test('restart returns seed', () => {
-		const seed = Symbol('seed');
+		const { seed } = context;
 		const result = restart({ seed });
 
-		expect(result).toEqual(seed);
+		expect(result).toEqual({ ...seed, ready: true });
 	});
 
 	test('decrease Health', () => {
@@ -198,6 +199,15 @@ describe('actions', () => {
 		const result = removeTargets(context);
 
 		expect(PlayerManager.removeTargets).toHaveBeenCalledWith(context);
+
+		expect(result).toMatchObject(expected);
+	});
+
+	test('gameStart', () => {
+		const data = Symbol('data');
+		const expected = { ready: data };
+
+		const result = gameStart({ data });
 
 		expect(result).toMatchObject(expected);
 	});

@@ -1,5 +1,6 @@
 import * as random from '@laufire/utils/random';
 import positionService from './positionService';
+import config from '../core/config';
 
 describe('PositionService', () => {
 	const {
@@ -118,23 +119,26 @@ describe('PositionService', () => {
 		expect(result).toMatchObject(expectation);
 	});
 	test('ThreeDProject', () => {
-		const rndViewport = random.rndBetween(1, twentyFive);
+		const z = config.threeDProjectY;
 		const data = {
 			x,
 			y,
+			z,
 		};
 		const viewport = {
-			width: rndViewport,
-			height: rndViewport,
+			width,
+			height,
 		};
-		const context = { data, viewport };
+		const context = { config, data, viewport };
+
 		const result = threeDProject(context);
 
 		const expectation = {
 			x: Math.round((result.x + (viewport.width / two))
-			* (hundred / viewport.width)),
-			y: Math.round((-result.y + (viewport.height / two))
-			* (hundred / viewport.height)),
+					* (hundred / viewport.width)),
+			y: Math.round((result.z + (viewport.height / two))
+					* (hundred / viewport.height)),
+			z: config.threeDProjectY,
 		};
 
 		expect(data).toEqual(expectation);

@@ -6,6 +6,7 @@ const config = {
 	health: 100,
 	damage: 0.1,
 	rndLength: 16,
+	threeDProjectY: 3,
 	defaultMode: '3d',
 	flight: {
 		x: 50,

@@ -5,6 +5,7 @@ const WelcomeScreen = (context) => {
 
 	return (
 		<div
+			role="welcomeScreen"
 			className="welcomeScreen"
 			onClick={ () => actions.gameStart(!state.ready) }
 		>

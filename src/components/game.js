@@ -6,17 +6,16 @@ import WelcomeScreen from './welcomeScreen';
 
 const Game = (context) => {
 	const { state } = context;
-	const Screen = PlayerManager.isAlive(context)
-		? GameScreen
-		: GameOverScreen;
-	const ready = {
-		true: Screen,
+	const readyScreens = {
+		true: PlayerManager.isAlive(context)
+			? GameScreen
+			: GameOverScreen,
 		false: WelcomeScreen,
 	};
 
 	return (
 		<div className="game" role="game">
-			{ ready[state.ready](context) }
+			{ readyScreens[state.ready](context) }
 		</div>
 	);
 };

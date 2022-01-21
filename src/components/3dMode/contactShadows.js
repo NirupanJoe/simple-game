@@ -7,8 +7,6 @@ const x = 0.1;
 const y = 0;
 const z = 0.1;
 
-const far = 4.5;
-
 const ContactShadows = () =>
 	<Shadows
 		rotation-x={ degreeToRad(degree) }
@@ -17,7 +15,7 @@ const ContactShadows = () =>
 		width={ 20 }
 		height={ 20 }
 		blur={ 0.2 }
-		far={ far }
+		far={ 4.5 }
 	/>;
 
 export default ContactShadows;

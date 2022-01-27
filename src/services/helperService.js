@@ -17,5 +17,10 @@ const flattenBullets = (hits) => hits.reduce((acc, { bullets }) =>
 
 const degreeToRad = (deg) => THREE.Math.degToRad(deg);
 
-export { getId,
-	getVariance, isProbable, flattenBullets, degreeToRad };
+export {
+	getId,
+	getVariance,
+	isProbable,
+	flattenBullets,
+	degreeToRad,
+};

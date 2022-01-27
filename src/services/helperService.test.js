@@ -5,9 +5,14 @@ import config from '../core/config';
 import * as random from '@laufire/utils/random';
 import * as helper from './helperService';
 import { range } from '@laufire/utils/collection';
+import * as THREE from 'three';
 
 describe('HelperService', () => {
-	const { getId, getVariance } = helper;
+	const {
+		getId,
+		getVariance,
+		degreeToRad,
+	} = helper;
 	const hundred = 100;
 	const one = 1;
 	const ten = 10;
@@ -78,5 +83,24 @@ describe('HelperService', () => {
 		const result = helper.flattenBullets(hits);
 
 		expect(result).toMatchObject(expectation);
+	});
+
+	test('degreeToRad', () => {
+		const getDegToRad = Symbol('getDegToRad');
+		const deg = Symbol('deg');
+
+		const backup = THREE.Math;
+
+		// eslint-disable-next-line no-import-assign
+		THREE.Math = {
+			degToRad: jest.fn().mockReturnValue(getDegToRad),
+		};
+
+		const result = degreeToRad(deg);
+
+		expect(result).toEqual(getDegToRad);
+		expect(THREE.Math.degToRad).toHaveBeenCalledWith(deg);
+		// eslint-disable-next-line no-import-assign
+		THREE.Math = backup;
 	});
 });

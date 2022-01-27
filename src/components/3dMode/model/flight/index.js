@@ -9,16 +9,18 @@ const Flight = ({ data: { rotation, position }}) => {
 
 	useEffect(() => actions.default.play(), []);
 	return (
-		<group key={ 0 }>
-			<a.primitive
-				ref={ ref }
+		<a.group
+			key={ 0 }
+			ref={ ref }
+			rotation={ rotation }
+			position={ position }
+		>
+			<primitive
 				object={ scene }
 				scale={ 0.8 }
-				rotation={ rotation }
-				position={ position }
 			/>
 			<Audio/>
-		</group>
+		</a.group>
 	);
 };
 

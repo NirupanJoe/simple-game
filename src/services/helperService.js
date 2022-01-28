@@ -2,6 +2,9 @@ import { rndString, rndBetween } from '@laufire/utils/random';
 import * as THREE from 'three';
 
 const hundred = 100;
+const power = 10;
+const radix = 16;
+const end = 6;
 
 const getId = ({ idLength }) => rndString(idLength);
 
@@ -17,10 +20,14 @@ const flattenBullets = (hits) => hits.reduce((acc, { bullets }) =>
 
 const degreeToRad = (deg) => THREE.Math.degToRad(deg);
 
+const changeColor = (color) => Math.pow(color, power).toString(radix)
+	.slice(0, end);
+
 export {
 	getId,
 	getVariance,
 	isProbable,
 	flattenBullets,
 	degreeToRad,
+	changeColor,
 };

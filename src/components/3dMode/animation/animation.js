@@ -1,14 +1,11 @@
 import { config } from '@react-spring/three';
+import { changeColor } from '../../../services/helperService';
 
 const bulletXRotation = 30;
 const bulletYRotation = 360;
 const flightYRotation = 3.1;
-const flightXRotation = 0;
 const targetXRotation = 4.5;
 const targetZRotation = 4.7;
-const power = 10;
-const radix = 16;
-const end = 6;
 
 const animation = {
 	target: ({ x, y, z, color }) => ({
@@ -17,8 +14,7 @@ const animation = {
 			position: [x, y, z],
 		},
 		rotation: [targetXRotation, 0, targetZRotation],
-		color: `#${ Math.pow(color, power).toString(radix)
-			.slice(0, end) }`,
+		color: `#${ changeColor(color) }`,
 		config: config.wobbly,
 
 	}),
@@ -28,8 +24,7 @@ const animation = {
 		from: {
 			position: [x, y, z],
 		},
-		color: 'royalBlue',
-		rotation: [flightXRotation, flightYRotation, 0],
+		rotation: [0, flightYRotation, 0],
 		position: [x, y, z],
 		config: config.wobbly,
 	}),

@@ -1,41 +1,43 @@
+import { React } from 'react';
 import { range } from '@laufire/utils/collection';
-import { rndBetween } from '@laufire/utils/random';
+import { rndBetween, rndString } from '@laufire/utils/random';
 import PositionService from '../../../services/positionService';
-import * as getSprings from '../animation';
+import helper from '../../../testHelper/helper';
 import * as TargetModel from '../model/target';
 import Targets from './targets';
 
-test('Target', () => {
+test('Target', async () => {
 	const ten = 10;
 	const ranges = range(0, rndBetween(1, ten));
 	const state = {
-		targets: ranges.map(Symbol),
+		targets: ranges.map(() => ({
+			id: rndString(),
+		})),
 	};
 	const context = {
 		state,
 	};
-	const projected = Symbol('projected');
-	const springs = state.targets.map(() => Symbol('spring'));
-	const enrichedTargets = state.targets.map(() => projected);
-	const target = Symbol('bullet');
+	const enrichedTargets = state.targets;
+	const scale = rndBetween();
 
-	jest.spyOn(PositionService, 'threeDProject').mockReturnValue(projected);
-	jest.spyOn(getSprings, 'default').mockReturnValue(springs);
-	jest.spyOn(TargetModel, 'default').mockReturnValue(target);
+	jest.spyOn(PositionService, 'threeDProject')
+		.mockImplementation(({ data }) => data);
+	jest.spyOn(TargetModel, 'default').mockImplementation((target) =>
+		<mesh key={ target.data.id } scale={ scale }/>);
 
-	const result = Targets(context);
+	const result = await helper.getScene(<Targets { ...context }/>);
 
 	state.targets.forEach((data) =>
 		expect(PositionService.threeDProject)
 			.toHaveBeenCalledWith({ ...context, data }));
 
-	expect(getSprings.default).toHaveBeenCalledWith(enrichedTargets, 'target');
+	enrichedTargets.forEach((target, i) => {
+		const renderCount = 2;
+		const data = { ...context, data: target };
 
-	springs.forEach((animationData, i) =>
-		expect(TargetModel.default).toHaveBeenCalledWith({
-			...context, data: { ...enrichedTargets[i], ...animationData },
-		}));
-	const expected = state.targets.map(() => target);
+		expect(TargetModel.default.mock.calls[i * renderCount][0])
+			.toEqual(data);
+	});
 
-	expect(result).toEqual(expected);
+	expect(result.allChildren.length).toEqual(enrichedTargets.length);
 });

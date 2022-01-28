@@ -1,6 +1,7 @@
 import { config } from '@react-spring/three';
-import { rndBetween } from '@laufire/utils/random';
+import { rndBetween, rndString } from '@laufire/utils/random';
 import animation from './animation';
+import * as helper from '../../../services/helperService';
 
 describe('animation', () => {
 	const {
@@ -10,21 +11,24 @@ describe('animation', () => {
 	} = animation;
 	const x = rndBetween();
 	const y = rndBetween();
-	const yRotation = 360;
-	const xRotation = 180;
-	const flightYRotation = 3.1;
-	const flightXRotation = 1.5;
+	const z = rndBetween();
 
 	test('target', () => {
-		const result = target({ x, y });
+		const targetXRotation = 4.5;
+		const targetZRotation = 4.7;
+		const color = Symbol('color');
+		const getChangedColor = rndString();
+
+		jest.spyOn(helper, 'changeColor').mockReturnValue(getChangedColor);
+
+		const result = target({ x, y, z, color });
 		const expected = {
 			loop: true,
 			from: {
-				position: [x, y, 0],
+				position: [x, y, z],
 			},
-			color: 'green',
-			rotation: [xRotation, yRotation, 0],
-			position: [x, y, 0],
+			color: `#${ getChangedColor }`,
+			rotation: [targetXRotation, 0, targetZRotation],
 			config: config.wobbly,
 		};
 
@@ -32,15 +36,17 @@ describe('animation', () => {
 	});
 
 	test('flight', () => {
-		const result = flight({ x, y });
+		const flightYRotation = 3.1;
+
+		const result = flight({ x, y, z });
+
 		const expected = {
 			loop: true,
 			from: {
-				position: [x, y, 0],
+				position: [x, y, z],
 			},
-			color: 'royalBlue',
-			rotation: [flightXRotation, flightYRotation, 0],
-			position: [x, y, 0],
+			rotation: [0, flightYRotation, 0],
+			position: [x, y, z],
 			config: config.wobbly,
 		};
 
@@ -48,16 +54,20 @@ describe('animation', () => {
 	});
 
 	test('bullet', () => {
-		const result = bullet({ x, y });
+		const bulletXRotation = 30;
+		const bulletYRotation = 360;
+
+		const result = bullet({ x, y, z });
+
 		const expected = {
 			loop: true,
 			from: {
-				position: [x, y, 0],
-				rotation: [0, 0, 0],
+				position: [x, y, z],
+				rotation: [bulletXRotation, 0, 0],
 			},
 			color: 'red',
-			rotation: [0, yRotation, 0],
-			position: [x, y, 0],
+			rotation: [bulletXRotation, bulletYRotation, 0],
+			position: [x, y, z],
 			config: config.wobbly,
 		};
 

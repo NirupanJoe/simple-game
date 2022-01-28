@@ -12,6 +12,7 @@ describe('HelperService', () => {
 		getId,
 		getVariance,
 		degreeToRad,
+		changeColor,
 	} = helper;
 	const hundred = 100;
 	const one = 1;
@@ -102,5 +103,26 @@ describe('HelperService', () => {
 		expect(THREE.Math.degToRad).toHaveBeenCalledWith(deg);
 		// eslint-disable-next-line no-import-assign
 		THREE.Math = backup;
+	});
+
+	test('changeColor', () => {
+		const color = Symbol('color');
+		const getPow = { toString: jest.fn() };
+		const getToString = { slice: jest.fn() };
+		const getSlice = Symbol('getSlice');
+		const end = 6;
+		const radix = 16;
+		const power = 10;
+
+		jest.spyOn(Math, 'pow').mockReturnValue(getPow);
+		jest.spyOn(getPow, 'toString').mockReturnValue(getToString);
+		jest.spyOn(getToString, 'slice').mockReturnValue(getSlice);
+
+		const result = changeColor(color);
+
+		expect(getToString.slice).toHaveBeenCalledWith(0, end);
+		expect(getPow.toString).toHaveBeenCalledWith(radix);
+		expect(Math.pow).toHaveBeenCalledWith(color, power);
+		expect(result).toEqual(getSlice);
 	});
 });

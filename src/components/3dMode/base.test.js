@@ -2,16 +2,17 @@ import React from 'react';
 import * as ReactFiber from '@react-three/fiber';
 import Base from './base';
 import { rndBetween } from '@laufire/utils/random';
-import { range } from '@laufire/utils/collection';
 import helper from '../../testHelper/helper';
-import * as Target from './scene/targets';
+import * as Targets from './scene/targets';
 import * as Flight from './scene/flight';
-import * as Bullet from './scene/bullets';
+import * as Bullets from './scene/bullets';
+import * as Plane from './plane';
+import * as OrthographicCamera from './orthographicCamera';
+import * as Bgm from './bgm';
+import * as ContactShadows from './contactShadows';
+import * as ReactDrei from '@react-three/drei';
 
-test('base', async () => {
-	const x = 1;
-	const y = 2;
-	const z = 10;
+test('Base', async () => {
 	const context = { context: Symbol('context') };
 	const useThree = {
 		mouse: Symbol('mouse'),
@@ -19,45 +20,37 @@ test('base', async () => {
 	};
 	const { mouse, viewport } = useThree;
 	const enrichedContext = { ...context, mouse, viewport };
-	const childCount = 6;
-	const three = 3;
-	const ranges = range(0, three);
-	const targetPosition = ranges.map(() => rndBetween());
-	const flightPosition = ranges.map(() => rndBetween());
-	const bulletPosition = ranges.map(() => rndBetween());
-	const targetMesh = <mesh position={ targetPosition }/>;
-	const flightMesh = <mesh position={ flightPosition }/>;
-	const bulletMesh = <mesh position={ bulletPosition }/>;
-	const ambientLightProps = {
-		color: 'black',
-		intensity: 0.3,
-	};
-	const directionalLightProps = {
-		position: [-x, y, z],
-		intensity: 2,
-	};
-	const colorProps = {
-		attach: 'background',
-		args: ['lightblue'],
-	};
+	const orbitControlsScale = rndBetween();
+	const childCount = 11;
+	const two = 2;
+	const components = [
+		[Targets, rndBetween()],
+		[Flight, rndBetween()],
+		[Bullets, rndBetween()],
+		[Plane, rndBetween()],
+		[Bgm, rndBetween()],
+		[OrthographicCamera, rndBetween()],
+		[ContactShadows, rndBetween(), {}],
+	];
 
 	jest.spyOn(ReactFiber, 'useThree').mockReturnValue(useThree);
-	jest.spyOn(Target, 'default').mockReturnValue(targetMesh);
-	jest.spyOn(Flight, 'default').mockReturnValue(flightMesh);
-	jest.spyOn(Bullet, 'default').mockReturnValue(bulletMesh);
+	jest.spyOn(ReactDrei, 'useHelper').mockReturnValue();
+	jest.spyOn(ReactDrei.OrbitControls, 'render')
+		.mockReturnValue(<mesh scale={ orbitControlsScale }/>);
+
+	components.map(([component, scale]) => {
+		const componentMesh = <mesh scale={ scale }/>;
+
+		jest.spyOn(component, 'default').mockReturnValue(componentMesh);
+	});
 
 	const scene = await helper.getScene(<Base { ...context }/>);
 	const children = scene.allChildren;
 
 	expect(ReactFiber.useThree).toHaveBeenCalledWith();
 	expect(children.length).toBe(childCount);
-	expect(children[0].props).toMatchObject(ambientLightProps);
-	expect(children[1].props).toMatchObject(directionalLightProps);
-	expect(children[2].props.position).toBe(targetPosition);
-	expect(children[3].props.position).toBe(flightPosition);
-	expect(children[4].props.position).toBe(bulletPosition);
-	expect(children[5].props).toMatchObject(colorProps);
-	expect(Target.default.mock.calls[0][0]).toEqual(enrichedContext);
-	expect(Flight.default.mock.calls[0][0]).toEqual(enrichedContext);
-	expect(Bullet.default.mock.calls[0][0]).toEqual(enrichedContext);
+	components.map(([component, scale, props = enrichedContext], i) => {
+		expect(children[i + two].props.scale).toEqual(scale);
+		expect(component.default.mock.calls[0][0]).toEqual(props);
+	});
 });

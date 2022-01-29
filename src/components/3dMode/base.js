@@ -32,7 +32,6 @@ const Base = (context) => {
 				position={ [x, y, z] }
 				intensity={ 1 }
 			/>
-			<OrthographicCamera { ...enrichedContext }/>
 			<Suspense fallback={ null }>
 				<Targets { ...enrichedContext }/>
 				<Flight { ...enrichedContext }/>
@@ -40,6 +39,7 @@ const Base = (context) => {
 				<Plane { ...enrichedContext }/>
 				<Bgm { ...enrichedContext }/>
 			</Suspense>
+			<OrthographicCamera { ...enrichedContext }/>
 			<ContactShadows/>
 			<OrbitControls/>
 		</>

@@ -7,7 +7,7 @@ const config = {
 	damage: 0.1,
 	rndLength: 16,
 	threeDProjectY: 3,
-	defaultMode: '3d',
+	defaultMode: '2d',
 	flight: {
 		x: 50,
 		y: 90,

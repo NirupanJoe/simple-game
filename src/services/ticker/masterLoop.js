@@ -3,7 +3,7 @@ import context from '../../core/context';
 const masterLoop = [
 	'decreaseHealth',
 	'backGroundMovingAxis',
-	// 'addTargets',
+	'addTargets',
 	'updateCloudPosition',
 	'resetCloudPosition',
 	'moveBullets',

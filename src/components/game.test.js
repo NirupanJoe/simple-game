@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Game from '../components/game';
-import playerManager from '../services/playerManger';
+import playerManager from '../services/playerManager';
 import * as GameOverScreen from './gameOverScreen';
 import * as GameScreen from './gameScreen';
 import * as WelcomeScreen from './welcomeScreen';

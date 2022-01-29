@@ -22,7 +22,7 @@ test('Base', async () => {
 	const { mouse, viewport } = useThree;
 	const enrichedContext = { ...context, mouse, viewport };
 	const orbitControlsScale = rndBetween();
-	const childCount = 11;
+	const childCount = 12;
 	const two = 2;
 	const components = [
 		[Targets, rndBetween()],

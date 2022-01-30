@@ -8,15 +8,17 @@ test('Cloud', async () => {
 	const data = {
 		x: rndBetween(),
 		y: rndBetween(),
+		z: rndBetween(),
 		width: rndBetween(),
 	};
 	const childLength = 1;
 	const scale = 0.3;
-	const position = [data.x, data.y, 0];
+	const position = [data.x, data.y, data.z];
 
 	jest.spyOn(ReactDrei, 'Cloud').mockReturnValue(<mesh scale={ scale }/>);
+
 	const scene = await helper.getScene(<Cloud data={ data }/>);
-	const mesh = scene.children;
+	const mesh = scene.allChildren;
 
 	expect(mesh.length).toBe(childLength);
 	expect(mesh[0].props.position).toEqual(position);

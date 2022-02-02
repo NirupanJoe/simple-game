@@ -8,6 +8,12 @@ const config = {
 	rndLength: 16,
 	threeDProjectY: 3,
 	defaultMode: '2d',
+	healthPosition: {
+		x: 5,
+		y: 3,
+		width: 1,
+		height: 0.3,
+	},
 	flight: {
 		x: 50,
 		y: 90,

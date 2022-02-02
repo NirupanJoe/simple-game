@@ -2,6 +2,7 @@ import { config } from '@react-spring/three';
 import { rndBetween, rndString } from '@laufire/utils/random';
 import animation from './animation';
 import * as helper from '../../../services/helperService';
+import GameService from '../../../services/gameService';
 
 describe('animation', () => {
 	const {
@@ -9,6 +10,7 @@ describe('animation', () => {
 		flight,
 		bullet,
 		object,
+		healthBar,
 	} = animation;
 	const x = rndBetween();
 	const y = rndBetween();
@@ -79,5 +81,23 @@ describe('animation', () => {
 		const result = object();
 
 		expect(result).toMatchObject({});
+	});
+
+	test('healthBar', () => {
+		const health = Symbol('health');
+
+		const getColor = Symbol('color');
+
+		jest.spyOn(GameService, 'healthColor').mockReturnValue(getColor);
+
+		const result = healthBar(health);
+
+		const expected = {
+			loop: true,
+			color: getColor,
+			config: config.wobbly,
+		};
+
+		expect(result).toEqual(expected);
 	});
 });

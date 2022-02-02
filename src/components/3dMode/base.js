@@ -10,6 +10,7 @@ import OrthographicCamera from './orthographicCamera';
 import Plane from './plane';
 import ContactShadows from './contactShadows';
 import Bgm from './bgm';
+import HealthBar from './healthBar';
 
 const x = 2.5;
 const y = 50;
@@ -40,6 +41,7 @@ const Base = (context) => {
 				<Clouds { ...enrichedContext }/>
 				<Plane { ...enrichedContext }/>
 				<Bgm { ...enrichedContext }/>
+				<HealthBar { ...enrichedContext }/>
 			</Suspense>
 			<OrthographicCamera { ...enrichedContext }/>
 			<ContactShadows/>

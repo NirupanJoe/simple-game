@@ -14,6 +14,10 @@ const config = {
 		width: 1,
 		height: 0.3,
 	},
+	scorePosition: {
+		x: 95,
+		y: 3,
+	},
 	flight: {
 		x: 50,
 		y: 90,

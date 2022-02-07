@@ -11,6 +11,7 @@ import Plane from './plane';
 import ContactShadows from './contactShadows';
 import Bgm from './bgm';
 import HealthBar from './healthBar';
+import Score from './score';
 
 const x = 2.5;
 const y = 50;
@@ -42,6 +43,7 @@ const Base = (context) => {
 				<Plane { ...enrichedContext }/>
 				<Bgm { ...enrichedContext }/>
 				<HealthBar { ...enrichedContext }/>
+				<Score { ...enrichedContext }/>
 			</Suspense>
 			<OrthographicCamera { ...enrichedContext }/>
 			<ContactShadows/>

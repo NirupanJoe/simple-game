@@ -13,6 +13,7 @@ import * as Bgm from './bgm';
 import * as ContactShadows from './contactShadows';
 import * as ReactDrei from '@react-three/drei';
 import * as HealthBar from './healthBar';
+import * as Score from './score';
 
 test('Base', async () => {
 	const context = { context: Symbol('context') };
@@ -23,7 +24,7 @@ test('Base', async () => {
 	const { mouse, viewport } = useThree;
 	const enrichedContext = { ...context, mouse, viewport };
 	const orbitControlsScale = rndBetween();
-	const childCount = 13;
+	const childCount = 14;
 	const two = 2;
 	const components = [
 		[Targets, rndBetween()],
@@ -33,6 +34,7 @@ test('Base', async () => {
 		[Plane, rndBetween()],
 		[Bgm, rndBetween()],
 		[HealthBar, rndBetween()],
+		[Score, rndBetween()],
 		[OrthographicCamera, rndBetween()],
 		[ContactShadows, rndBetween(), {}],
 	];

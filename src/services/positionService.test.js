@@ -11,6 +11,7 @@ describe('PositionService', () => {
 		isPointInRect,
 		getAllPoints,
 		threeDProject,
+		getHealthProps,
 	} = positionService;
 	const twentyFive = 25;
 	const hundred = 100;
@@ -142,5 +143,21 @@ describe('PositionService', () => {
 		};
 
 		expect(data).toEqual(expectation);
+	});
+
+	test('getHealthProps', () => {
+		const state = { health: random.rndBetween(1, twentyFive) };
+		const mockConfig = {
+			health: random.rndBetween(1, twentyFive),
+			healthPosition: { width: random.rndBetween(1, twentyFive) },
+		};
+		const context = { state: state, config: mockConfig };
+
+		const result = getHealthProps(context);
+
+		expect(result.width - (result.XPosition * two))
+			.toEqual(mockConfig.healthPosition.width);
+		expect(result.width * mockConfig.health / state.health)
+			.toEqual(mockConfig.healthPosition.width);
 	});
 });

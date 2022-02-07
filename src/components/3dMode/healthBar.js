@@ -1,8 +1,6 @@
 import { React } from 'react';
 import { Plane, Text } from '@react-three/drei';
 import { degreeToRad } from '../../services/helperService';
-import { useSpring, a } from '@react-spring/three';
-import animation from './animation/animation';
 import PositionService from '../../services/positionService';
 import GameService from '../../services/gameService';
 
@@ -14,23 +12,26 @@ const planeOneProps = ({ config: { healthPosition: { height, width }}}) => {
 	};
 };
 
-const planeTwoProps = ({ state, config: { health, healthPosition }}) => {
-	const scale = 1 / health;
-	const height = healthPosition.height / scale;
+const planeTwoProps = (context) => {
+	const { config: { healthPosition: { height }}} = context;
+	const { width, XPosition } = PositionService.getHealthProps(context);
 
 	return {
-		args: [state.health, height, 1],
-		scale: scale,
+		args: [width, height, 1],
+		position: [XPosition, 0, 0],
 	};
 };
 
-const meshProps = (context) => {
+const groupProps = (context) => {
 	const { x, z } = PositionService.threeDProject({ ...context,
 		data: context.config.healthPosition });
 	const degree = -90;
 
+	// eslint-disable-next-line no-console
+	console.log(x, z);
 	return {
-		rotation: [degreeToRad(degree), 0, 0], position: [x, 1, z],
+		rotation: [degreeToRad(degree), 0, 0],
+		position: [x, 1, z],
 	};
 };
 
@@ -41,17 +42,17 @@ const textProps = ({ state }) => ({
 });
 
 const HealthBar = (context) => {
-	const { state } = context;
-	const { color } = useSpring(animation.healthBar(state));
+	const { state: { health }} = context;
+	const color = GameService.healthColor(health);
 
 	return (
-		<mesh { ...meshProps(context) }>
+		<group { ...groupProps(context) }>
 			<Plane { ...planeOneProps(context) }/>;
 			<Plane { ...planeTwoProps(context) }>
-				<a.meshStandardMaterial color={ color }/>
+				<meshStandardMaterial color={ color }/>
 			</Plane>
 			<Text { ...textProps(context) }/>
-		</mesh>
+		</group>
 	);
 };
 

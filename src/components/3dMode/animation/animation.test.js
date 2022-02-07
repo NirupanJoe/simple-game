@@ -2,7 +2,6 @@ import { config } from '@react-spring/three';
 import { rndBetween, rndString } from '@laufire/utils/random';
 import animation from './animation';
 import * as helper from '../../../services/helperService';
-import GameService from '../../../services/gameService';
 
 describe('animation', () => {
 	const {
@@ -84,20 +83,8 @@ describe('animation', () => {
 	});
 
 	test('healthBar', () => {
-		const health = Symbol('health');
+		const result = healthBar();
 
-		const getColor = Symbol('color');
-
-		jest.spyOn(GameService, 'healthColor').mockReturnValue(getColor);
-
-		const result = healthBar(health);
-
-		const expected = {
-			loop: true,
-			color: getColor,
-			config: config.wobbly,
-		};
-
-		expect(result).toEqual(expected);
+		expect(result).toMatchObject({});
 	});
 });

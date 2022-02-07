@@ -1,5 +1,4 @@
 import { config } from '@react-spring/three';
-import GameService from '../../../services/gameService';
 import { changeColor } from '../../../services/helperService';
 
 const bulletXRotation = 30;
@@ -46,11 +45,7 @@ const animation = {
 
 	}),
 
-	healthBar: ({ health }) => ({
-		loop: true,
-		color: GameService.healthColor(health),
-		config: config.wobbly,
-	}),
+	healthBar: () => ({}),
 };
 
 export default animation;

@@ -17,10 +17,11 @@ test('HealthBar', async () => {
 	const getProject = {
 		x: Symbol('x'),
 		z: Symbol('z'),
+		width: rndBetween(),
 	};
 	const healthProps = {
 		width: rndBetween(),
-		XPosition: Symbol(''),
+		XPosition: Symbol('XPosition'),
 	};
 	const getDegreeToRad = rndBetween();
 	const getCeilHealth = rndString();
@@ -53,5 +54,7 @@ test('HealthBar', async () => {
 	expect(PositionService.threeDProject).toHaveBeenCalledWith({ ...context,
 		data: config.healthPosition });
 	expect(helperService.degreeToRad).toHaveBeenCalledWith(degree);
+	expect(PositionService.getHealthProps).toHaveBeenCalledWith({ ...context,
+		data: { ...context.config.healthPosition, width: getProject.width }});
 	expect(GameService.ceilHealth).toHaveBeenCalledWith(state.health);
 });

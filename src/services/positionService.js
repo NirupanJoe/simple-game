@@ -39,18 +39,22 @@ const PositionService = {
 		x: (data.x * width / hundred) - (width / two),
 		y: config.threeDProjectY,
 		z: (data.y * height / hundred) - (height / two),
+		width: data.width * width / hundred,
+		height: data.height * height / hundred,
 	}),
 
 	getHealthProps: (context) => {
 		const {
 			state: { health: healthPercentage },
-			config: { health, healthPosition },
+			config: { health },
+			data,
 		} = context;
-		const width = healthPosition.width * healthPercentage / health;
-		const XPosition = -(healthPosition.width - width) / two;
+		const width = data.width * healthPercentage / health;
+		const XPosition = -(data.width - width) / two;
 
 		return { width, XPosition };
 	},
+
 };
 
 export default PositionService;

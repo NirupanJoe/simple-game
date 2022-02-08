@@ -121,14 +121,10 @@ describe('PositionService', () => {
 	});
 	test('ThreeDProject', () => {
 		const z = config.threeDProjectY;
-		const data = {
-			x,
-			y,
-			z,
-		};
+		const data = { x, y, z, width, height };
 		const viewport = {
-			width,
-			height,
+			width: random.rndBetween(1, twentyFive),
+			height: random.rndBetween(1, twentyFive),
 		};
 		const context = { config, data, viewport };
 
@@ -140,6 +136,8 @@ describe('PositionService', () => {
 			y: Math.round((result.z + (viewport.height / two))
 					* (hundred / viewport.height)),
 			z: config.threeDProjectY,
+			width: Math.round(result.width * hundred / viewport.width),
+			height: Math.round(result.height * hundred / viewport.height),
 		};
 
 		expect(data).toEqual(expectation);
@@ -147,17 +145,17 @@ describe('PositionService', () => {
 
 	test('getHealthProps', () => {
 		const state = { health: random.rndBetween(1, twentyFive) };
+		const data = { width: random.rndBetween(1, twentyFive) };
 		const mockConfig = {
 			health: random.rndBetween(1, twentyFive),
-			healthPosition: { width: random.rndBetween(1, twentyFive) },
 		};
-		const context = { state: state, config: mockConfig };
+		const context = { state: state, config: mockConfig, data: data };
 
 		const result = getHealthProps(context);
 
 		expect(result.width - (result.XPosition * two))
-			.toEqual(mockConfig.healthPosition.width);
+			.toEqual(data.width);
 		expect(result.width * mockConfig.health / state.health)
-			.toEqual(mockConfig.healthPosition.width);
+			.toEqual(data.width);
 	});
 });

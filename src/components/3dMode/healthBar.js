@@ -4,8 +4,10 @@ import { degreeToRad } from '../../services/helperService';
 import PositionService from '../../services/positionService';
 import GameService from '../../services/gameService';
 
-const planeOneProps = ({ config: { healthPosition: { height, width }}}) => {
+const planeOneProps = (context) => {
 	const increase = 0.05;
+	const { width, height } = PositionService.threeDProject({ ...context,
+		data: context.config.healthPosition });
 
 	return {
 		args: [width + increase, height + increase, 1],
@@ -13,8 +15,10 @@ const planeOneProps = ({ config: { healthPosition: { height, width }}}) => {
 };
 
 const planeTwoProps = (context) => {
-	const { config: { healthPosition: { height }}} = context;
-	const { width, XPosition } = PositionService.getHealthProps(context);
+	const { width: w, height } = PositionService.threeDProject({ ...context,
+		data: context.config.healthPosition });
+	const { width, XPosition } = PositionService.getHealthProps({ ...context,
+		data: { ...context.config.healthPosition, width: w }});
 
 	return {
 		args: [width, height, 1],
@@ -27,8 +31,6 @@ const groupProps = (context) => {
 		data: context.config.healthPosition });
 	const degree = -90;
 
-	// eslint-disable-next-line no-console
-	console.log(x, z);
 	return {
 		rotation: [degreeToRad(degree), 0, 0],
 		position: [x, 1, z],

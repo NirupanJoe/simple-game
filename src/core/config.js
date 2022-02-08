@@ -10,9 +10,9 @@ const config = {
 	defaultMode: '2d',
 	healthPosition: {
 		x: 5,
-		y: 3,
-		width: 1,
-		height: 0.3,
+		y: 2.5,
+		width: 10,
+		height: 5,
 	},
 	scorePosition: {
 		x: 95,

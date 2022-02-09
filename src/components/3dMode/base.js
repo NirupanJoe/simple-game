@@ -12,6 +12,7 @@ import ContactShadows from './contactShadows';
 import Bgm from './bgm';
 import HealthBar from './healthBar';
 import Score from './score';
+import AudioControl from './audioControl';
 
 const x = 2.5;
 const y = 50;
@@ -44,6 +45,7 @@ const Base = (context) => {
 				<Bgm { ...enrichedContext }/>
 				<HealthBar { ...enrichedContext }/>
 				<Score { ...enrichedContext }/>
+				<AudioControl { ...enrichedContext }/>
 			</Suspense>
 			<OrthographicCamera { ...enrichedContext }/>
 			<ContactShadows/>

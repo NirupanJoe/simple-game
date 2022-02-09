@@ -7,7 +7,14 @@ const helper = {
 		await ReactThreeTestRenderer.create(Component);
 		const { scene } = await ReactThreeTestRenderer.create(Component);
 
-		return scene;
+		return scene ;
+	},
+
+	getFireEvent: async (Component) => {
+		await ReactThreeTestRenderer.create(Component);
+		const { fireEvent } = await ReactThreeTestRenderer.create(Component);
+
+		return fireEvent ;
 	},
 
 	testEffect: (fn, count) =>

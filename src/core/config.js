@@ -2,7 +2,7 @@ import fighterJet from '../images/fighterJet.png';
 import bulletImage from '../images/bullet.png';
 
 const config = {
-	tickerDelay: 100,
+	tickerDelay: 1000000,
 	health: 100,
 	damage: 0.1,
 	rndLength: 16,
@@ -17,6 +17,12 @@ const config = {
 	scorePosition: {
 		x: 95,
 		y: 3,
+	},
+	audioControl: {
+		x: 50,
+		y: 3,
+		width: 3,
+		height: 4,
 	},
 	flight: {
 		x: 50,

@@ -14,6 +14,7 @@ import * as ContactShadows from './contactShadows';
 import * as ReactDrei from '@react-three/drei';
 import * as HealthBar from './healthBar';
 import * as Score from './score';
+import * as AudioControl from './audioControl';
 
 test('Base', async () => {
 	const context = { context: Symbol('context') };
@@ -24,7 +25,7 @@ test('Base', async () => {
 	const { mouse, viewport } = useThree;
 	const enrichedContext = { ...context, mouse, viewport };
 	const orbitControlsScale = rndBetween();
-	const childCount = 14;
+	const childCount = 15;
 	const two = 2;
 	const components = [
 		[Targets, rndBetween()],
@@ -35,6 +36,7 @@ test('Base', async () => {
 		[Bgm, rndBetween()],
 		[HealthBar, rndBetween()],
 		[Score, rndBetween()],
+		[AudioControl, rndBetween()],
 		[OrthographicCamera, rndBetween()],
 		[ContactShadows, rndBetween(), {}],
 	];

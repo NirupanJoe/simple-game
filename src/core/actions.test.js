@@ -19,7 +19,8 @@ describe('actions', () => {
 		updateScore,
 		removeTargets,
 		generateClouds,
-		gameStart } = actions;
+		gameStart,
+		setAudio } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -217,5 +218,13 @@ describe('actions', () => {
 		const result = gameStart({ data });
 
 		expect(result).toMatchObject(expected);
+	});
+
+	test('setAudio', () => {
+		const data = Symbol('data');
+
+		const result = setAudio({ data });
+
+		expect(result).toMatchObject({ audio: data });
 	});
 });

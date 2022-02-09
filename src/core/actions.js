@@ -65,6 +65,10 @@ const gameStart = ({ data }) => ({
 	ready: data,
 });
 
+const setAudio = ({ data }) => ({
+	audio: data,
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -82,6 +86,7 @@ const actions = {
 	removeTargets,
 	generateClouds,
 	gameStart,
+	setAudio,
 };
 
 export default actions;

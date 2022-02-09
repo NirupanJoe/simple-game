@@ -9,6 +9,7 @@ const seed = {
 	score: 0,
 	bgnScreenY: 10,
 	ready: false,
+	audio: false,
 	flight: config.flight,
 	targets: [],
 	objects: [],

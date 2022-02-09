@@ -1,13 +1,19 @@
 import React from 'react';
-import { PositionalAudio } from '@react-three/drei';
+import AudioClip from '../../audioClip';
 
-const Audio = () =>
-	<PositionalAudio { ...{
+const Audio = (context) => {
+	const props = {
 		loop: false,
-		autoplay: true,
-		distance: 5,
-		url: `${ process.env.PUBLIC_URL }/audio/bullet.mp3`,
-	} }
-	/>;
+		url: 'bullet',
+	};
+
+	return (
+		<AudioClip { ...{
+			...context,
+			data: props,
+		} }
+		/>
+	);
+};
 
 export default Audio;

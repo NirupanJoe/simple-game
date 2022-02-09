@@ -7,16 +7,21 @@ const radius = 0.15;
 const height = 0.6;
 const radialSegments = 8;
 
-const Bullet = ({ data: { rotation, position, color, id }}) =>
-	<a.mesh
-		key={ id }
-		rotation={ rotation }
-		position={ position }
-	>
-		<Cone args={ [radius, height, radialSegments] } scale={ 0.5 }>
-			<a.meshStandardMaterial color={ color }/>
-		</Cone>
-		<Audio/>
-	</a.mesh>;
+const Bullet = (context) => {
+	const { data: { rotation, position, color, id }} = context;
+
+	return (
+		<a.mesh
+			key={ id }
+			rotation={ rotation }
+			position={ position }
+		>
+			<Cone args={ [radius, height, radialSegments] } scale={ 0.5 }>
+				<a.meshStandardMaterial color={ color }/>
+			</Cone>
+			<Audio { ...context }/>
+		</a.mesh>
+	);
+};
 
 export default Bullet;

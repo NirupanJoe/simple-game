@@ -1,13 +1,17 @@
 import { React } from 'react';
-import { PositionalAudio } from '@react-three/drei';
+import AudioClip from '../audioClip';
 
-const Bgm = () =>
-	<PositionalAudio { ...{
-		loop: true,
-		autoplay: true,
-		distance: 5,
-		url: `${ process.env.PUBLIC_URL }/audio/background.mp3`,
-	} }
-	/>;
+const Bgm = (context) => {
+	const props = {
+		url: 'background',
+	};
+
+	return (
+		<AudioClip { ...{
+			...context,
+			data: props,
+		} }
+		/>);
+};
 
 export default Bgm;

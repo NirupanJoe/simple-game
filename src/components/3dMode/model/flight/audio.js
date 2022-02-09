@@ -1,13 +1,18 @@
 import React from 'react';
-import { PositionalAudio } from '@react-three/drei';
+import AudioClip from '../../audioClip';
 
-const Audio = () =>
-	<PositionalAudio { ...{
-		loop: true,
-		autoplay: true,
-		distance: 5,
-		url: `${ process.env.PUBLIC_URL }/audio/flight.mp3`,
-	} }
-	/>;
+const Audio = (context) => {
+	const props = {
+		url: 'flight',
+	};
+
+	return (
+		<AudioClip { ...{
+			...context,
+			data: props,
+		} }
+		/>
+	);
+};
 
 export default Audio;

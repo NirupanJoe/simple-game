@@ -3,7 +3,8 @@ import { a } from '@react-spring/three';
 import { useAnimations, useGLTF } from '@react-three/drei';
 import Audio from './audio';
 
-const Flight = ({ data: { rotation, position }}) => {
+const Flight = (context) => {
+	const { data: { rotation, position }} = context;
 	const { scene, animations } = useGLTF(`${ process.env.PUBLIC_URL }/flight/flight.gltf`);
 	const { ref, actions } = useAnimations(animations);
 
@@ -19,7 +20,7 @@ const Flight = ({ data: { rotation, position }}) => {
 				object={ scene }
 				scale={ 0.8 }
 			/>
-			<Audio/>
+			<Audio { ...context }/>
 		</a.group>
 	);
 };

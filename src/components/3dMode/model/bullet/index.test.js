@@ -10,15 +10,18 @@ test('Bullet', async () => {
 		position: rndBetween(),
 		color: 'red',
 	};
+	const context = { data };
 	const scale = 0.5;
 	const audioScale = rndBetween();
 	const childCount = 2;
 
 	jest.spyOn(Audio, 'default').mockReturnValue(<mesh scale={ audioScale }/>);
-	const scene = await helper.getScene(<Bullet data={ data }/>);
+
+	const scene = await helper.getScene(<Bullet { ...context }/>);
 	const mesh = scene.children[0].allChildren;
 
 	expect(mesh.length).toBe(childCount);
 	expect(mesh[0].props.scale).toEqual(scale);
 	expect(mesh[1].props.scale).toEqual(audioScale);
+	expect(Audio.default.mock.calls[0][0]).toMatchObject(context);
 });

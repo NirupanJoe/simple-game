@@ -1,9 +1,11 @@
+import { React } from 'react';
 import { range } from '@laufire/utils/collection';
 import { rndBetween } from '@laufire/utils/random';
 import PositionService from '../../../services/positionService';
 import * as getSprings from '../animation';
 import * as BulletModel from '../model/bullet/index';
 import Bullet from './bullets';
+import { render } from '@testing-library/react';
 
 test('Bullet', () => {
 	const ten = 10;
@@ -17,13 +19,13 @@ test('Bullet', () => {
 	const projected = Symbol('projected');
 	const springs = state.bullets.map(() => Symbol('spring'));
 	const enrichedBullets = state.bullets.map(() => projected);
-	const bullet = Symbol('bullet');
+	const bullet = <div role="bullet"/>;
 
 	jest.spyOn(PositionService, 'threeDProject').mockReturnValue(projected);
 	jest.spyOn(getSprings, 'default').mockReturnValue(springs);
 	jest.spyOn(BulletModel, 'default').mockReturnValue(bullet);
 
-	const result = Bullet(context);
+	const { getAllByRole } = render(Bullet(context));
 
 	state.bullets.forEach((data) =>
 		expect(PositionService.threeDProject)
@@ -31,11 +33,10 @@ test('Bullet', () => {
 
 	expect(getSprings.default).toHaveBeenCalledWith(enrichedBullets, 'bullet');
 
-	springs.forEach((animationData, i) =>
-		expect(BulletModel.default).toHaveBeenCalledWith({
+	springs.forEach((animationData, i) => {
+		expect(getAllByRole('bullet')[i]).toBeInTheDocument();
+		expect(BulletModel.default.mock.calls[0][0]).toMatchObject({
 			...context, data: { ...enrichedBullets[i], ...animationData },
-		}));
-	const expected = state.bullets.map(() => bullet);
-
-	expect(result).toEqual(expected);
+		});
+	});
 });

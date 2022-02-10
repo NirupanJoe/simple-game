@@ -1,26 +1,24 @@
 import React from 'react';
 import { a } from '@react-spring/three';
-import { Cone } from '@react-three/drei';
 import Audio from './audio';
-
-const radius = 0.15;
-const height = 0.6;
-const radialSegments = 8;
+import { useGLTF } from '@react-three/drei';
+import { SkeletonUtils } from 'three-stdlib';
 
 const Bullet = (context) => {
-	const { data: { rotation, position, color, id }} = context;
+	const { data: { rotation, position, id, width, height }} = context;
+	const { scene } = useGLTF(`${ process.env.PUBLIC_URL }/bullet/bullet.gltf`);
+	const clone = SkeletonUtils.clone(scene);
 
 	return (
-		<a.mesh
+		<a.group
 			key={ id }
 			rotation={ rotation }
 			position={ position }
+			scale={ [width, height, width] }
 		>
-			<Cone args={ [radius, height, radialSegments] } scale={ 0.5 }>
-				<a.meshStandardMaterial color={ color }/>
-			</Cone>
+			<primitive object={ clone }/>
 			<Audio { ...context }/>
-		</a.mesh>
+		</a.group>
 	);
 };
 

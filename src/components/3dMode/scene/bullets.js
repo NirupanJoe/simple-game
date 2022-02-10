@@ -1,3 +1,4 @@
+import { React } from 'react';
 import PositionService from '../../../services/positionService';
 import getSprings from '../animation';
 import BulletModel from '../model/bullet/index';
@@ -9,10 +10,13 @@ const Bullets = (context) => {
 
 	return (
 		getSprings(enrichedBullets, 'bullet').map((animationData, i) =>
-			BulletModel({
-				...context,
-				data: { ...enrichedBullets[i], ...animationData },
-			}))
+			<BulletModel
+				key={ i }
+				{ ...{
+					...context,
+					data: { ...enrichedBullets[i], ...animationData },
+				} }
+			/>)
 	);
 };
 

@@ -10,7 +10,9 @@ const seed = {
 	bgnScreenY: 10,
 	flight: config.flight,
 	targets: [],
+
 	objects: [],
+
 	bullets: [],
 
 };

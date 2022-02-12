@@ -42,7 +42,13 @@ const config = {
 			width: 20,
 			height: 20,
 			type: 'cloud',
-			prob: 0.03,
+			prob: 0.8,
+		},
+		ship: {
+			width: 20,
+			height: 20,
+			type: 'ship',
+			prob: 1,
 		},
 	},
 	targets: {

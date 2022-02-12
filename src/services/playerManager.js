@@ -1,5 +1,5 @@
 import PositionService from './positionService';
-import { find } from '@laufire/utils/collection';
+import { find, map } from '@laufire/utils/collection';
 import * as helper from './helperService';
 import { rndString } from '@laufire/utils/random';
 import * as helperService from '../services/helperService';
@@ -16,12 +16,10 @@ const PlayerManager = {
 		({ bgnScreenY:
 			(state.bgnScreenY + config.bgnScreenYIncre) % hundred }),
 
-	updateCloudPosition: ({ state, config }) => state.objects.map((obj) => ({
-		...obj,
-		y: obj.y + config.bgnScreenYIncre,
-	})),
+	updateObjects: ({ state, config }) => state.objects.map((obj) => ({ ...obj,
+		y: obj.y + config.bgnScreenYIncre })),
 
-	resetCloudPosition: ({ state }) =>
+	resetObjects: ({ state }) =>
 		state.objects.filter((obj) => obj.y < hundred),
 
 	moveBullets: ({ state, config }) =>
@@ -35,20 +33,27 @@ const PlayerManager = {
 			...bullet,
 			isHit: PlayerManager.isBulletHit(targets, bullet),
 		})),
-	generateClouds: (context) =>
-		(helperService.isProbable(context.config.objects.cloud.prob)
-			? PlayerManager.createCloud(context)
-			: context.state.objects),
+	generateObjects: (context) =>
+		map(context.config.objects, (object) =>
+			(helperService.isProbable(object.prob)
+				? PlayerManager.createObjects({ ...context, data: object })
+				: context.state.objects)),
 
-	createCloud: ({ config, state }) => [
+	createObjects: ({ config, state, data: object }) => [
 		...state.objects, {
-			x: PositionService.getRandomValue(config.objects.cloud.width),
-			y: -PositionService.getRandomValue(config.objects.cloud.height),
+			x: PositionService.getRandomValue(object.width),
+			y: -PositionService.getRandomValue(object.height),
 			id: rndString(config.rndLength),
-			height: config.objects.cloud.height,
-			width: config.objects.cloud.width,
+			height: object.height,
+			width: object.width,
+			type: object.type,
 		},
 	],
+	// const getMax = (a, b) => Math.max(a, b);
+	// callback is invoked for each element in the array starting at index 0
+	// [1, 100].reduce(getMax, 50); // 100
+	// const generateObjects: (context) => {cloud:[{},{},{}], ship:[{}, {}, {}]}
+	// const createObjects: (config, state, data: object) = []
 
 	removeHitBullets: ({ state: { bullets }}) =>
 		bullets.filter((data) => data.isHit !== true),

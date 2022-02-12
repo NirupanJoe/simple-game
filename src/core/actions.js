@@ -27,12 +27,12 @@ const updateFlightPosition = (context) => ({
 	},
 });
 
-const updateCloudPosition = (context) => ({
-	objects: PlayerManager.updateCloudPosition(context),
+const updateObjects = (context) => ({
+	objects: PlayerManager.updateObjects(context),
 });
 
-const resetCloudPosition = (context) => ({
-	objects: PlayerManager.resetCloudPosition(context),
+const resetObjects = (context) => ({
+	objects: PlayerManager.resetObjects(context),
 });
 
 const generateBullets = (context) => ({
@@ -49,9 +49,13 @@ const processBullets = (context) =>
 const clearHitBullets = (context) => ({
 	bullets: PlayerManager.removeHitBullets(context),
 });
-const generateClouds = (context) => ({
-	objects: PlayerManager.generateClouds(context),
-});
+const generateObjects = (context) => {
+	// eslint-disable-next-line no-unused-vars
+	const finalArr = Object.values(PlayerManager.generateObjects(context))
+		.flat();
+
+	return { } ;
+};
 
 const updateScore = (context) => ({
 	score: PlayerManager.updateScore(context),
@@ -67,8 +71,8 @@ const actions = {
 	decreaseHealth,
 	backGroundMovingAxis,
 	addTargets,
-	updateCloudPosition,
-	resetCloudPosition,
+	updateObjects,
+	resetObjects,
 	generateBullets,
 	moveBullets,
 	updateFlightPosition,
@@ -76,7 +80,7 @@ const actions = {
 	clearHitBullets,
 	updateScore,
 	removeTargets,
-	generateClouds,
+	generateObjects,
 };
 
 export default actions;

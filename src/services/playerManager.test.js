@@ -2,16 +2,16 @@
 import PositionService from './positionService';
 import PlayerManager from './playerManager';
 import config from '../core/config';
-import { range, secure } from '@laufire/utils/collection';
+import { range, secure, map } from '@laufire/utils/collection';
 import { random } from '@laufire/utils';
 import * as helperService from './helperService';
 import { rndBetween } from '@laufire/utils/lib';
 
 describe('PlayerManager', () => {
 	const { isAlive, decreaseHealth, backGroundMovingAxis,
-		updateCloudPosition, resetCloudPosition, moveBullets,
+		updateObjects, resetObjects, moveBullets,
 		detectBulletHit, removeHitBullets,
-		generateClouds, createCloud, removeTargets,
+		generateObjects, createObjects, removeTargets,
 		isBulletHit, calDamage, detectOverLapping
 		, collectHits, updateHealth, processHits,
 		filterBullet, updateScore } = PlayerManager;
@@ -63,44 +63,6 @@ describe('PlayerManager', () => {
 		};
 
 		expect(result).toEqual(expectation);
-	});
-
-	describe('Cloud services test', () => {
-		const state = {
-			objects: [{
-				x: 20,
-				y: 0,
-				type: 'Cloud',
-			},
-			{
-				x: 50,
-				y: 100,
-				type: 'Cloud',
-			}],
-		};
-
-		test('Test UpdateCloud Position', () => {
-			const result = updateCloudPosition({ state, config });
-
-			const expectation = state.objects.map((obj) => ({
-				...obj,
-				y: obj.y + config.bgnScreenYIncre,
-			}));
-
-			expect(result).toMatchObject(expectation);
-		});
-
-		test('Test resetCloud Position', () => {
-			const result = resetCloudPosition({ state });
-
-			const expectation = [{
-				x: 20,
-				y: 0,
-				type: 'Cloud',
-			}];
-
-			expect(result).toMatchObject(expectation);
-		});
 	});
 
 	describe('removeHitBullets test', () => {
@@ -372,53 +334,65 @@ describe('PlayerManager', () => {
 
 		expect(result).toMatchObject(expectation);
 	});
-	describe('Test Clouds', () => {
-		const prob = Symbol('prob');
-		const height = Symbol('height');
-		const width = Symbol('width');
-		const context = {
-			config: {
-				objects: {
-					cloud: {
-						prob,
-						height,
-						width,
+
+	describe('Test Objects', () => {
+		// const height = Symbol('height');
+		// const width = Symbol('width');
+		test.only('To test generateObjects', () => {
+			const prob = Symbol('prob');
+			const context = {
+				config: {
+					objects: {
+						// eslint-disable-next-line object-shorthand
+						object: {
+							prob: prob,
+						},
 					},
 				},
+				state: {
+					objects: {
+						cloud: [],
+						ship: [],
+					},
+				},
+			};
 
-			},
-			state: {
-				objects: Symbol('objects'),
-			},
-		};
+			const { objects } = context.config.objects;
 
-		test('Generate clouds is performed', () => {
-			jest.spyOn(helperService, 'isProbable').mockReturnValue(true);
-			jest.spyOn(PlayerManager, 'createCloud')
-				.mockReturnValue(returnValue);
-			const result = generateClouds(context);
+			map(objects, (object) => {
+				jest.spyOn(helperService, 'isProbable').mockReturnValue(true);
+				jest.spyOn(PlayerManager, 'createObjects')
+					.mockReturnValue([{ returnValue }]);
 
-			expect(helperService.isProbable)
-				.toHaveBeenCalledWith(prob);
-			expect(PlayerManager.createCloud)
-				.toHaveBeenCalledWith(context);
-			expect(result).toEqual(returnValue);
+				const result = generateObjects(context);
+
+				expect(helperService.isProbable)
+					.toHaveBeenCalledWith(object.prob);
+				expect(PlayerManager.createObjects)
+					.toHaveBeenCalledWith({ ...context, data: object });
+				expect(result).toEqual([{ returnValue }]);
+			});
 		});
 
-		test('Generate clouds is not performed', () => {
-			const expected = context.state.objects;
-
-			jest.spyOn(helperService, 'isProbable').mockReturnValue(false);
-
-			const result = generateClouds(context);
-
-			expect(helperService.isProbable)
-				.toHaveBeenCalledWith(context.config.objects.cloud.prob);
-			expect(result).toEqual(expected);
-		});
-
-		// eslint-disable-next-line max-statements
-		test('To test createCLouds', () => {
+		// 	// eslint-disable-next-line max-statements
+		test('To test createObjects', () => {
+			const prob = Symbol('prob');
+			const context = {
+				config: {
+					objects: {
+						// eslint-disable-next-line object-shorthand
+						object: {
+							prob: prob,
+						},
+					},
+				},
+				state: {
+					objects: {
+						cloud: [],
+						ship: [],
+					},
+				},
+			};
 			const mockContext = {
 				...context,
 				state: {
@@ -436,7 +410,7 @@ describe('PlayerManager', () => {
 
 			jest.spyOn(random, 'rndString').mockReturnValue(id);
 
-			const result = createCloud(mockContext);
+			const result = createObjects(mockContext);
 			const expectation = [
 				...mockContext.state.objects, {
 					x: x,
@@ -454,6 +428,46 @@ describe('PlayerManager', () => {
 				.toHaveBeenCalledWith(mockContext.config.objects.cloud.width);
 			expect(PositionService.getRandomValue)
 				.toHaveBeenCalledWith(mockContext.config.objects.cloud.height);
+
+			expect(result).toMatchObject(expectation);
+		});
+
+		test.only('To test updateObjects', () => {
+			const prob = Symbol('prob');
+			const context = {
+				config: {
+					objects: {
+						// eslint-disable-next-line object-shorthand
+						object: {
+							prob: prob,
+						},
+					},
+				},
+				state: {
+					objects: {
+						cloud: [],
+						ship: [],
+					},
+				},
+			};
+			const result = updateObjects({ context, config });
+
+			const expectation = context.state.objects.cloud.map((obj) => ({
+				...obj,
+				y: obj.y + config.bgnScreenYIncre,
+			}));
+
+			expect(result).toMatchObject(expectation);
+		});
+
+		test('To test resetObjects', () => {
+			const result = resetObjects({ state });
+
+			const expectation = [{
+				x: 20,
+				y: 0,
+				type: 'Cloud',
+			}];
 
 			expect(result).toMatchObject(expectation);
 		});

@@ -11,4 +11,21 @@ describe('shortcut', () => {
 
 		expect(actions.setAudio).toHaveBeenCalledWith(!state.audio);
 	});
+
+	test('gameStart', () => {
+		[false].map((ready) => {
+			const actions = { gameStart: jest.fn() };
+			const state = { ready };
+			const context = { actions, state };
+
+			shortcut.ENTER(context);
+
+			const called = {
+				true: 'not.toHaveBeenCalledWith',
+				false: 'toHaveBeenCalledWith',
+			};
+
+			expect(actions.gameStart)[called[ready]](!ready);
+		});
+	});
 });

@@ -19,7 +19,11 @@ test('Keyboard', () => {
 
 		Keyboard(context);
 
+		expect(React.useEffect).toHaveBeenCalledWith(expect.any(Function), []);
 		getKeys.includes(key) && expect(shortcut[evt.key])
 			.toHaveBeenCalledWith(context);
+		// eslint-disable-next-line no-undef
+		expect(window.addEventListener)
+			.toHaveBeenCalledWith('keydown', expect.any(Function));
 	});
 });

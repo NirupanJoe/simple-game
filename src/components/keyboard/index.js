@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
-import shortcut from './shortcut';
+import shortcutManager from '../../services/shortcutManager';
 
 const Keyboard = (context) => {
 	useEffect(() => {
 		// eslint-disable-next-line no-undef
-		window.addEventListener('keydown', (evt) => {
-			const key = evt.key.toUpperCase();
-
-			shortcut[key] && shortcut[key](context);
+		window.addEventListener('keydown', ({ key }) => {
+			shortcutManager.handleShortcut({ ...context, data: { key }});
 		});
 	}, []);
 };

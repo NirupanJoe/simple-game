@@ -29,6 +29,10 @@ const config = {
 		y: 90,
 		width: 6,
 	},
+	shortcutKeys: [
+		{ key: 'M', action: 'mute', desc: 'Mute' },
+		{ key: 'ENTER', action: 'gameStart', desc: 'StartGame' },
+	],
 	bulletsType: {
 		normal: {
 			type: 'normal',

@@ -7,25 +7,22 @@ describe('shortcut', () => {
 		const state = { audio: rndValue([true, false]) };
 		const context = { state, actions };
 
-		shortcut.M(context);
+		shortcut.mute(context);
 
 		expect(actions.setAudio).toHaveBeenCalledWith(!state.audio);
 	});
 
 	test('gameStart', () => {
-		[false].map((ready) => {
+		[false, true].map((ready) => {
 			const actions = { gameStart: jest.fn() };
 			const state = { ready };
 			const context = { actions, state };
 
-			shortcut.ENTER(context);
+			shortcut.gameStart(context);
 
-			const called = {
-				true: 'not.toHaveBeenCalledWith',
-				false: 'toHaveBeenCalledWith',
-			};
-
-			expect(actions.gameStart)[called[ready]](!ready);
+			!ready
+				? expect(actions.gameStart).toHaveBeenCalledWith(!ready)
+				: expect(actions.gameStart).not.toHaveBeenCalledWith(!ready);
 		});
 	});
 });

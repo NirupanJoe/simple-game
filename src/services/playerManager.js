@@ -57,26 +57,32 @@ const PlayerManager = {
 		find(bullet, (value) =>
 			PositionService.isPointInRect(value, target)),
 
-	isBulletHit: (bullet, target) =>
-		PlayerManager
-			.detectOverLapping(PositionService.getAllPoints(bullet),
-				PositionService.getAllPoints(target)) !== undefined,
+	isBulletHit: (bullet, target) => {
+		const bulletPoints = PositionService.getAllPoints(bullet);
+		const targetPoints = PositionService.getAllPoints(target);
+
+		const isOverlapped = PlayerManager
+			.detectOverLapping(bulletPoints, targetPoints);
+
+		return isOverlapped !== undefined;
+	},
 
 	filterBullet: (bullets, target) => bullets.filter((bullet) =>
 		PlayerManager.isBulletHit(bullet, target)),
 
-	collectHits: ({ state: { targets, bullets }}) =>
-		targets.map((target) =>
-			({
-				target: { ...target },
-				bullets: PlayerManager.filterBullet(bullets, target),
-			})),
+	collectHits: ({ data }) => data.targets.map((target) => PlayerManager
+		.collectEachTargetHits(target, data.bullets)),
+
+	collectEachTargetHits: (target, bullets) => ({
+		target: target,
+		bullets: PlayerManager.filterBullet(bullets, target),
+	}),
 
 	updateHealth: (hits) => hits.map(({ target, bullets }) =>
 		({		...target,
 			health: PlayerManager.calDamage(target, bullets) })),
 
-	updateBulletIsHit: (hitBullets, { state: { bullets }}) => {
+	updateBulletIsHit: (hitBullets, bullets) => {
 		const bulletsId = hitBullets.map((bullet) => bullet.id);
 
 		return bullets.map((bullet) => (
@@ -84,14 +90,17 @@ const PlayerManager = {
 	},
 
 	processHits: (context) => {
-		const hits = PlayerManager.collectHits(context);
+		const { state: { bullets, targets }} = context;
+		const data = { bullets, targets };
+		const hits = PlayerManager.collectHits({ ...context, data });
 
 		return	{
 			targets: PlayerManager.updateHealth(hits),
 			bullets: PlayerManager
-				.updateBulletIsHit(helper.flattenBullets(hits), context),
+				.updateBulletIsHit(helper.flattenBullets(hits), bullets),
 		};
 	},
+
 	calDamage: (target, bullets) => Math.max(target.health - bullets
 		.reduce((a, c) => a + c.damage, 0), 0),
 

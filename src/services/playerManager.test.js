@@ -12,8 +12,8 @@ describe('PlayerManager', () => {
 		updateCloudPosition, resetCloudPosition, moveBullets,
 		detectBulletHit, removeHitBullets,
 		generateClouds, createCloud, removeTargets,
-		isBulletHit, calDamage, detectOverLapping
-		, collectHits, updateHealth, processHits,
+		isBulletHit, calDamage, detectOverLapping,
+		collectHits, updateHealth, processHits,
 		filterBullet, updateScore } = PlayerManager;
 	const hundred = 100;
 	const two = 2;
@@ -243,18 +243,36 @@ describe('PlayerManager', () => {
 
 		const bullets = Symbol('bullets');
 
-		const context = { state: { targets, bullets }};
+		const data = { targets, bullets };
 
-		const expectation = targets.map((data) =>
-			({ target: data, bullets: returnValue }));
+		const expectation = targets.map(() => returnValue);
 
-		jest.spyOn(PlayerManager, 'filterBullet').mockReturnValue(returnValue);
+		jest.spyOn(PlayerManager, 'collectEachTargetHits')
+			.mockReturnValue(returnValue);
 
-		const result = collectHits(context);
+		const result = collectHits({ data });
 
-		targets.forEach((target) => expect(PlayerManager.filterBullet)
-			.toHaveBeenCalledWith(bullets, target));
+		targets.forEach((target) => expect(PlayerManager.collectEachTargetHits)
+			.toHaveBeenCalledWith(target, bullets));
 		expect(result).toMatchObject(expectation);
+	});
+
+	test('collectEachTargetHits', () => {
+		const target = Symbol('targetValue');
+		const bullets = Symbol('bulletsValue');
+
+		jest.spyOn(PlayerManager, 'filterBullet')
+			.mockReturnValue(returnValue);
+
+		const expectation = { target: target,
+			bullets: returnValue };
+
+		const result = PlayerManager.collectEachTargetHits(target, bullets);
+
+		expect(PlayerManager.filterBullet)
+			.toHaveBeenCalledWith(bullets, target);
+
+		expect(result).toEqual(expectation);
 	});
 
 	test('updateHealth', () => {
@@ -292,7 +310,7 @@ describe('PlayerManager', () => {
 		test.each(expectations)('updateBulletIsHit %p',
 			(hits, expected) => {
 				const result = PlayerManager
-					.updateBulletIsHit(hits, { state: { bullets }});
+					.updateBulletIsHit(hits, bullets);
 				const resultCheck = result;
 
 				expect(resultCheck).toMatchObject(expected);
@@ -303,8 +321,9 @@ describe('PlayerManager', () => {
 		const targets = Symbol('targets');
 		const bullets = Symbol('bullets');
 		const flattenBulletsValue = Symbol('flattenBulletsValue');
-		const context = Symbol('context');
-		const expected = { targets, bullets };
+		const data = { targets, bullets };
+		const context = { state: { ...data }};
+		const expected = { ...data };
 
 		jest.spyOn(PlayerManager, 'collectHits').mockReturnValue(returnValue);
 		jest.spyOn(PlayerManager, 'updateHealth').mockReturnValue(targets);
@@ -315,13 +334,14 @@ describe('PlayerManager', () => {
 
 		const result = processHits(context);
 
-		expect(PlayerManager.collectHits).toHaveBeenCalledWith(context);
+		expect(PlayerManager.collectHits)
+			.toHaveBeenCalledWith({ ...context, data });
 		expect(PlayerManager.updateHealth).toHaveBeenCalledWith(returnValue);
 		expect(helperService.flattenBullets).toHaveBeenCalledWith(returnValue);
 		expect(PlayerManager.updateBulletIsHit)
-			.toHaveBeenCalledWith(flattenBulletsValue, context);
+			.toHaveBeenCalledWith(flattenBulletsValue, bullets);
 
-		expect(result).toMatchObject(expected);
+		expect(result).toEqual(expected);
 	});
 
 	test('filterBullet', () => {

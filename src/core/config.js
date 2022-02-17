@@ -32,6 +32,7 @@ const config = {
 	shortcutKeys: [
 		{ key: 'M', action: 'mute', desc: 'Mute' },
 		{ key: 'ENTER', action: 'gameStart', desc: 'StartGame' },
+		{ key: 'H', action: 'help', desc: 'Help' },
 	],
 	bulletsType: {
 		normal: {

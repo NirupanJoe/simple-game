@@ -25,4 +25,14 @@ describe('shortcut', () => {
 				: expect(actions.gameStart).not.toHaveBeenCalledWith(!ready);
 		});
 	});
+
+	test('help', () => {
+		const actions = { setHelp: jest.fn() };
+		const state = { help: rndValue([true, false]) };
+		const context = { state, actions };
+
+		shortcut.help(context);
+
+		expect(actions.setHelp).toHaveBeenCalledWith(!state.help);
+	});
 });

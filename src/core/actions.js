@@ -69,6 +69,10 @@ const setAudio = ({ data }) => ({
 	audio: data,
 });
 
+const setHelp = ({ data }) => ({
+	help: data,
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -87,6 +91,7 @@ const actions = {
 	generateClouds,
 	gameStart,
 	setAudio,
+	setHelp,
 };
 
 export default actions;

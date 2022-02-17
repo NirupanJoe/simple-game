@@ -20,7 +20,8 @@ describe('actions', () => {
 		removeTargets,
 		generateClouds,
 		gameStart,
-		setAudio } = actions;
+		setAudio,
+		setHelp } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -226,5 +227,13 @@ describe('actions', () => {
 		const result = setAudio({ data });
 
 		expect(result).toMatchObject({ audio: data });
+	});
+
+	test('setHelp', () => {
+		const data = Symbol('data');
+
+		const result = setHelp({ data });
+
+		expect(result).toMatchObject({ help: data });
 	});
 });

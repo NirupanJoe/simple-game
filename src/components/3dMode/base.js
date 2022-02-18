@@ -13,6 +13,7 @@ import Bgm from './bgm';
 import HealthBar from './healthBar';
 import Score from './score';
 import AudioControl from './audioControl';
+import PlayPause from './playPause';
 
 const x = 2.5;
 const y = 50;
@@ -46,6 +47,7 @@ const Base = (context) => {
 				<HealthBar { ...enrichedContext }/>
 				<Score { ...enrichedContext }/>
 				<AudioControl { ...enrichedContext }/>
+				<PlayPause { ...enrichedContext }/>
 			</Suspense>
 			<OrthographicCamera { ...enrichedContext }/>
 			<ContactShadows/>

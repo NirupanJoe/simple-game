@@ -73,6 +73,10 @@ const setHelp = ({ data }) => ({
 	help: data,
 });
 
+const setPlayPause = ({ data }) => ({
+	playPause: data,
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -92,6 +96,7 @@ const actions = {
 	gameStart,
 	setAudio,
 	setHelp,
+	setPlayPause,
 };
 
 export default actions;

@@ -11,6 +11,7 @@ const seed = {
 	ready: false,
 	audio: false,
 	help: false,
+	playPause: false,
 	flight: config.flight,
 	targets: [],
 	objects: [],

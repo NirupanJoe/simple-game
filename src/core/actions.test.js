@@ -21,7 +21,8 @@ describe('actions', () => {
 		generateClouds,
 		gameStart,
 		setAudio,
-		setHelp } = actions;
+		setHelp,
+		setPlayPause } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -235,5 +236,13 @@ describe('actions', () => {
 		const result = setHelp({ data });
 
 		expect(result).toMatchObject({ help: data });
+	});
+
+	test('setPlayPause', () => {
+		const data = Symbol('data');
+
+		const result = setPlayPause({ data });
+
+		expect(result).toMatchObject({ playPause: data });
 	});
 });

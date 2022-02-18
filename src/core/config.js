@@ -24,6 +24,10 @@ const config = {
 		width: 3,
 		height: 4,
 	},
+	playPause: {
+		x: 60,
+		y: 3,
+	},
 	flight: {
 		x: 50,
 		y: 90,

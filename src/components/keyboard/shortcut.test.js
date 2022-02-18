@@ -35,4 +35,14 @@ describe('shortcut', () => {
 
 		expect(actions.setHelp).toHaveBeenCalledWith(!state.help);
 	});
+
+	test('playPause', () => {
+		const actions = { setPlayPause: jest.fn() };
+		const state = { playPause: rndValue([true, false]) };
+		const context = { state, actions };
+
+		shortcut.playPause(context);
+
+		expect(actions.setPlayPause).toHaveBeenCalledWith(!state.playPause);
+	});
 });

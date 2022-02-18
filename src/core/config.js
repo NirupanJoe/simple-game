@@ -37,6 +37,7 @@ const config = {
 		{ key: 'M', action: 'mute', desc: 'Mute' },
 		{ key: 'ENTER', action: 'gameStart', desc: 'StartGame' },
 		{ key: 'H', action: 'help', desc: 'Help' },
+		{ key: 'P', action: 'playPause', desc: 'Play/Pause' },
 	],
 	bulletsType: {
 		normal: {

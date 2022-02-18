@@ -6,6 +6,7 @@ import { range, secure } from '@laufire/utils/collection';
 import { random } from '@laufire/utils';
 import * as helperService from './helperService';
 import { rndBetween } from '@laufire/utils/lib';
+import helper from '../testHelper/helper';
 
 describe('PlayerManager', () => {
 	const { isAlive, decreaseHealth, backGroundMovingAxis,
@@ -366,18 +367,22 @@ describe('PlayerManager', () => {
 	});
 
 	test('updateScore', () => {
-		const targets = secure(rndRange.map((data) => ({ id: data, health:
-			rndBetween(0, four) })));
-		const score = rndBetween(0, ten);
+		helper.retry(() => {
+			const rndRangeNum = secure(range(0, random.rndBetween(1, ten)));
+			const targets = secure(rndRangeNum
+				.map((data) => ({ id: data, health:
+				rndBetween(0, four) })));
+			const score = rndBetween(0, ten);
 
-		const damagedTargets = targets.filter((target) =>
-			target.health === 0);
+			const damagedTargets = targets.filter((target) =>
+				target.health === 0);
 
-		const expectation = damagedTargets.length + score;
+			const expectation = damagedTargets.length + score;
 
-		const result = updateScore({ state: { targets, score }});
+			const result = updateScore({ state: { targets, score }});
 
-		expect(result).toEqual(expectation);
+			expect(result).toEqual(expectation);
+		});
 	});
 
 	test('removeTargets', () => {

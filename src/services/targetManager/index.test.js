@@ -66,7 +66,7 @@ describe('target Manager', () => {
 			targetTypes.map((type) =>
 				expect(HelperService.isProbable)
 					.toHaveBeenCalledWith(config.targets[type].prop.spawn));
-			expect(result).toEqual([false]);
+			expect(result).toEqual([]);
 		});
 	});
 

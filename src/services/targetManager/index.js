@@ -3,6 +3,7 @@ import { keys } from '@laufire/utils/collection';
 import { rndValue, rndBetween } from '@laufire/utils/random';
 import { getVariance, isProbable, getId } from '../helperService';
 import positionService from '../positionService';
+import { truthy } from '@laufire/utils/predicates';
 
 const { maxTargets } = config;
 const targetTypeKeys = keys(config.targets);
@@ -31,7 +32,7 @@ const targetManager = {
 
 	spawnTargets: () => targetTypeKeys.map((type) =>
 		isProbable(config.targets[type].prop.spawn)
-		&& targetManager.getTargets({ type })),
+		&& targetManager.getTargets({ type })).filter(truthy),
 
 	addTargets: ({ state: { targets }}) =>
 		(targets.length < maxTargets

@@ -76,6 +76,8 @@ const setHelp = ({ data }) => ({
 const setPlayPause = ({ data }) => ({
 	playPause: data,
 });
+const processEnemyBullets = (context) =>
+	PlayerManager.processEnemyBullets(context);
 
 const actions = {
 	updateMousePosition,
@@ -97,6 +99,7 @@ const actions = {
 	setAudio,
 	setHelp,
 	setPlayPause,
+	processEnemyBullets,
 };
 
 export default actions;

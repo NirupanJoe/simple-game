@@ -111,6 +111,25 @@ const PlayerManager = {
 	removeTargets: ({ state: { targets }}) =>
 		targets.filter((target) => target.health !== 0),
 
+	processEnemyBullets: (context) => {
+		const { enemyBullets, flight, health } = context.state;
+		const data = { targets: [flight], bullets: enemyBullets };
+
+		const hits = PlayerManager.collectHits({ ...context, data });
+
+		const { target, bullets } = hits[0];
+		const addedHealth = [{ target: { ...target, health },
+			bullets: bullets }];
+
+		const targetHealth = PlayerManager.updateHealth(addedHealth);
+
+		return	{
+			health: targetHealth[0].health,
+			enemyBullets: PlayerManager
+				.updateBulletIsHit(helperService.flattenBullets(hits),
+					enemyBullets),
+		};
+	},
 };
 
 export default PlayerManager;

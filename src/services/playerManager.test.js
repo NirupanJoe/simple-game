@@ -483,4 +483,38 @@ describe('PlayerManager', () => {
 			expect(result).toMatchObject(expectation);
 		});
 	});
+	test('processEnemyBullets', () => {
+		const context = {
+			state: {	enemyBullets: Symbol('enemyBullet'),
+				flight: Symbol('flight'),
+				health: Symbol('health') },
+		};
+		const hits = [{ bullets: Symbol('bullets'),
+			target: { id: Symbol('id') }}];
+
+		const addedHealth = [{ bullets: Symbol('bullets'),
+			target: { id: Symbol('id'), health: context.state.health }}];
+
+		const flattenBullets = Symbol('flattenBullets');
+		const updatedBullets = Symbol('UpdatedBullets');
+		const data = { targets: [context.state.flight],
+			bullets: context.state.enemyBullets };
+
+		const expectation = { health: addedHealth[0].health,
+			enemyBullets: updatedBullets };
+
+		jest.spyOn(PlayerManager, 'collectHits').mockReturnValue(hits);
+		jest.spyOn(PlayerManager, 'updateHealth')
+			.mockReturnValue(addedHealth);
+		jest.spyOn(helperService, 'flattenBullets')
+			.mockReturnValue(flattenBullets);
+		jest.spyOn(PlayerManager, 'updateBulletIsHit')
+			.mockReturnValue(updatedBullets);
+
+		const result = PlayerManager.processEnemyBullets(context);
+
+		expect(PlayerManager.collectHits)
+			.toHaveBeenCalledWith({ ...context, data });
+		expect(result).toEqual(expectation);
+	});
 });

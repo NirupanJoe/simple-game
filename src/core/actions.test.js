@@ -22,7 +22,8 @@ describe('actions', () => {
 		gameStart,
 		setAudio,
 		setHelp,
-		setPlayPause } = actions;
+		setPlayPause,
+		processEnemyBullets } = actions;
 
 	const returnValue = Symbol('return');
 
@@ -203,6 +204,7 @@ describe('actions', () => {
 
 		expect(result).toMatchObject(expected);
 	});
+
 	test('test generateClouds', () => {
 		jest.spyOn(playerManager, 'generateClouds')
 			.mockReturnValue(returnValue);
@@ -244,5 +246,17 @@ describe('actions', () => {
 		const result = setPlayPause({ data });
 
 		expect(result).toMatchObject({ playPause: data });
+	});
+
+	test('test process Enemy Bullets', () => {
+		jest.spyOn(playerManager, 'processEnemyBullets')
+			.mockReturnValue(returnValue);
+
+		const expected = returnValue;
+
+		const result = processEnemyBullets(context);
+
+		expect(playerManager.processEnemyBullets).toHaveBeenCalledWith(context);
+		expect(result).toEqual(expected);
 	});
 });

@@ -121,9 +121,16 @@
 }
 .cloud {
 	position: absolute;
-	background-color: white;
-	border-radius: 50%;
-	box-shadow: 5px 9px 6px -5px #000000;
+	background-color: blue;
+	background-size: 100%;
+
+}
+
+.ship{
+	position: absolute;
+	background-color: yellow;
+	background-size: 100%;
+
 }
 
 .help {

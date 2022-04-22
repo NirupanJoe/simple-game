@@ -1,17 +1,15 @@
-/* eslint-disable react/display-name */
-jest.mock('../healthBar', () => () => <div role="healthBar"/>);
-jest.mock('../score', () => () => <div role="score"/>);
-jest.mock('../flight', () => () => <div role="flight"/>);
-
 import React from 'react';
 import { render } from '@testing-library/react';
 import TwoDMode from './2dMode';
 import * as Container from '../container';
-import Cloud from '../cloud';
+import backgroundObject from '../backgroundObject';
 import Bullet from '../bullet';
 import Target from '../target';
+import * as HealthBar from '../healthBar';
+import * as Score from '../score';
+import * as Flight from '../flight';
 
-describe('TwoDMode', () => {
+test('render twoDMode', () => {
 	const state = {
 		targets: Symbol('target'),
 		bullets: Symbol('bullets'),
@@ -19,24 +17,33 @@ describe('TwoDMode', () => {
 	};
 	const context = { state	};
 
-	test('render twoDMode', () => {
-		jest.spyOn(Container, 'default')
-			.mockReturnValueOnce(<div role="cloud"/>)
-			.mockReturnValueOnce(<div role="bullet"/>)
-			.mockReturnValueOnce(<div role="target"/>);
+	jest.spyOn(Container, 'default')
+		.mockReturnValueOnce(<div role="backgroundObject"/>)
+		.mockReturnValueOnce(<div role="bullet"/>)
+		.mockReturnValueOnce(<div role="target"/>);
 
-		const { getByRole } = render(TwoDMode(context));
+	jest.spyOn(HealthBar, 'default')
+		.mockReturnValue(<div role="healthBar"/>);
 
-		expect(Container.default).toHaveBeenCalledWith(state.objects, Cloud);
-		expect(Container.default).toHaveBeenCalledWith(state.bullets, Bullet);
-		expect(Container.default).toHaveBeenCalledWith(state.targets, Target);
-		expect(getByRole('healthBar')).toBeInTheDocument();
-		expect(getByRole('cloud')).toBeInTheDocument();
-		expect(getByRole('score')).toBeInTheDocument();
-		expect(getByRole('bullet')).toBeInTheDocument();
-		expect(getByRole('flight')).toBeInTheDocument();
-		expect(getByRole('target')).toBeInTheDocument();
-		expect(getByRole('twoDMode')).toBeInTheDocument();
-		expect(getByRole('twoDMode')).toHaveClass('twoDMode');
-	});
+	jest.spyOn(Score, 'default').mockReturnValue(<div role="score-card"/>);
+
+	jest.spyOn(Flight, 'default').mockReturnValue(<div role="flight"/>);
+
+	const { getByRole } = render(TwoDMode(context));
+
+	expect(Container.default)
+		.toHaveBeenCalledWith(state.objects, backgroundObject);
+	expect(Container.default).toHaveBeenCalledWith(state.bullets, Bullet);
+	expect(Container.default).toHaveBeenCalledWith(state.targets, Target);
+	expect(HealthBar.default).toHaveBeenCalled();
+	expect(Flight.default).toHaveBeenCalled();
+	expect(Score.default).toHaveBeenCalled();
+	expect(getByRole('healthBar')).toBeInTheDocument();
+	expect(getByRole('backgroundObject')).toBeInTheDocument();
+	expect(getByRole('score-card')).toBeInTheDocument();
+	expect(getByRole('bullet')).toBeInTheDocument();
+	expect(getByRole('flight')).toBeInTheDocument();
+	expect(getByRole('target')).toBeInTheDocument();
+	expect(getByRole('twoDMode')).toBeInTheDocument();
+	expect(getByRole('twoDMode')).toHaveClass('twoDMode');
 });

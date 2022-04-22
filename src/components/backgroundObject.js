@@ -1,8 +1,8 @@
 import React from 'react';
 import PositionService from '../services/positionService';
 
-const Cloud = (data) => {
-	const { id, height, width } = data;
+const backgroundObject = (data) => {
+	const { id, height, width, type } = data;
 	const { x, y } = PositionService.project(data);
 
 	const style = {
@@ -12,7 +12,13 @@ const Cloud = (data) => {
 		width: `${ width }%`,
 	};
 
-	return <div key={ id }role="cloud" style={ style } className="cloud"/>;
+	return (
+		<div
+			key={ id }
+			role="backgroundObject"
+			style={ style }
+			className={ type }
+		/>) ;
 };
 
-export default Cloud;
+export default backgroundObject;

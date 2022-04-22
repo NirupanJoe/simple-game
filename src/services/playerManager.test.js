@@ -2,7 +2,7 @@
 import PositionService from './positionService';
 import PlayerManager from './playerManager';
 import config from '../core/config';
-import { range, secure } from '@laufire/utils/collection';
+import * as collection from '@laufire/utils/collection';
 import { random } from '@laufire/utils';
 import * as helperService from './helperService';
 import { rndBetween } from '@laufire/utils/lib';
@@ -10,12 +10,13 @@ import helper from '../testHelper/helper';
 
 describe('PlayerManager', () => {
 	const { isAlive, decreaseHealth, backGroundMovingAxis,
-		updateCloudPosition, resetCloudPosition, moveBullets,
+		updateBackgroundObjects, resetBackgroundObjects, moveBullets,
 		detectBulletHit, removeHitBullets,
-		generateClouds, createCloud, removeTargets,
-		isBulletHit, calDamage, detectOverLapping,
-		collectHits, updateHealth, processHits,
-		filterBullet, updateScore } = PlayerManager;
+		generateObjects, createObjects, removeTargets,
+		isBulletHit, calDamage, detectOverLapping
+		, collectHits, updateHealth, processHits,
+		filterBullet, updateScore, getObjects } = PlayerManager;
+	const { range, secure, keys } = collection;
 	const hundred = 100;
 	const two = 2;
 	const four = 4;
@@ -64,44 +65,6 @@ describe('PlayerManager', () => {
 		};
 
 		expect(result).toEqual(expectation);
-	});
-
-	describe('Cloud services test', () => {
-		const state = {
-			objects: [{
-				x: 20,
-				y: 0,
-				type: 'Cloud',
-			},
-			{
-				x: 50,
-				y: 100,
-				type: 'Cloud',
-			}],
-		};
-
-		test('Test UpdateCloud Position', () => {
-			const result = updateCloudPosition({ state, config });
-
-			const expectation = state.objects.map((obj) => ({
-				...obj,
-				y: obj.y + config.bgnScreenYIncre,
-			}));
-
-			expect(result).toMatchObject(expectation);
-		});
-
-		test('Test resetCloud Position', () => {
-			const result = resetCloudPosition({ state });
-
-			const expectation = [{
-				x: 20,
-				y: 0,
-				type: 'Cloud',
-			}];
-
-			expect(result).toMatchObject(expectation);
-		});
 	});
 
 	describe('removeHitBullets test', () => {
@@ -397,10 +360,12 @@ describe('PlayerManager', () => {
 
 		expect(result).toMatchObject(expectation);
 	});
-	describe('Test Clouds', () => {
+	describe('Test generateObjects and getObjects', () => {
 		const prob = Symbol('prob');
 		const height = Symbol('height');
 		const width = Symbol('width');
+		const types = keys(config.objects);
+		const type = Symbol('type');
 		const context = {
 			config: {
 				objects: {
@@ -408,77 +373,106 @@ describe('PlayerManager', () => {
 						prob,
 						height,
 						width,
+						type,
+					},
+					ship: {
+						prob,
+						height,
+						width,
+						type,
 					},
 				},
 
 			},
 			state: {
-				objects: Symbol('objects'),
+				objects: [Symbol('objects')],
 			},
+			data: types,
 		};
 
-		test('Generate clouds is performed', () => {
-			jest.spyOn(helperService, 'isProbable').mockReturnValue(true);
-			jest.spyOn(PlayerManager, 'createCloud')
-				.mockReturnValue(returnValue);
-			const result = generateClouds(context);
+		test(' generateObjects is performed', () => {
+			const objectKeys = Symbol('objectKeys');
+			const newObjects = [Symbol('newObjects')];
 
-			expect(helperService.isProbable)
-				.toHaveBeenCalledWith(prob);
-			expect(PlayerManager.createCloud)
-				.toHaveBeenCalledWith(context);
-			expect(result).toEqual(returnValue);
+			jest.spyOn(collection, 'keys').mockReturnValue(objectKeys);
+
+			jest.spyOn(PlayerManager, 'createObjects')
+				.mockReturnValue(newObjects);
+			const result = generateObjects(context);
+
+			expect(PlayerManager.createObjects)
+				.toHaveBeenCalledWith({ ...context, data: objectKeys });
+			expect(collection.keys)
+				.toHaveBeenCalledWith(context.config.objects);
+			expect(result).toEqual([...context.state.objects, ...newObjects]);
 		});
 
-		test('Generate clouds is not performed', () => {
-			const expected = context.state.objects;
-
-			jest.spyOn(helperService, 'isProbable').mockReturnValue(false);
-
-			const result = generateClouds(context);
-
-			expect(helperService.isProbable)
-				.toHaveBeenCalledWith(context.config.objects.cloud.prob);
-			expect(result).toEqual(expected);
-		});
-
-		// eslint-disable-next-line max-statements
-		test('To test createCLouds', () => {
-			const mockContext = {
-				...context,
-				state: {
-					objects: [Symbol('object1')],
-				},
-
-			};
-			const x = Symbol('x');
-			const y = random.rndBetween(1, hundred);
-			const id = Symbol('id');
+		test('to test getObjects', () => {
+			const item = random.rndValue(context.data);
+			const rndString = Symbol('rndString');
+			const num = random.rndBetween(0, hundred);
 
 			jest.spyOn(PositionService, 'getRandomValue')
-				.mockReturnValueOnce(x)
-				.mockReturnValueOnce(y);
+				.mockReturnValueOnce(num)
+				.mockReturnValueOnce(num);
 
-			jest.spyOn(random, 'rndString').mockReturnValue(id);
+			jest.spyOn(random, 'rndString').mockReturnValue(rndString);
+			jest.spyOn(PositionService, 'getRandomValue')
+				.mockReturnValue(width);
+			jest.spyOn(PositionService, 'getRandomValue')
+				.mockReturnValue(height);
 
-			const result = createCloud(mockContext);
-			const expectation = [
-				...mockContext.state.objects, {
-					x: x,
-					y: -y,
-					id: id,
-					height: mockContext.config.objects.cloud.height,
-					width: mockContext.config.objects.cloud.width,
+			const result = getObjects({ ...context, data: item });
 
-				},
-			];
+			const expected = {
+				height: context.config.objects[item].height,
+				width: context.config.objects[item].width,
+				x: num,
+				y: -num,
+			};
 
-			expect(random.rndString)
-				.toHaveBeenCalledWith(mockContext.config.rndLength);
-			expect(PositionService.getRandomValue)
-				.toHaveBeenCalledWith(mockContext.config.objects.cloud.width);
-			expect(PositionService.getRandomValue)
-				.toHaveBeenCalledWith(mockContext.config.objects.cloud.height);
+			expect(result).toMatchObject(expected);
+		});
+	});
+
+	describe('Test updateBackgroundObjects and resetBackgroundObjects', () => {
+		const ninetyNine = 99;
+
+		test('Test updateBackgroundObjects', () => {
+			const state
+			= { objects: [{ y: rndBetween() }, { y: rndBetween() }] };
+			const result = updateBackgroundObjects({ state, config });
+
+			const expectation = state.objects.map((obj) => ({
+				...obj,
+				y: obj.y + config.bgnScreenYIncre,
+			}));
+
+			expect(result).toMatchObject(expectation);
+		});
+
+		test('resetBackgroundObjects is executed', () => {
+			const state = {
+				objects: [
+					{ y: rndBetween(0, ninetyNine) },
+					{ y: rndBetween(0, ninetyNine) },
+				],
+			};
+			const result = resetBackgroundObjects({ state });
+
+			expect(result).toMatchObject(state.objects);
+		});
+
+		test('resetBackgroundObjects is not executed', () => {
+			const state = {
+				objects: [
+					{ y: 101 },
+					{ y: 110 },
+				],
+			};
+			const result = resetBackgroundObjects({ state });
+
+			const expectation = [];
 
 			expect(result).toMatchObject(expectation);
 		});
@@ -516,5 +510,47 @@ describe('PlayerManager', () => {
 		expect(PlayerManager.collectHits)
 			.toHaveBeenCalledWith({ ...context, data });
 		expect(result).toEqual(expectation);
+	});
+
+	describe('to test create Objects', () => {
+		const types = keys(config.objects);
+		const objects = Symbol('objects');
+		const mockContext = {
+			data: types,
+			config: config,
+		};
+
+		test('Objects are created', () => {
+			jest.spyOn(helperService, 'isProbable').mockReturnValue(true);
+			jest.spyOn(PlayerManager, 'getObjects')
+				.mockReturnValue(objects);
+
+			const result = createObjects(mockContext);
+			const expected = types.map(() => objects);
+
+			types.map((type) => {
+				expect(helperService.isProbable)
+					.toHaveBeenCalledWith(mockContext
+						.config.objects[type].prob);
+				expect(PlayerManager.getObjects)
+					.toHaveBeenCalledWith({ ...mockContext, data: type });
+			});
+			expect(result).toEqual(expected);
+		});
+
+		test('Objects are not created', () => {
+			jest.spyOn(helperService, 'isProbable').mockReturnValue(false);
+
+			const result = createObjects(mockContext);
+			const expected = [];
+
+			types.map((type) => {
+				expect(helperService.isProbable)
+					.toHaveBeenCalledWith(mockContext
+						.config.objects[type].prob);
+			});
+
+			expect(result).toEqual(expected);
+		});
 	});
 });

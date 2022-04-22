@@ -9,8 +9,8 @@ describe('actions', () => {
 	const { restart,
 		updateMousePosition,
 		addTargets,
-		updateCloudPosition,
-		resetCloudPosition,
+		updateObjects,
+		resetObjects,
 		generateBullets,
 		moveBullets,
 		updateFlightPosition,
@@ -18,7 +18,7 @@ describe('actions', () => {
 		clearHitBullets,
 		updateScore,
 		removeTargets,
-		generateClouds,
+		generateObjects,
 		gameStart,
 		setAudio,
 		setHelp,
@@ -120,26 +120,42 @@ describe('actions', () => {
 		expect(result).toMatchObject({ targets: returnValue });
 	});
 
-	test('Update cloud Position Test ', () => {
-		jest.spyOn(playerManager, 'updateCloudPosition')
-			.mockReturnValue(returnValue);
-
-		const result = updateCloudPosition(context);
+	test('test updateObjects', () => {
 		const expected = { objects: returnValue };
 
-		expect(playerManager.updateCloudPosition).toHaveBeenCalledWith(context);
+		jest.spyOn(playerManager, 'updateBackgroundObjects')
+			.mockReturnValue(returnValue);
+
+		const result = updateObjects(context);
+
+		expect(playerManager.updateBackgroundObjects)
+			.toHaveBeenCalledWith(context);
 
 		expect(result).toMatchObject(expected);
 	});
 
-	test('Reset cloud Position Test ', () => {
-		jest.spyOn(playerManager, 'resetCloudPosition')
-			.mockReturnValue(returnValue);
-
-		const result = resetCloudPosition(context);
+	test('test resetObjects ', () => {
 		const expected = { objects: returnValue };
 
-		expect(playerManager.resetCloudPosition).toHaveBeenCalledWith(context);
+		jest.spyOn(playerManager, 'resetBackgroundObjects')
+			.mockReturnValue(returnValue);
+
+		const result = resetObjects(context);
+
+		expect(playerManager.resetBackgroundObjects)
+			.toHaveBeenCalledWith(context);
+		expect(result).toMatchObject(expected);
+	});
+
+	test('test generateObjects', () => {
+		const expected = { objects: returnValue };
+
+		jest.spyOn(playerManager, 'generateObjects')
+			.mockReturnValue(returnValue);
+
+		const result = generateObjects(context);
+
+		expect(playerManager.generateObjects).toHaveBeenCalledWith(context);
 		expect(result).toMatchObject(expected);
 	});
 
@@ -202,16 +218,6 @@ describe('actions', () => {
 
 		expect(playerManager.removeTargets).toHaveBeenCalledWith(context);
 
-		expect(result).toMatchObject(expected);
-	});
-
-	test('test generateClouds', () => {
-		jest.spyOn(playerManager, 'generateClouds')
-			.mockReturnValue(returnValue);
-		const result = generateClouds(context);
-		const expected = { objects: returnValue };
-
-		expect(playerManager.generateClouds).toHaveBeenCalledWith(context);
 		expect(result).toMatchObject(expected);
 	});
 

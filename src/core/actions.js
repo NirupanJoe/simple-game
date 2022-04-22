@@ -27,12 +27,12 @@ const updateFlightPosition = (context) => ({
 	},
 });
 
-const updateCloudPosition = (context) => ({
-	objects: PlayerManager.updateCloudPosition(context),
+const updateObjects = (context) => ({
+	objects: PlayerManager.updateBackgroundObjects(context),
 });
 
-const resetCloudPosition = (context) => ({
-	objects: PlayerManager.resetCloudPosition(context),
+const resetObjects = (context) => ({
+	objects: PlayerManager.resetBackgroundObjects(context),
 });
 
 const generateBullets = (context) => ({
@@ -49,8 +49,8 @@ const processBullets = (context) =>
 const clearHitBullets = (context) => ({
 	bullets: PlayerManager.removeHitBullets(context),
 });
-const generateClouds = (context) => ({
-	objects: PlayerManager.generateClouds(context),
+const generateObjects = (context) => ({
+	objects: PlayerManager.generateObjects(context),
 });
 
 const updateScore = (context) => ({
@@ -85,8 +85,8 @@ const actions = {
 	decreaseHealth,
 	backGroundMovingAxis,
 	addTargets,
-	updateCloudPosition,
-	resetCloudPosition,
+	updateObjects,
+	resetObjects,
 	generateBullets,
 	moveBullets,
 	updateFlightPosition,
@@ -94,7 +94,7 @@ const actions = {
 	clearHitBullets,
 	updateScore,
 	removeTargets,
-	generateClouds,
+	generateObjects,
 	gameStart,
 	setAudio,
 	setHelp,

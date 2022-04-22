@@ -67,11 +67,18 @@ const config = {
 	objects: {
 		cloud: {
 			width: 20,
-			height: 20,
+			height: 10,
 			type: 'cloud',
-			prob: 0.03,
+			prob: 0.02,
+		},
+		ship: {
+			width: 5,
+			height: 20,
+			type: 'ship',
+			prob: 0.01,
 		},
 	},
+
 	targets: {
 		shooter: {
 			health: 1,

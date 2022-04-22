@@ -1,5 +1,5 @@
 import PositionService from './positionService';
-import { find } from '@laufire/utils/collection';
+import { find, keys } from '@laufire/utils/collection';
 import * as helper from './helperService';
 import { rndString } from '@laufire/utils/random';
 import * as helperService from '../services/helperService';
@@ -16,12 +16,13 @@ const PlayerManager = {
 		({ bgnScreenY:
 			(state.bgnScreenY + config.bgnScreenYIncre) % hundred }),
 
-	updateCloudPosition: ({ state, config }) => state.objects.map((obj) => ({
-		...obj,
-		y: obj.y + config.bgnScreenYIncre,
-	})),
+	updateBackgroundObjects: ({ state, config }) =>
+		state.objects.map((obj) => ({
+			...obj,
+			y: obj.y + config.bgnScreenYIncre,
+		})),
 
-	resetCloudPosition: ({ state }) =>
+	resetBackgroundObjects: ({ state }) =>
 		state.objects.filter((obj) => obj.y < hundred),
 
 	moveBullets: ({ state, config }) =>
@@ -35,20 +36,31 @@ const PlayerManager = {
 			...bullet,
 			isHit: PlayerManager.isBulletHit(targets, bullet),
 		})),
-	generateClouds: (context) =>
-		(helperService.isProbable(context.config.objects.cloud.prob)
-			? PlayerManager.createCloud(context)
-			: context.state.objects),
 
-	createCloud: ({ config, state }) => [
-		...state.objects, {
-			x: PositionService.getRandomValue(config.objects.cloud.width),
-			y: -PositionService.getRandomValue(config.objects.cloud.height),
-			id: rndString(config.rndLength),
-			height: config.objects.cloud.height,
-			width: config.objects.cloud.width,
-		},
-	],
+	getObjects: (context) => ({
+		x: PositionService
+			.getRandomValue(context.config.objects[context.data].width),
+		y: -PositionService
+			.getRandomValue(context.config.objects[context.data].height),
+		id: rndString(context.config.rndLength),
+		height: context.config.objects[context.data].height,
+		width: context.config.objects[context.data].width,
+		type: context.config.objects[context.data].type,
+	}),
+
+	createObjects: (context) => context.data.filter((type) =>
+		helperService.isProbable(context.config.objects[type].prob))
+		.map((item) => PlayerManager
+			.getObjects({ ...context, data: item })),
+
+	generateObjects: (context) => {
+		const objectKeys = keys(context.config.objects);
+
+		return [
+			...context.state.objects,
+			...PlayerManager.createObjects({ ...context, data: objectKeys }),
+		];
+	},
 
 	removeHitBullets: ({ state: { bullets }}) =>
 		bullets.filter((data) => data.isHit !== true),

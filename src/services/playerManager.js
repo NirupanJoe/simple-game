@@ -39,19 +39,17 @@ const PlayerManager = {
 
 	getObjects: (context) => ({
 		x: PositionService
-			.getRandomValue(context.config.objects[context.data].width),
+			.getRandomValue(context.data.width),
 		y: -PositionService
-			.getRandomValue(context.config.objects[context.data].height),
+			.getRandomValue(context.data.height),
 		id: rndString(context.config.rndLength),
-		height: context.config.objects[context.data].height,
-		width: context.config.objects[context.data].width,
-		type: context.config.objects[context.data].type,
+		...context.data,
 	}),
 
 	createObjects: (context) => context.data.filter((type) =>
 		helperService.isProbable(context.config.objects[type].prob))
 		.map((item) => PlayerManager
-			.getObjects({ ...context, data: item })),
+			.getObjects({ ...context, data: context.config.objects[item] })),
 
 	generateObjects: (context) => {
 		const objectKeys = keys(context.config.objects);

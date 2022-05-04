@@ -422,7 +422,8 @@ describe('PlayerManager', () => {
 			jest.spyOn(PositionService, 'getRandomValue')
 				.mockReturnValue(height);
 
-			const result = getObjects({ ...context, data: item });
+			const result = getObjects({ ...context,
+				data: context.config.objects[item] });
 
 			const expected = {
 				height: context.config.objects[item].height,
@@ -533,7 +534,8 @@ describe('PlayerManager', () => {
 					.toHaveBeenCalledWith(mockContext
 						.config.objects[type].prob);
 				expect(PlayerManager.getObjects)
-					.toHaveBeenCalledWith({ ...mockContext, data: type });
+					.toHaveBeenCalledWith({ ...mockContext,
+						data: mockContext.config.objects[type] });
 			});
 			expect(result).toEqual(expected);
 		});

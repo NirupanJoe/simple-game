@@ -1,5 +1,7 @@
 import fighterJet from '../images/fighterJet.png';
 import bulletImage from '../images/bullet.png';
+import cloudImage from '../images/cloud.png';
+import shipImage from '../images/ship.png';
 
 const config = {
 	tickerDelay: 100,
@@ -70,12 +72,14 @@ const config = {
 			height: 10,
 			type: 'cloud',
 			prob: 0.02,
+			image: cloudImage,
 		},
 		ship: {
 			width: 5,
-			height: 20,
+			height: 10,
 			type: 'ship',
 			prob: 0.01,
+			image: shipImage,
 		},
 	},
 

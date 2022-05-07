@@ -2,19 +2,21 @@ import React from 'react';
 import PositionService from '../services/positionService';
 
 const backgroundObject = (data) => {
-	const { id, height, width, type } = data;
+	const { id, height, width, type, image } = data;
+
 	const { x, y } = PositionService.project(data);
 
 	const style = {
 		top: `${ y }%`,
 		left: `${ x }%`,
-		height: `${ height }%`,
-		width: `${ width }%`,
+		height: `${ height }vw`,
+		width: `${ width }vw`,
 	};
 
 	return (
-		<div
+		<img
 			key={ id }
+			src={ image }
 			role="backgroundObject"
 			style={ style }
 			className={ type }

@@ -9,6 +9,7 @@ test('test backgroundObjects', () => {
 		height: rndBetween(),
 		width: rndBetween(),
 		type: rndString(),
+		image: rndString(),
 	};
 
 	const projectedValue = {
@@ -19,8 +20,8 @@ test('test backgroundObjects', () => {
 	const style = {
 		top: `${ projectedValue.y }%`,
 		left: `${ projectedValue.x }%`,
-		height: `${ data.height }%`,
-		width: `${ data.width }%`,
+		height: `${ data.height }vw`,
+		width: `${ data.width }vw`,
 
 	};
 
@@ -31,6 +32,7 @@ test('test backgroundObjects', () => {
 
 	expect(component).toHaveStyle(style);
 	expect(component).toHaveClass(data.type);
+	expect(component).toHaveAttribute('src', data.image);
 	expect(PositionService.project).toHaveBeenCalledWith(data);
 	expect(component).toBeInTheDocument();
 });

@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^12.8.3",
     "@types/three": "^0.134.0",
     "leva": "^0.9.20",
+    "node-gyp": "^9.0.0",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

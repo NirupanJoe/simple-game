@@ -79,6 +79,14 @@ const setPlayPause = ({ data }) => ({
 const processEnemyBullets = (context) =>
 	PlayerManager.processEnemyBullets(context);
 
+const moveRight = (context) => ({
+	flight: PositionService.moveRight(context),
+});
+
+const moveLeft = (context) => ({
+	flight: PositionService.moveLeft(context),
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -100,6 +108,8 @@ const actions = {
 	setHelp,
 	setPlayPause,
 	processEnemyBullets,
+	moveRight,
+	moveLeft,
 };
 
 export default actions;

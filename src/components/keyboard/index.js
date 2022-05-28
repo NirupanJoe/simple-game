@@ -7,6 +7,9 @@ const Keyboard = (context) => {
 		window.addEventListener('keydown', ({ key }) => {
 			shortcutManager.handleShortcut({ ...context, data: { key }});
 		});
+		window.addEventListener('keyup', () => {
+			context.state.flight.degree = 0;
+		});
 	}, []);
 };
 

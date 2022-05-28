@@ -4,14 +4,29 @@ const hundred = 100;
 const two = 2;
 
 const PositionService = {
-	project: ({ x, y, width, height }) => ({
+	project: ({ x, y, width, height, degree }) => ({
 		x: x - (width / two),
 		y: y - (height / two),
+		degree: degree,
 	}),
 
 	limitMovement: ({ state: { flight: { width }, position: { x }}}) =>
 		Math.min(hundred - (width / two), Math
 			.max(x, 0 + (width / two))),
+
+	limitKeyMovement: (width, x) =>
+		Math.min(hundred - (width / two), Math
+			.max(x, 0 + (width / two))),
+
+	moveLeft: ({ state: { flight: { width }, flight: { x }}}) => ({
+		x: PositionService.limitKeyMovement(width, x - 1),
+		degree: -30,
+	}),
+
+	moveRight: ({ state: { flight: { width }, flight: { x }}}) => ({
+		x: PositionService.limitKeyMovement(width, x + 1),
+		degree: 30,
+	}),
 
 	pxToPercentage: (xPos, innerWidth) =>
 		xPos / innerWidth * hundred,

@@ -9,6 +9,15 @@ const shortcut = {
 	playPause: (context) =>
 		context.actions.setPlayPause(!context.state.playPause),
 
+	left: (context) =>
+		context.actions.moveLeft(context),
+
+	right: (context) =>
+		context.actions.moveRight(context),
+
+	fire: (context) =>
+		context.actions.generateBullets(context),
+
 };
 
 export default shortcut;

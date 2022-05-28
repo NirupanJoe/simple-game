@@ -40,6 +40,9 @@ const config = {
 		{ key: 'ENTER', action: 'gameStart', desc: 'StartGame' },
 		{ key: 'H', action: 'help', desc: 'Help' },
 		{ key: 'P', action: 'playPause', desc: 'Play/Pause' },
+		{ key: 'ARROWRIGHT', action: 'right', desc: 'Move Right' },
+		{ key: 'ARROWLEFT', action: 'left', desc: 'Move Left' },
+		{ key: 'ARROWUP', action: 'fire', desc: 'Move Left' },
 	],
 	bulletsType: {
 		normal: {

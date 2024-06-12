@@ -16,3 +16,4 @@ coverage
 !.editorconfig
 !.eslint*
 dist
+build

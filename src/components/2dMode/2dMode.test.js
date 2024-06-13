@@ -46,4 +46,7 @@ test('render twoDMode', () => {
 	expect(getByRole('target')).toBeInTheDocument();
 	expect(getByRole('twoDMode')).toBeInTheDocument();
 	expect(getByRole('twoDMode')).toHaveClass('twoDMode');
+	expect(getByRole('twoDMode')).toHaveStyle({
+		backgroundPositionY: `${ context.state.bgnScreenY }%`,
+	});
 });

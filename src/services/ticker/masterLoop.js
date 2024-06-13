@@ -16,7 +16,8 @@ const masterLoop = [
 ];
 
 const runMasterLoop = () =>
-	masterLoop.forEach((data) => context.actions[data]());
+	!context.state.playPause
+			&& masterLoop.forEach((data) => context.actions[data]());
 
 const master = {
 	runMasterLoop,

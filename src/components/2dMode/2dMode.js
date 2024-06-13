@@ -7,11 +7,19 @@ import HealthBar from '../healthBar';
 import Score from '../score';
 import Target from '../target';
 
+const style = (context) => ({
+	backgroundPositionY: `${ context.state.bgnScreenY }%`,
+});
+
 const TwoDMode = (context) => {
 	const { state } = context;
 
 	return (
-		<div role="twoDMode" className="twoDMode">
+		<div
+			role="twoDMode"
+			style={ style(context) }
+			className="twoDMode"
+		>
 			{ HealthBar() }
 			{ Container(state.objects, backgroundObject) }
 			{ Score() }

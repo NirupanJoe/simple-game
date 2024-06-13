@@ -26,13 +26,14 @@
 }
 
 .game-screen {
-	background-image: url('./images/ocean-image.jpg');
-	background-repeat: repeat;
 	height: 100vh;
 	width: 100vw;
 	user-select: none;
-
+	
 	.twoDMode {
+	height: 100%;
+	background-image: url('./images/ocean-image.jpg');
+	background-repeat: repeat;
 	display: flex;
 	justify-content: space-between;
 

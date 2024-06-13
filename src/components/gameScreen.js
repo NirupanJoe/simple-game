@@ -5,10 +5,6 @@ import ThreeDMode from './3dMode/3dMode';
 import shortcutScreens from './shortcutScreens';
 import { map, values } from '@laufire/utils/collection';
 
-const style = (context) => ({
-	backgroundPositionY: `${ context.state.bgnScreenY }%`,
-});
-
 const GameMode = {
 	'3d': ThreeDMode,
 	'2d': TwoDMode,
@@ -18,7 +14,6 @@ const GameScreen = (context) =>
 	<div
 		role="gameScreen"
 		className="game-screen"
-		style={ style(context) }
 		onMouseMove={ (event) => {
 			context.actions.updateMousePosition(event);
 			context.actions.updateFlightPosition();

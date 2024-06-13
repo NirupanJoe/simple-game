@@ -7,6 +7,9 @@ import { rndString, rndValue } from '@laufire/utils/random';
 import { render, fireEvent } from '@testing-library/react';
 import * as getMode from '../services/urlService';
 import GameScreen from './gameScreen';
+import { collection } from '@laufire/utils';
+import shortcutScreens from './shortcutScreens';
+// import * as shortcutScreens from './shortcutScreens';
 
 describe('testing GameScreen', () => {
 	const context = {
@@ -24,6 +27,17 @@ describe('testing GameScreen', () => {
 	const rndMode = rndValue(GameMode);
 
 	test('gameScreen visible', () => {
+		const shortcutListComponent = collection.values(collection
+			.map(shortcutScreens, () =>
+				<div key={ rndString() } role={ rndString() }/>));
+		const mapReturnValue = <div role="mapReturnValue"/>;
+
+		jest.spyOn(collection, 'map').mockImplementation((s, Component) => {
+			<Component { ...context }/>;
+		})
+			.mockReturnValue(mapReturnValue);
+		jest.spyOn(collection, 'values')
+			.mockReturnValue(shortcutListComponent);
 		jest.spyOn(getMode, 'default').mockReturnValue(rndMode);
 		const component = render(GameScreen(context)).getByRole('gameScreen');
 
@@ -31,6 +45,11 @@ describe('testing GameScreen', () => {
 		expect(component).toHaveClass('game-screen');
 		expect(component).toHaveStyle({
 			backgroundPositionY: `${ context.state.bgnScreenY }%`,
+		});
+		shortcutListComponent.map((shortcutComponent, i) => {
+			expect(render(GameScreen(context))
+				.getAllByRole(shortcutComponent.props.role)[i])
+				.toBeInTheDocument();
 		});
 	});
 
@@ -64,4 +83,25 @@ describe('testing GameScreen', () => {
 		expect(getByRole(rndMode)).toBeInTheDocument();
 		expect(getMode.default).toHaveBeenCalledWith(context);
 	});
+
+	// test('shourtList', () => {
+	// 	// const shortcutScreensvalue = range(0, rndBetween)
+	// 	// 	.reduce((acc) => ({
+	// 	// 		...acc,
+	// 	// 		[rndString()]: jest.fn,
+	// 	// 	}), {});
+
+	// 	jest.spyOn(collection, 'map').mockImplementation((s, c) => {
+	// 		c(context);
+	// 		// eslint-disable-next-line no-console
+	// 		console.log({ s, c }, 'map');
+	// 	});
+	// 	// eslint-disable-next-line react/jsx-key
+	// 	jest.spyOn(collection, 'values').mockReturnValue([<div/>]);
+
+	// 	const component = render(<GameScreen { ...context }/>)
+	// 		.getByRole('gameScreen');
+
+	// 	expect(component).toBeInTheDocument();
+	// });
 });

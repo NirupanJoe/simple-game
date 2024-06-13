@@ -17,7 +17,6 @@ test('ThreeDMode', () => {
 	Base.mockReturnValue(<div className="base"/>);
 	Canvas.mockImplementation(({ children }) =>
 		<div className="canvas">{children}</div>);
-	jest.spyOn(Help, 'default').mockReturnValue(<div className="help"/>);
 
 	const component = render(ThreeDMode(context)).container.children[0];
 

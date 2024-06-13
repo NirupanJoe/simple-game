@@ -1,7 +1,7 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 import Help from '.';
-import * as Container from '../container';
+import * as Container from '../../container';
 import ShortcutKey from './shortcutKey';
 
 test('Help', () => {

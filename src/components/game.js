@@ -18,7 +18,7 @@ const Game = (context) => {
 	return (
 		<div className="game" role="game">
 			<Screen { ...context }/>
-			<Keyboard { ...context }/>
+			{Keyboard(context)}
 		</div>
 	);
 };

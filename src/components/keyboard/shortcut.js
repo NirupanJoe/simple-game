@@ -4,7 +4,10 @@ const shortcut = {
 	gameStart: (context) =>
 		!context.state.ready && context.actions.gameStart(!context.state.ready),
 
-	help: (context) => context.actions.setHelp(!context.state.help),
+	help: (context) => {
+		context.actions.setHelp(!context.state.help);
+		shortcut.playPause(context);
+	},
 
 	playPause: (context) =>
 		context.actions.setPlayPause(!context.state.playPause),

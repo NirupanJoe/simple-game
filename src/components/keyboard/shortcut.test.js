@@ -27,13 +27,17 @@ describe('shortcut', () => {
 	});
 
 	test('help', () => {
-		const actions = { setHelp: jest.fn() };
-		const state = { help: rndValue([true, false]) };
+		const actions = { setHelp: jest.fn(), setPlayPause: jest.fn() };
+		const state = {
+			help: rndValue([true, false]),
+			playPause: rndValue([true, false]),
+		};
 		const context = { state, actions };
 
 		shortcut.help(context);
 
 		expect(actions.setHelp).toHaveBeenCalledWith(!state.help);
+		expect(actions.setPlayPause).toHaveBeenCalledWith(!state.playPause);
 	});
 
 	test('playPause', () => {

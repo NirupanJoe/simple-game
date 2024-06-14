@@ -3,7 +3,8 @@ import context from '../core/context';
 import PositionService from '../services/positionService';
 
 const style = () => {
-	const { x } = PositionService.project(context.state.flight);
+	const { x } = !context.state.playPause
+	&& PositionService.project(context.state.flight);
 
 	return { left: `${ x }%` };
 };

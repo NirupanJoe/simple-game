@@ -13,11 +13,12 @@ const Game = (context) => {
 			: GameOverScreen,
 		false: WelcomeScreen,
 	};
+	const Screen = readyScreens[state.ready];
 
 	return (
 		<div className="game" role="game">
-			{ readyScreens[state.ready](context) }
-			{ Keyboard(context) }
+			<Screen { ...context }/>
+			<Keyboard { ...context }/>
 		</div>
 	);
 };

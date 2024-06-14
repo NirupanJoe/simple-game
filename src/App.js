@@ -8,7 +8,7 @@ const App = (context) => {
 
 	return (
 		<div className="App">
-			{Game(context)}
+			<Game { ...context }/>
 		</div>
 	);
 };

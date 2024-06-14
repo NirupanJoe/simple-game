@@ -6,7 +6,8 @@ const Score = () =>
 	<div role="score-card" className="container">
 		<img role="damage-icon" src={ blast } className="flightDamage"/>
 		<span role="score" className="score">
-			{ context.state.score } </span>
+			{ context.state.score }
+		</span>
 	</div>;
 
 export default Score;

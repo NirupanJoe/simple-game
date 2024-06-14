@@ -20,11 +20,11 @@ const TwoDMode = (context) => {
 			style={ style(context) }
 			className="twoDMode"
 		>
-			{ HealthBar() }
+			<HealthBar/>
 			{ Container(state.objects, backgroundObject) }
-			{ Score() }
+			<Score/>
 			{ Container(state.bullets, Bullet) }
-			{ Flight() }
+			<Flight/>
 			{ Container(state.targets, Target) }
 		</div>
 	);

@@ -18,7 +18,7 @@ describe('WelcomeScreen', () => {
 		const component = render(WelcomeScreen(context))
 			.getByRole('welcomeScreen');
 
-		expect(component).toHaveTextContent('Click now');
+		expect(component.children[0]).toHaveTextContent('Start');
 		expect(component).toHaveClass('welcomeScreen');
 		expect(component).toBeInTheDocument();
 	});

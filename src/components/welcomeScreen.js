@@ -9,7 +9,7 @@ const WelcomeScreen = (context) => {
 			className="welcomeScreen"
 			onClick={ () => actions.gameStart(!state.ready) }
 		>
-			Click now
+			<button>Start</button>
 		</div>);
 };
 

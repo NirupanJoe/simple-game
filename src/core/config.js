@@ -94,7 +94,7 @@ const config = {
 			y: 10,
 			variance: 0.2,
 			prop: {
-				spawn: 1,
+				spawn: 0.01,
 			},
 		},
 	},

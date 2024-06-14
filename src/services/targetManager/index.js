@@ -5,7 +5,7 @@ import { getVariance, isProbable, getId } from '../helperService';
 import positionService from '../positionService';
 import { truthy } from '@laufire/utils/predicates';
 
-const { maxTargets } = config;
+// const { maxTargets } = config;
 const targetTypeKeys = keys(config.targets);
 const sixtyFive = 65;
 const threeHundredFifty = 350;
@@ -35,12 +35,19 @@ const targetManager = {
 		&& targetManager.getTargets({ type })).filter(truthy),
 
 	addTargets: ({ state: { targets }}) =>
-		(targets.length < maxTargets
-			? [
-				...targets,
-				...targetManager.spawnTargets(),
-			]
-			:	targets),
+		[
+			...targets,
+			...targetManager.spawnTargets(),
+		],
+
+	moveTargets: ({ state: { targets }}) => targets.map((target) => ({
+		...target,
+		y: target.y + 1,
+	})),
+
+	removeTargets: ({ state: { targets }}) =>
+		// eslint-disable-next-line no-magic-numbers
+		targets.filter((target) => target.y > 100),
 };
 
 export default targetManager;

@@ -13,6 +13,7 @@ const masterLoop = [
 	'updateScore',
 	'removeTargets',
 	'processEnemyBullets',
+	'moveTargets',
 ];
 
 const runMasterLoop = () =>

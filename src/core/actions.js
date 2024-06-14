@@ -79,6 +79,10 @@ const setPlayPause = ({ data }) => ({
 const processEnemyBullets = (context) =>
 	PlayerManager.processEnemyBullets(context);
 
+const moveTargets = (context) => ({
+	targets: targetManager.moveTargets(context),
+});
+
 const actions = {
 	updateMousePosition,
 	restart,
@@ -100,6 +104,7 @@ const actions = {
 	setHelp,
 	setPlayPause,
 	processEnemyBullets,
+	moveTargets,
 };
 
 export default actions;

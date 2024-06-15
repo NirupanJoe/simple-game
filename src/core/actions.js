@@ -46,9 +46,17 @@ const moveBullets = (context) => ({
 const processBullets = (context) =>
 	PlayerManager.processHits(context);
 
-const clearHitBullets = (context) => ({
-	bullets: PlayerManager.removeHitBullets(context),
+const clearBullets = (context) => ({
+	bullets: PlayerManager.removeBullets({
+		...context,
+		data: context.state.bullets,
+	}),
+	enemyBullets: PlayerManager.removeBullets({
+		...context,
+		data: context.state.enemyBullets,
+	}),
 });
+
 const generateObjects = (context) => ({
 	objects: PlayerManager.generateObjects(context),
 });
@@ -76,6 +84,7 @@ const setHelp = ({ data }) => ({
 const setPlayPause = ({ data }) => ({
 	playPause: data,
 });
+
 const processEnemyBullets = (context) =>
 	PlayerManager.processEnemyBullets(context);
 
@@ -99,7 +108,7 @@ const actions = {
 	moveBullets,
 	updateFlightPosition,
 	processBullets,
-	clearHitBullets,
+	clearBullets,
 	updateScore,
 	removeTargets,
 	generateObjects,

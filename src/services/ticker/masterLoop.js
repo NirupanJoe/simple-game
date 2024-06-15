@@ -8,7 +8,7 @@ const masterLoop = [
 	'resetObjects',
 	'moveBullets',
 	'processBullets',
-	'clearHitBullets',
+	'clearBullets',
 	'updateScore',
 	'removeTargets',
 	'processEnemyBullets',

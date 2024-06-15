@@ -15,7 +15,7 @@ describe('actions', () => {
 		moveBullets,
 		updateFlightPosition,
 		processBullets,
-		clearHitBullets,
+		clearBullets,
 		updateScore,
 		removeTargets,
 		generateObjects,
@@ -182,13 +182,13 @@ describe('actions', () => {
 		expect(result).toEqual(expected);
 	});
 
-	test('clearHitBullets test', () => {
+	test('clearBullets test', () => {
 		jest.spyOn(playerManager, 'removeHitBullets')
 			.mockReturnValue(returnValue);
 
 		const expected = { bullets: returnValue };
 
-		const result = clearHitBullets(context);
+		const result = clearBullets(context);
 
 		expect(playerManager.removeHitBullets).toHaveBeenCalledWith(context);
 

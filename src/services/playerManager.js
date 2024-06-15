@@ -66,8 +66,8 @@ const PlayerManager = {
 		];
 	},
 
-	removeHitBullets: ({ state: { bullets }}) =>
-		bullets.filter((data) => data.isHit !== true),
+	removeBullets: ({ data }) =>
+		data.filter((item) => !(item.isHit || item.y > hundred || item.y < 0)),
 
 	detectOverLapping: (bullet, target) =>
 		find(bullet, (value) =>

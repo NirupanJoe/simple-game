@@ -5,13 +5,16 @@ import updateContext from '@laufire/resist';
 import './index.css';
 import App from './App';
 import context from './core/context';
+import { CookiesProvider } from 'react-cookie';
 
 const Entry = () => {
 	const [state, setState] = useState(context.seed);
 
 	updateContext(context, { state, setState });
 
-	return App(context);
+	return <CookiesProvider defaultSetOptions={{ path: '/' }}>
+		<App {...context}/>
+	</CookiesProvider>;
 };
 
 ReactDOM.render(<React.StrictMode>

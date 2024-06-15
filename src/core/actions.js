@@ -79,12 +79,12 @@ const setPlayPause = ({ data }) => ({
 const processEnemyBullets = (context) =>
 	PlayerManager.processEnemyBullets(context);
 
-const generateTargetsBullets = (context) => ({
-	targetsBullets: targetManager.generateTargetsBullets(context),
+const generateEnemyBullets = (context) => ({
+	enemyBullets: targetManager.generateEnemyBullets(context),
 });
 
-const moveTargetsBullets = (context) => ({
-	targetsBullets: PlayerManager.moveTargetsBullets(context),
+const moveEnemyBullets = (context) => ({
+	enemyBullets: PlayerManager.moveEnemyBullets(context),
 });
 
 const actions = {
@@ -108,8 +108,8 @@ const actions = {
 	setHelp,
 	setPlayPause,
 	processEnemyBullets,
-	generateTargetsBullets,
-	moveTargetsBullets,
+	generateEnemyBullets,
+	moveEnemyBullets,
 };
 
 export default actions;

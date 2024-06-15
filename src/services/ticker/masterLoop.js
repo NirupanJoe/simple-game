@@ -1,7 +1,6 @@
 import context from '../../core/context';
 
 const masterLoop = [
-	'decreaseHealth',
 	'backGroundMovingAxis',
 	'addTargets',
 	'generateObjects',
@@ -13,8 +12,8 @@ const masterLoop = [
 	'updateScore',
 	'removeTargets',
 	'processEnemyBullets',
-	'generateTargetsBullets',
-	'moveTargetsBullets',
+	'generateEnemyBullets',
+	'moveEnemyBullets',
 ];
 
 const runMasterLoop = () =>

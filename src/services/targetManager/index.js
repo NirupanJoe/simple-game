@@ -43,7 +43,7 @@ const targetManager = {
 			]
 			:	targets),
 
-	generateTargetBullet: (context) => {
+	generateenemyBullet: (context) => {
 		const target = rndValue(context.state.targets);
 
 		return isProbable(target.prop.bulletSpawn) && {
@@ -57,13 +57,13 @@ const targetManager = {
 		};
 	},
 
-	generateTargetsBullets: (context) => {
-		const { state: { targetsBullets }} = context;
-		const targetBullet = targetManager.generateTargetBullet(context);
+	generateEnemyBullets: (context) => {
+		const { state: { enemyBullets }} = context;
+		const enemyBullet = targetManager.generateenemyBullet(context);
 
-		return targetBullet
-			? targetsBullets.concat(targetBullet)
-			: targetsBullets;
+		return enemyBullet
+			? enemyBullets.concat(enemyBullet)
+			: enemyBullets;
 	},
 };
 

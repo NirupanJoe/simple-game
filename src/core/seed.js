@@ -17,7 +17,6 @@ const seed = {
 	targets: [],
 	objects: [],
 	bullets: [],
-	targetsBullets: [],
 	enemyBullets: [{
 		image: bulletImage,
 		type: 'normal',

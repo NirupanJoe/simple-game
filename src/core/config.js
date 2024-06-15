@@ -34,6 +34,7 @@ const config = {
 		x: 50,
 		y: 90,
 		width: 8,
+		height: 8,
 	},
 	shortcutKeys: [
 		{ key: 'M', action: 'mute', desc: 'Mute' },

@@ -33,7 +33,7 @@ const config = {
 	flight: {
 		x: 50,
 		y: 90,
-		width: 6,
+		width: 8,
 	},
 	shortcutKeys: [
 		{ key: 'M', action: 'mute', desc: 'Mute' },

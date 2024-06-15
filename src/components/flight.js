@@ -6,7 +6,11 @@ const style = () => {
 	const { x } = !context.state.playPause
 	&& PositionService.project(context.state.flight);
 
-	return { left: `${ x }%` };
+	return {
+		left: `${ x }%`,
+		width: `${ context.state.flight.width }vw`,
+		height: `${ context.state.flight.width }vw`,
+	};
 };
 
 const Flight = () =>

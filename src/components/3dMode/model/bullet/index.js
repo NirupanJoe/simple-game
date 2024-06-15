@@ -22,4 +22,6 @@ const Bullet = (context) => {
 	);
 };
 
+useGLTF.preload(`${ process.env.PUBLIC_URL }/bullet/bullet.gltf`);
+
 export default Bullet;

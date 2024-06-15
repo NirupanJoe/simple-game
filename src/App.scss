@@ -6,6 +6,7 @@
 	text-align: center;
 	height: 100vh;
 	width: 100vw;
+	user-select: none;
 
 	.game {
 		height: 100%;
@@ -28,7 +29,6 @@
 .game-screen {
 	height: 100vh;
 	width: 100vw;
-	user-select: none;
 	
 	.twoDMode {
 	height: 100%;

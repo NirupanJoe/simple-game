@@ -24,6 +24,7 @@ const TwoDMode = (context) => {
 			{ Container(state.objects, backgroundObject) }
 			<Score/>
 			{ Container(state.bullets, Bullet) }
+			{ Container(state.targetsBullets, Bullet) }
 			<Flight/>
 			{ Container(state.targets, Target) }
 		</div>

@@ -31,6 +31,12 @@ const PlayerManager = {
 			y: bullet.y - config.moveBulletPercentage,
 		})),
 
+	moveTargetsBullets: ({ state, config }) =>
+		state.targetsBullets.map((targetBullet) => ({
+			...targetBullet,
+			y: targetBullet.y + config.moveBulletPercentage,
+		})),
+
 	detectBulletHit: ({ state: { targets, bullets }}) =>
 		bullets.map((bullet) => ({
 			...bullet,

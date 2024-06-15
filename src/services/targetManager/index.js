@@ -4,6 +4,7 @@ import { rndValue, rndBetween } from '@laufire/utils/random';
 import { getVariance, isProbable, getId } from '../helperService';
 import positionService from '../positionService';
 import { truthy } from '@laufire/utils/predicates';
+import GameService from '../gameService';
 
 const { maxTargets } = config;
 const targetTypeKeys = keys(config.targets);
@@ -41,6 +42,29 @@ const targetManager = {
 				...targetManager.spawnTargets(),
 			]
 			:	targets),
+
+	generateTargetBullet: (context) => {
+		const target = rndValue(context.state.targets);
+
+		return isProbable(target.prop.bulletSpawn) && {
+			...GameService.makeBullet({
+				...context,
+				data: GameService.getType(context),
+			}),
+			x: target.x,
+			y: 10,
+			rotate: 180,
+		};
+	},
+
+	generateTargetsBullets: (context) => {
+		const { state: { targetsBullets }} = context;
+		const targetBullet = targetManager.generateTargetBullet(context);
+
+		return targetBullet
+			? targetsBullets.concat(targetBullet)
+			: targetsBullets;
+	},
 };
 
 export default targetManager;

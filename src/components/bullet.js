@@ -2,7 +2,7 @@ import React from 'react';
 import PositionService from '../services/positionService';
 
 const style = (bullet) => {
-	const { width, height, color } = bullet;
+	const { width, height, color, rotate } = bullet;
 	const { x, y } = PositionService.project(bullet);
 
 	return {
@@ -11,6 +11,7 @@ const style = (bullet) => {
 		left: `${ x }%`,
 		top: `${ y }%`,
 		filter: `hue-rotate(${ color }deg)`,
+		rotate: `${ rotate }deg`,
 	};
 };
 

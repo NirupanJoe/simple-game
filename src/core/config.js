@@ -95,6 +95,7 @@ const config = {
 			variance: 0.2,
 			prop: {
 				spawn: 1,
+				bulletSpawn: 0.05,
 			},
 		},
 	},

@@ -7,9 +7,10 @@ const WelcomeScreen = (context) => {
 		<div
 			role="welcomeScreen"
 			className="welcomeScreen"
-			onClick={ () => actions.gameStart(!state.ready) }
 		>
-			<button>Start</button>
+			<button onClick={ () => actions.gameStart(!state.ready) }>
+				Start
+			</button>
 		</div>);
 };
 

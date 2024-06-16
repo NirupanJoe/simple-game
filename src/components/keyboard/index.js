@@ -1,13 +1,18 @@
+/* eslint-disable no-undef */
 import { useEffect } from 'react';
 import shortcutManager from '../../services/shortcutManager';
 
 const Keyboard = (context) => {
 	useEffect(() => {
-		// eslint-disable-next-line no-undef
-		window.addEventListener('keydown', ({ key }) => {
+		const handleKeydown = ({ key }) => {
 			shortcutManager.handleShortcut({ ...context, data: { key }});
-		});
-	}, []);
+		};
+
+		window.addEventListener('keydown', handleKeydown);
+		return () => {
+			window.removeEventListener('keydown', handleKeydown);
+		};
+	}, [context, shortcutManager]);
 };
 
 export default Keyboard;

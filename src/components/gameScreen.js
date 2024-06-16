@@ -21,7 +21,8 @@ const GameScreen = (context) => {
 				context.actions.updateMousePosition(event);
 				context.actions.updateFlightPosition();
 			} }
-			onClick={ (event) => context.actions.generateBullets(event) }
+			onClick={ (event) => !context.state.playPause
+				&& context.actions.generateBullets(event) }
 		>
 			<Mode { ...context }/>
 			{values(map(shortcutScreens, (Component, key) =>
